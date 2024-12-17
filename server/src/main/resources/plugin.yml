@@ -1,0 +1,5 @@
+name: Cassini
+version: '${version}'
+main: com.undefined.cassini.Main
+api-version: '1.21'
+author: UndefinedCreation

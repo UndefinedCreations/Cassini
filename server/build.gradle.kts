@@ -5,7 +5,7 @@ plugins {
 }
 
 repositories {
-    maven("https://repo.undefinedcreation.com/stellar")
+    maven("https://repo.undefinedcreation.com/releases")
 }
 
 dependencies {

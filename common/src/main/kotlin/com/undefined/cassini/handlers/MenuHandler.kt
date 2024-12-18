@@ -1,8 +1,9 @@
 package com.undefined.cassini.handlers
 
-import com.undefined.cassini.impl.ChestMenu
+import com.undefined.cassini.Menu
 import org.bukkit.entity.Player
 
 abstract class MenuHandler {
-    abstract fun openInventory(player: Player, menu: ChestMenu)
+    abstract fun openMenu(player: Player, menu: Menu)
+    abstract fun registerListeners()
 }

@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack
 
 class GUIItem(val itemStack: ItemStack) {
 
-    val actions: MutableList<ClickActionType> = mutableListOf()
+    val actions: MutableSet<ClickActionType> = mutableSetOf()
     val customActions: MutableList<(ClickData) -> Unit> = mutableListOf()
 
     fun addAction(action: ClickActionType) {

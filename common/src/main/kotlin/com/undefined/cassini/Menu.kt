@@ -21,10 +21,8 @@ abstract class Menu(var title: Component, val size: Int, val parent: Menu?) {
     @ApiStatus.Internal
     fun init() {
         if (hasBeenInitialized) return
-        println("init!")
         hasBeenInitialized = true
         initialize()
-        println("items: ${items.map { it.value.itemStack.type.name }}")
     }
 
     @ApiStatus.OverrideOnly
@@ -53,12 +51,12 @@ abstract class Menu(var title: Component, val size: Int, val parent: Menu?) {
     }
 
     @ApiStatus.OverrideOnly
-    fun onClick(data: ClickData) {}
+    open fun onClick(data: ClickData) {}
 
     @ApiStatus.OverrideOnly
-    fun onOpen(data: Player) {}
+    open fun onOpen(player: Player) {}
 
     @ApiStatus.OverrideOnly
-    fun onClose(data: Player) {}
+    open fun onClose(player: Player) {}
 
 }

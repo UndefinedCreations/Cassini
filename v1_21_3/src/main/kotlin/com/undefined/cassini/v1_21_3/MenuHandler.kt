@@ -1,5 +1,6 @@
 package com.undefined.cassini.v1_21_3
 
+import com.undefined.cassini.Menu
 import com.undefined.cassini.handlers.MenuHandler
 import com.undefined.cassini.impl.ChestMenu
 import net.minecraft.core.NonNullList
@@ -8,34 +9,31 @@ import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
 import net.minecraft.world.item.ItemStack
 import org.bukkit.entity.Player
 
-
 object MenuHandler : MenuHandler() {
 
-    override fun openInventory(player: Player, menu: ChestMenu) {
+    val menus: HashMap<Int, Menu> = hashMapOf()
+
+    override fun openMenu(player: Player, menu: Menu) {
         val type = MenuAdapter.getMenuType(menu.size)
-        val syncId = -1
+        val containerId = player.serverPlayer().nextContainerCounter()
         val title = ComponentAdapter.getComponent(menu.title)
-        val packet = ClientboundOpenScreenPacket(syncId, type, title)
+        val packet = ClientboundOpenScreenPacket(containerId, type, title)
         player.connection().sendPacket(packet)
-        println("contents: ${menu.items.map { it.value.itemStack.type }}")
+        menus[containerId] = menu
+        player.serverPlayer().containerMenu = type.create(containerId, player.serverPlayer().inventory)
         setContents(player, menu)
     }
 
-    fun setContents(player: Player, menu: ChestMenu) {
+    fun setContents(player: Player, menu: Menu) {
         val items = NonNullList.create<ItemStack>()
-        println("size: ${menu.size}")
-        for (slot in 0..menu.size) {
-            println("slot: $slot")
-            println("item: ${items.getOrNull(slot)}")
-            menu.items.getOrDefault(slot, null)?.let { items.add(ItemAdapter.getMojangItemStack(it)) } ?: items.add(ItemAdapter.empty)
-        }
-        println("items: ${items.map { it.item.name.toString() }}")
-        println("gui items: ${menu.items.map { "${it.key}: ${it.value.itemStack.type.name}" }}")
+        for (slot in 0..menu.size)
+            menu.items.getOrDefault(slot, null)?.let { items.add(ItemAdapter.getMojangItemStack(it)) }
+                ?: items.add(ItemAdapter.empty)
         val serverPlayer = player.serverPlayer()
 
-        val syncId = -1
+        val containerId = menus.filterValues { it == menu }.keys.first()
         val packet = ClientboundContainerSetContentPacket(
-            syncId,
+            containerId,
             serverPlayer.containerMenu.stateId,
             items,
             ItemAdapter.empty
@@ -43,5 +41,7 @@ object MenuHandler : MenuHandler() {
 
         player.connection().sendPacket(packet)
     }
+
+    override fun registerListeners() { PacketListener }
 
 }

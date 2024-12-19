@@ -1,6 +1,7 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.data.CassiniContext
+import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickActions
 import com.undefined.cassini.data.chest.ChestSize
 import com.undefined.cassini.data.item.GUIItem
@@ -13,18 +14,14 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
-class Inventory : ChestMenu(Component.text("hi!"), ChestSize.GENERIC_9X1) {
+class Inventory : ChestMenu(Component.text("hi!"), ChestSize.GENERIC_9X1, MenuOptimization.FASTEST) {
     override fun initialize() = createInventory {
         setItem(1, ItemStack(Material.PAPER))
         addItem(ItemStack(Material.PAPER))
-        setItem(9, ItemStack(Material.GOLDEN_HORSE_ARMOR))
-        val item = GUIItem(ItemStack(Material.DIAMOND_SWORD))
-        item.addAction(ClickActions.CANCEL)
-        item.addAction {
-            println(type.name)
-            println(isCancelled)
-        }
-        setItem(8, item)
+        setItem(7, ItemStack(Material.DIAMOND_AXE))
+        val item = GUIItem(ItemStack(Material.BARRIER))
+        item.addAction(ClickActions.CLOSE)
+        setItem(4, item)
     }
 
     override fun onClick(context: CassiniContext) {

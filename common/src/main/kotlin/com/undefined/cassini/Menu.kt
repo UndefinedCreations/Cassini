@@ -1,6 +1,7 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.data.CassiniContext
+import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.item.GUIItem
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
@@ -9,7 +10,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.ApiStatus
 
-abstract class Menu(var title: Component, val size: Int, val parent: Menu?) {
+abstract class Menu(var title: Component, val size: Int, val optimization: MenuOptimization, val parent: Menu?) {
 
     private var hasBeenInitialized = false
     val items: HashMap<Int, GUIItem> = hashMapOf()

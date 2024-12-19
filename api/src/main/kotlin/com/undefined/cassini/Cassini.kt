@@ -20,7 +20,9 @@ object Cassini {
 
     fun initialize(plugin: JavaPlugin) {
         if (::plugin.isInitialized) return
-        Bukkit.getPluginManager().registerEvents(listeners[NMSVersion.version] ?: throw UnsupportedVersionException(), plugin)
         this.plugin = plugin
+        val listener = listeners[NMSVersion.version] ?: throw UnsupportedVersionException()
+        listener.plugin = plugin
+        Bukkit.getPluginManager().registerEvents(listener, plugin)
     }
 }

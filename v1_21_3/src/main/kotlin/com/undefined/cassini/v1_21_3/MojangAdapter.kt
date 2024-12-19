@@ -27,7 +27,7 @@ object MojangAdapter {
     fun getComponent(component: net.kyori.adventure.text.Component): Component =
         Component.Serializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)!!
 
-    fun getMenuType(size: Int): MenuType<ChestMenu> = when(size) {
+    fun getMenuType(size: Int): MenuType<ChestMenu> = when (size) {
         9 -> MenuType.GENERIC_9x1
         18 -> MenuType.GENERIC_9x2
         27 -> MenuType.GENERIC_9x3

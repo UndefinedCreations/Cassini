@@ -1,6 +1,5 @@
 package com.undefined.cassini.v1_21_3
 
-import com.undefined.cassini.data.CassiniContext
 import com.undefined.cassini.handlers.PacketListener
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
@@ -9,10 +8,12 @@ import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
 object PacketListener : PacketListener {
 
+    override lateinit var plugin: JavaPlugin
     val players: HashMap<UUID, UUID> = hashMapOf()
 
     @EventHandler
@@ -38,7 +39,7 @@ object PacketListener : PacketListener {
                         menu.items[packet.slotNum]?.let { item ->
                             val context = CassiniContextImpl(player, menu, clickType, item)
                             menu.onClick(context)
-                            for (action in item.actions) context.action()
+                            for (action in item.actions) sync { context.action() }
                             if (context.isCancelled) return
                         }
                     }

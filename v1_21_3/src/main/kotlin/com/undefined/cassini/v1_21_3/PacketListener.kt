@@ -1,11 +1,9 @@
 package com.undefined.cassini.v1_21_3
 
-import com.undefined.cassini.data.click.ClickData
+import com.undefined.cassini.data.CassiniContext
 import com.undefined.cassini.handlers.PacketListener
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
-import io.netty.channel.ChannelPromise
-import net.minecraft.network.protocol.game.ClientboundContainerClosePacket
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
 import org.bukkit.event.EventHandler
@@ -30,32 +28,22 @@ object PacketListener : PacketListener {
             "packet_handler",
             id.toString(),
             object : ChannelDuplexHandler() {
-                override fun channelRead(context: ChannelHandlerContext, packet: Any) {
+                override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket)
                         MenuHandler.menus.getOrDefault(packet.containerId, null)?.onClose(player)
 
                     if (packet is ServerboundContainerClickPacket) {
-                        val menu = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(context, packet)
-                        val data = ClickData(
-                            player,
-                            MenuAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
-                        )
-                        menu.onClick(data)
+                        val menu = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(channelHandlerContext, packet)
+                        val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
                         menu.items[packet.slotNum]?.let { item ->
-                            for (action in item.customActions) action(data)
-                            if (ActionAdapter.handleClickActions(player, item, menu)) return
+                            val context = CassiniContextImpl(player, menu, clickType, item)
+                            menu.onClick(context)
+                            for (action in item.actions) context.action()
+                            if (context.isCancelled) return
                         }
                     }
 
-                    super.channelRead(context, packet)
-                }
-
-                override fun write(context: ChannelHandlerContext, packet: Any, promise: ChannelPromise) {
-                    if (packet is ClientboundContainerClosePacket) {
-                        println("clientbound container close packet")
-                        return
-                    }
-                    super.write(context, packet, promise)
+                    super.channelRead(channelHandlerContext, packet)
                 }
             }
         )

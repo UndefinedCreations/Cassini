@@ -1,6 +1,6 @@
 package com.undefined.cassini
 
-import com.undefined.cassini.data.click.ClickData
+import com.undefined.cassini.data.CassiniContext
 import com.undefined.cassini.data.item.GUIItem
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
@@ -51,7 +51,7 @@ abstract class Menu(var title: Component, val size: Int, val parent: Menu?) {
     }
 
     @ApiStatus.OverrideOnly
-    open fun onClick(data: ClickData) {}
+    open fun onClick(context: CassiniContext) {}
 
     @ApiStatus.OverrideOnly
     open fun onOpen(player: Player) {}

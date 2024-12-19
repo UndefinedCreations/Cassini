@@ -1,8 +1,8 @@
 package com.undefined.cassini
 
-import com.undefined.cassini.data.click.ClickActionType
-import com.undefined.cassini.data.click.ClickData
-import com.undefined.cassini.data.inventory.ChestSize
+import com.undefined.cassini.data.CassiniContext
+import com.undefined.cassini.data.click.ClickActions
+import com.undefined.cassini.data.chest.ChestSize
 import com.undefined.cassini.data.item.GUIItem
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
@@ -19,16 +19,16 @@ class Inventory : ChestMenu(Component.text("hi!"), ChestSize.GENERIC_9X1) {
         addItem(ItemStack(Material.PAPER))
         setItem(9, ItemStack(Material.GOLDEN_HORSE_ARMOR))
         val item = GUIItem(ItemStack(Material.DIAMOND_SWORD))
-        item.addAction { data ->
-            println(data.type.name)
-            println("Custom Action!")
+        item.addAction(ClickActions.CANCEL)
+        item.addAction {
+            println(type.name)
+            println(isCancelled)
         }
-        item.addAction(ClickActionType.CANCEL)
         setItem(8, item)
     }
 
-    override fun onClick(data: ClickData) {
-        println("onClick: ${data.player.name}, ${data.type}")
+    override fun onClick(context: CassiniContext) {
+        println("onClick: ${context.player.name}, ${context.type}")
     }
 
     override fun onOpen(player: Player) {

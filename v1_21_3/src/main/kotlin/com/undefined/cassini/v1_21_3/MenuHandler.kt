@@ -2,7 +2,6 @@ package com.undefined.cassini.v1_21_3
 
 import com.undefined.cassini.Menu
 import com.undefined.cassini.handlers.MenuHandler
-import com.undefined.cassini.impl.ChestMenu
 import net.minecraft.core.NonNullList
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
@@ -14,9 +13,9 @@ object MenuHandler : MenuHandler() {
     val menus: HashMap<Int, Menu> = hashMapOf()
 
     override fun openMenu(player: Player, menu: Menu) {
-        val type = MenuAdapter.getMenuType(menu.size)
+        val type = MojangAdapter.getMenuType(menu.size)
         val containerId = player.serverPlayer().nextContainerCounter()
-        val title = ComponentAdapter.getComponent(menu.title)
+        val title = MojangAdapter.getComponent(menu.title)
         val packet = ClientboundOpenScreenPacket(containerId, type, title)
         player.connection().sendPacket(packet)
         menus[containerId] = menu
@@ -27,8 +26,8 @@ object MenuHandler : MenuHandler() {
     fun setContents(player: Player, menu: Menu) {
         val items = NonNullList.create<ItemStack>()
         for (slot in 0..menu.size)
-            menu.items.getOrDefault(slot, null)?.let { items.add(ItemAdapter.getMojangItemStack(it)) }
-                ?: items.add(ItemAdapter.empty)
+            menu.items.getOrDefault(slot, null)?.let { items.add(MojangAdapter.getMojangItemStack(it)) }
+                ?: items.add(MojangAdapter.emptyItem)
         val serverPlayer = player.serverPlayer()
 
         val containerId = menus.filterValues { it == menu }.keys.first()
@@ -36,7 +35,7 @@ object MenuHandler : MenuHandler() {
             containerId,
             serverPlayer.containerMenu.stateId,
             items,
-            ItemAdapter.empty
+            MojangAdapter.emptyItem
         )
 
         player.connection().sendPacket(packet)

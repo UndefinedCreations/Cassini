@@ -1,4 +1,4 @@
-package com.undefined.cassini.data.inventory
+package com.undefined.cassini.data.chest
 
 class ChestSize {
     companion object {

@@ -1,24 +1,19 @@
 package com.undefined.cassini.data.item
 
-import com.undefined.cassini.data.click.ClickActionType
-import com.undefined.cassini.data.click.ClickData
+import com.undefined.cassini.data.CassiniContext
+import com.undefined.cassini.data.click.ClickActions
 import org.bukkit.inventory.ItemStack
 
 class GUIItem(val itemStack: ItemStack) {
 
-    val actions: MutableSet<ClickActionType> = mutableSetOf()
-    val customActions: MutableList<(ClickData) -> Unit> = mutableListOf()
+    val actions: MutableSet<CassiniContext.() -> Unit> = mutableSetOf()
 
-    fun addAction(action: ClickActionType) {
+    fun addAction(action: CassiniContext.() -> Unit) {
         actions.add(action)
     }
 
-    fun addAction(action: (ClickData) -> Unit) {
-        customActions.add(action)
-    }
-
     fun clearActions() {
-        customActions.clear()
+        actions.clear()
     }
 
 }

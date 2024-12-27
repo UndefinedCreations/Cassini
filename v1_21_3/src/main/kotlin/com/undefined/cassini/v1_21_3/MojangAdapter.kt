@@ -37,7 +37,8 @@ object MojangAdapter {
         else -> throw InvalidChestSizeException()
     }
 
-    fun getClickType(type: ClickType, button: Int, changedSlots: Int): org.bukkit.event.inventory.ClickType = when {
+    fun getClickType(type: ClickType, button: Int, changedSlots: Int): org.bukkit.event.inventory.ClickType =
+        when {
             type == ClickType.PICKUP && button == 0 -> org.bukkit.event.inventory.ClickType.LEFT
             type == ClickType.QUICK_MOVE && button == 0 -> org.bukkit.event.inventory.ClickType.SHIFT_LEFT
             type == ClickType.PICKUP && button == 1 -> org.bukkit.event.inventory.ClickType.RIGHT

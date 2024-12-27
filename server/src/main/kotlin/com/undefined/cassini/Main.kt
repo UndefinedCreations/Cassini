@@ -3,7 +3,7 @@ package com.undefined.cassini
 import com.undefined.cassini.data.CassiniContext
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickActions
-import com.undefined.cassini.data.chest.ChestSize
+import com.undefined.cassini.data.MenuSize
 import com.undefined.cassini.data.item.GUIItem
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
-class Inventory : ChestMenu(Component.text("hi!"), ChestSize.GENERIC_9X1, MenuOptimization.FASTEST) {
+class Inventory : ChestMenu(Component.text("hi!"), MenuSize.CHEST_9X2, MenuOptimization.FASTEST) {
     override fun initialize() = createInventory {
         setItem(1, ItemStack(Material.PAPER))
         addItem(ItemStack(Material.PAPER))

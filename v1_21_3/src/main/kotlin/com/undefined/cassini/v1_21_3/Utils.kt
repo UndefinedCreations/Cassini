@@ -12,8 +12,6 @@ fun Player.connection(): ServerGamePacketListenerImpl = serverPlayer().connectio
 
 fun sync(runnable: () -> Unit) {
     object : BukkitRunnable() {
-        override fun run() {
-            runnable()
-        }
+        override fun run() = runnable()
     }.runTask(PacketListener.plugin)
 }

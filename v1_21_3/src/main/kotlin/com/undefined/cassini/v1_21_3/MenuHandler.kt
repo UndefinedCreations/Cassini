@@ -17,7 +17,7 @@ object MenuHandler : MenuHandler() {
 
     val menus: HashMap<Int, Menu> = hashMapOf()
 
-    override fun openMenu(player: Player, menu: Menu) {
+    override fun openMenu(player: Player, menu: Menu, modifySlots: Boolean) {
         val serverPlayer = player.serverPlayer()
         val type = MojangAdapter.getMenuType(menu.size)
         val containerId = player.serverPlayer().nextContainerCounter()

@@ -4,7 +4,7 @@ import com.undefined.cassini.data.CassiniContext
 import com.undefined.cassini.data.click.ClickActions
 import org.bukkit.inventory.ItemStack
 
-class GUIItem(val itemStack: ItemStack) {
+open class GUIItem(val itemStack: ItemStack) {
 
     val actions: MutableSet<CassiniContext.() -> Unit> = mutableSetOf()
 

@@ -14,7 +14,7 @@ import java.util.UUID
 object PacketListener : PacketListener {
 
     override lateinit var plugin: JavaPlugin
-    val players: HashMap<UUID, UUID> = hashMapOf()
+    private val players: HashMap<UUID, UUID> = hashMapOf()
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {

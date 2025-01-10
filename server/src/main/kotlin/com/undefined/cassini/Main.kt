@@ -9,12 +9,13 @@ import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
 import com.undefined.stellar.StellarCommand
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
-class Inventory : ChestMenu(Component.text("hi!"), MenuSize.CHEST_9X2, MenuOptimization.FASTEST) {
+class Inventory : ChestMenu(Component.text("hi!", NamedTextColor.GREEN), MenuSize.CHEST_9X2, MenuOptimization.FASTEST) {
     override fun initialize() = createInventory {
         setItem(1, ItemStack(Material.PAPER))
         addItem(ItemStack(Material.PAPER))

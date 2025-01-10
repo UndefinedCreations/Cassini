@@ -15,3 +15,5 @@ fun sync(runnable: () -> Unit) {
         override fun run() = runnable()
     }.runTask(PacketListener.plugin)
 }
+
+typealias Id = Int

@@ -1,10 +1,12 @@
 package com.undefined.cassini.v1_21_3
 
+import com.undefined.cassini.data.event.MenuCloseEvent
 import com.undefined.cassini.handlers.PacketListener
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
@@ -30,14 +32,26 @@ object PacketListener : PacketListener {
             id.toString(),
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
-                    if (packet is ServerboundContainerClosePacket)
-                        MenuHandler.menus.getOrDefault(packet.containerId, null)?.onClose(player)
+                    if (packet is ServerboundContainerClosePacket) {
+                        println("container id: ${packet.containerId}")
+                        MenuHandler.menus.getOrDefault(packet.containerId, null)?.let { config ->
+                            println("running on close...")
+                            MenuHandler.onClose(player, config.menu)
+//                            println("config: $config")
+//                            MenuHandler.menus.remove(packet.containerId)
+//                            println(packet.containerId in MenuHandler.menus)
+//                            Bukkit.getPluginManager().callEvent(MenuCloseEvent(player, config.menu))
+//                            println("called event")
+                            return
+                        }
+                    }
 
                     if (packet is ServerboundContainerClickPacket) {
-                        val menu = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(channelHandlerContext, packet)
+                        val config = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(channelHandlerContext, packet)
+                        val menu = config.menu
                         val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
                         menu.items[packet.slotNum]?.let { item ->
-                            val context = CassiniContextImpl(player, menu, clickType, item)
+                            val context = CassiniContextImpl(player, config, clickType, item)
                             menu.onClick(context)
                             for (action in item.actions) sync { context.action() }
                             if (context.isCancelled) return

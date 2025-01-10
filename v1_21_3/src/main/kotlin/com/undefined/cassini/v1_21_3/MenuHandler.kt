@@ -2,35 +2,47 @@ package com.undefined.cassini.v1_21_3
 
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
+import com.undefined.cassini.data.event.MenuCloseEvent
 import com.undefined.cassini.handlers.MenuHandler
 import net.minecraft.core.NonNullList
+import net.minecraft.network.protocol.game.ClientboundContainerClosePacket
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
 import net.minecraft.world.inventory.ChestMenu
-import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
+import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.inventory.CraftInventoryCustom
-import org.bukkit.craftbukkit.inventory.util.CraftCustomInventoryConverter
 import org.bukkit.entity.Player
 
 object MenuHandler : MenuHandler() {
 
-    val menus: HashMap<Int, Menu> = hashMapOf()
+    val menus: HashMap<Id, MenuConfig> = hashMapOf()
 
     override fun openMenu(player: Player, menu: Menu, modifySlots: Boolean) {
         val serverPlayer = player.serverPlayer()
-        val type = MojangAdapter.getMenuType(menu.size)
-        val containerId = player.serverPlayer().nextContainerCounter()
-        val title = MojangAdapter.getComponent(menu.title)
-        val packet = ClientboundOpenScreenPacket(containerId, type, title)
+        val connection = player.connection()
 
-        player.connection().sendPacket(packet)
-        menus[containerId] = menu
+        val type = MojangAdapter.getMenuType(menu.size)
+        val id = player.serverPlayer().nextContainerCounter()
+        val title = MojangAdapter.getComponent(menu.title)
+
+        val previousMenu = menus.values.firstOrNull { it.player == player }
+        previousMenu?.let {
+            if (modifySlots) {
+                return setContents(player, menu)
+            } else {
+                connection.sendPacket(ClientboundContainerClosePacket(id))
+                onClose(player, menu)
+            }
+        }
+
+        connection.sendPacket(ClientboundOpenScreenPacket(id, type, title))
+        menus[id] = MenuConfig(player, menu, id, modifySlots)
         when (menu.optimization) {
             MenuOptimization.NORMAL -> {
                 val container = ChestMenu(
                     type,
-                    containerId,
+                    id,
                     serverPlayer.inventory,
                     CraftInventoryCustom(player, menu.size, menu.title).inventory,
                     menu.size / 8
@@ -44,7 +56,7 @@ object MenuHandler : MenuHandler() {
             MenuOptimization.FAST -> {
                 val container = ChestMenu(
                     type,
-                    containerId,
+                    id,
                     serverPlayer.inventory,
                     CraftInventoryCustom(player, menu.size, menu.title).inventory,
                     menu.size / 8
@@ -59,14 +71,14 @@ object MenuHandler : MenuHandler() {
         }
     }
 
-    fun setContents(player: Player, menu: Menu) {
+    override fun setContents(player: Player, menu: Menu) {
         val items = NonNullList.create<ItemStack>()
         for (slot in 0..menu.size)
             menu.items.getOrDefault(slot, null)?.let { items.add(MojangAdapter.getMojangItemStack(it)) }
                 ?: items.add(MojangAdapter.emptyItem)
         val serverPlayer = player.serverPlayer()
 
-        val containerId = menus.filterValues { it == menu }.keys.first()
+        val containerId = menus.filterValues { it.menu == menu }.keys.firstOrNull() ?: serverPlayer.nextContainerCounter()
         val packet = ClientboundContainerSetContentPacket(
             containerId,
             serverPlayer.containerMenu.stateId,
@@ -78,5 +90,21 @@ object MenuHandler : MenuHandler() {
     }
 
     override fun registerListeners() { PacketListener }
+
+    fun onClose(player: Player, menu: Menu) {
+        println("on close...")
+        val previousMenu = menus.values.firstOrNull { it.player == player }
+        println("previous menu: $previousMenu")
+        if (previousMenu != null) {
+            println("removing from menus")
+            menus.remove(previousMenu.id)
+            println("removed menu: ${previousMenu.id !in menus}")
+        }
+        println("calling event...")
+        sync {
+            Bukkit.getPluginManager().callEvent(MenuCloseEvent(player, menu))
+        }
+        println("called event")
+    }
 
 }

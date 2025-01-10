@@ -2,9 +2,7 @@ package com.undefined.cassini.impl
 
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
-import com.undefined.cassini.data.item.GUIItem
 import com.undefined.cassini.data.item.PageItem
-import com.undefined.cassini.util.openMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 
@@ -19,13 +17,12 @@ abstract class PaginatedMenu<T>(
     abstract val backButton: PageItem
     abstract val nextButton: PageItem
 
-    open fun onPageItemClick(slot: Int, item: GUIItem) {}
     val currentPage: Int = 1
     val totalPages: Int = 1
 
     fun nextPage(player: Player) {
         currentPage
-        player.openMenu()
+//        player.openMenu()
     }
 
     fun backPage(player: Player) {

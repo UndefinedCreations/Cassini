@@ -11,14 +11,20 @@ import org.jetbrains.annotations.ApiStatus
 abstract class Menu(var title: Component, val size: Int, val optimization: MenuOptimization, val parent: Menu?) {
 
     private var hasBeenInitialized = false
-    val items: HashMap<Int, GUIItem> = hashMapOf()
+    open val items: HashMap<Int, GUIItem> = hashMapOf()
     fun firstEmptySlot(): Int {
         if (size == items.size) return -1
         return items.size + 1
     }
 
     @ApiStatus.OverrideOnly
-    abstract fun initialize()
+    open fun preinitialize(player: Player) {}
+
+    @ApiStatus.OverrideOnly
+    abstract fun initialize(player: Player)
+
+    @ApiStatus.OverrideOnly
+    open fun afterinitialize(player: Player) {}
 
     fun setItem(slot: Int, item: ItemStack) {
         items[slot] = GUIItem(item)
@@ -54,9 +60,7 @@ abstract class Menu(var title: Component, val size: Int, val optimization: MenuO
 
     fun isSlotEmpty(slot: Int) = !items.containsKey(slot)
 
-    fun clear() {
-        items.clear()
-    }
+    fun clear() = items.clear()
 
     @ApiStatus.OverrideOnly
     open fun onClick(context: CassiniContext) {}

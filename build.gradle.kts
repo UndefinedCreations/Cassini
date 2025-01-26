@@ -80,7 +80,6 @@ tasks {
     assemble {
         dependsOn("shadowJar")
     }
-
     jar.configure {
         dependsOn("shadowJar")
         archiveClassifier.set("dev")

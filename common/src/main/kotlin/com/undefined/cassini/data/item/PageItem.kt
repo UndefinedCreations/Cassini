@@ -1,3 +1,5 @@
 package com.undefined.cassini.data.item
 
-data class PageItem(val slot: Int, val activeItem: GUIItem, val inactiveItem: GUIItem)
+import org.bukkit.inventory.ItemStack
+
+data class PageItem(val slot: Int, val item: ItemStack)

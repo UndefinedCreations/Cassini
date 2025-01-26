@@ -5,7 +5,7 @@ plugins {
 }
 
 repositories {
-    maven("https://repo.undefinedcreation.com/releases")
+    maven("https://repo.undefinedcreations.com/releases")
 }
 
 dependencies {
@@ -13,7 +13,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":v1_21_3:", "reobf"))
     implementation(project(":api"))
-    implementation("com.undefined:stellar:0.0.8")
+    implementation("com.undefined:stellar:0.0.70")
 }
 
 tasks {

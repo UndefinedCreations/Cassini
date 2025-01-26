@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
 import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.SoundType
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.inventory.CraftInventoryCustom
 import org.bukkit.entity.Player
@@ -28,12 +29,11 @@ object MenuHandler : MenuHandler() {
 
         val previousMenu = menus.values.firstOrNull { it.player == player }
         previousMenu?.let {
-            if (modifySlots) {
+            if (modifySlots)
                 return setContents(player, menu)
-            } else {
-                connection.sendPacket(ClientboundContainerClosePacket(id))
-                onClose(player, menu)
-            }
+
+            connection.sendPacket(ClientboundContainerClosePacket(id))
+            onClose(player, menu)
         }
 
         connection.sendPacket(ClientboundOpenScreenPacket(id, type, title))
@@ -92,19 +92,11 @@ object MenuHandler : MenuHandler() {
     override fun registerListeners() { PacketListener }
 
     fun onClose(player: Player, menu: Menu) {
-        println("on close...")
         val previousMenu = menus.values.firstOrNull { it.player == player }
-        println("previous menu: $previousMenu")
-        if (previousMenu != null) {
-            println("removing from menus")
-            menus.remove(previousMenu.id)
-            println("removed menu: ${previousMenu.id !in menus}")
-        }
-        println("calling event...")
+        previousMenu?.let { menus.remove(previousMenu.id) }
         sync {
             Bukkit.getPluginManager().callEvent(MenuCloseEvent(player, menu))
         }
-        println("called event")
     }
 
 }

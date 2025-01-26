@@ -33,16 +33,8 @@ object PacketListener : PacketListener {
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket) {
-                        println("container id: ${packet.containerId}")
                         MenuHandler.menus.getOrDefault(packet.containerId, null)?.let { config ->
-                            println("running on close...")
-                            MenuHandler.onClose(player, config.menu)
-//                            println("config: $config")
-//                            MenuHandler.menus.remove(packet.containerId)
-//                            println(packet.containerId in MenuHandler.menus)
-//                            Bukkit.getPluginManager().callEvent(MenuCloseEvent(player, config.menu))
-//                            println("called event")
-                            return
+                            return MenuHandler.onClose(player, config.menu)
                         }
                     }
 

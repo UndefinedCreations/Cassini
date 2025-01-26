@@ -3,6 +3,7 @@ package com.undefined.cassini.impl
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.item.GUIItem
+import com.undefined.cassini.data.pattern.MenuPattern
 import com.undefined.cassini.exception.InvalidSlotException
 import net.kyori.adventure.text.Component
 import org.bukkit.inventory.ItemStack
@@ -21,7 +22,9 @@ abstract class ChestMenu(
         parent: Menu? = null
     ) : this(Component.text(title), size, optimization, parent)
 
-    fun createInventory(init: ChestMenu.() -> Unit) { init(this) }
+    fun createInventory(init: ChestMenu.() -> Unit) { this.init() }
+
+    fun applyPattern(pattern: MenuPattern<ChestMenu>) = pattern(this)
 
     fun setRow(item: GUIItem, row: Int) =
         ((ROW_SIZE * (row - 1)) until (ROW_SIZE * (row - 1) + ROW_SIZE)).run {

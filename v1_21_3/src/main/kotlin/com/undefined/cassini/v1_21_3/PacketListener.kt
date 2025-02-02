@@ -1,17 +1,15 @@
 package com.undefined.cassini.v1_21_3
 
-import com.undefined.cassini.data.event.MenuCloseEvent
 import com.undefined.cassini.handlers.PacketListener
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
-import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.UUID
+import java.util.*
 
 object PacketListener : PacketListener {
 
@@ -33,12 +31,15 @@ object PacketListener : PacketListener {
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket) {
+                        println("closing...")
                         MenuHandler.menus.getOrDefault(packet.containerId, null)?.let { config ->
+                            println("close")
                             return MenuHandler.onClose(player, config.menu)
                         }
                     }
 
                     if (packet is ServerboundContainerClickPacket) {
+                        println("click packet")
                         val config = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(channelHandlerContext, packet)
                         val menu = config.menu
                         val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())

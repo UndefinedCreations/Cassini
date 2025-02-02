@@ -1,16 +1,18 @@
 package com.undefined.cassini.v1_21_3
 
+import com.undefined.cassini.Menu
 import com.undefined.cassini.data.item.GUIItem
 import com.undefined.cassini.exception.InvalidChestSizeException
+import com.undefined.cassini.exception.InvalidMenuTypeException
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.minecraft.commands.CommandBuildContext
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.inventory.ChestMenu
-import net.minecraft.world.inventory.ClickType
-import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.inventory.*
 import net.minecraft.world.item.ItemStack
+import org.bukkit.craftbukkit.inventory.CraftInventoryCustom
 import org.bukkit.craftbukkit.inventory.CraftItemStack
+import org.bukkit.entity.Player
 
 object MojangAdapter {
 
@@ -27,14 +29,18 @@ object MojangAdapter {
     fun getComponent(component: net.kyori.adventure.text.Component): Component =
         Component.Serializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)!!
 
-    fun getMenuType(size: Int): MenuType<ChestMenu> = when (size) {
-        9 -> MenuType.GENERIC_9x1
-        18 -> MenuType.GENERIC_9x2
-        27 -> MenuType.GENERIC_9x3
-        36 -> MenuType.GENERIC_9x4
-        46 -> MenuType.GENERIC_9x5
-        54 -> MenuType.GENERIC_9x6
-        else -> throw InvalidChestSizeException()
+    fun getMenuType(menu: Menu): MenuType<*> = when (menu) {
+        is com.undefined.cassini.impl.ChestMenu -> when (menu.size) {
+            9 -> MenuType.GENERIC_9x1
+            18 -> MenuType.GENERIC_9x2
+            27 -> MenuType.GENERIC_9x3
+            36 -> MenuType.GENERIC_9x4
+            46 -> MenuType.GENERIC_9x5
+            54 -> MenuType.GENERIC_9x6
+            else -> throw InvalidChestSizeException()
+        }
+        is com.undefined.cassini.impl.AnvilMenu -> MenuType.ANVIL
+        else -> throw InvalidMenuTypeException()
     }
 
     fun getClickType(type: ClickType, button: Int, changedSlots: Int): org.bukkit.event.inventory.ClickType =
@@ -53,5 +59,11 @@ object MojangAdapter {
             type == ClickType.SWAP -> org.bukkit.event.inventory.ClickType.SWAP_OFFHAND
             else -> org.bukkit.event.inventory.ClickType.UNKNOWN
         }
+
+    fun getContainer(menu: Menu, type: MenuType<*>, id: Int, player: Player): AbstractContainerMenu = when (menu) {
+        is com.undefined.cassini.impl.ChestMenu -> ChestMenu(type, id, player.serverPlayer().inventory, CraftInventoryCustom(player, menu.size, menu.title).inventory, menu.size / 8)
+        is com.undefined.cassini.impl.AnvilMenu -> AnvilMenu(id, player.serverPlayer().inventory)
+        else -> throw InvalidMenuTypeException()
+    }
 
 }

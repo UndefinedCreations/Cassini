@@ -3,9 +3,9 @@ package com.undefined.cassini
 import com.undefined.cassini.data.event.MenuCloseEvent
 import com.undefined.cassini.exception.UnsupportedVersionException
 import com.undefined.cassini.handlers.MenuHandler
+import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.NMSVersion
-import com.undefined.cassini.util.openMenu
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -25,16 +25,16 @@ object MenuManager : Listener {
         onClose(event)
     }
 
-    fun update(player: Player, menu: ChestMenu, modifySlots: Boolean = true) {
+    fun update(player: Player, menu: Menu, modifySlots: Boolean = true) {
         if (menu !in hasBeenInitialized) hasBeenInitialized.add(menu)
         menu.items.clear()
         menu.preinitialize(player)
         menu.initialize(player)
         menu.afterinitialize(player)
-        openChestMenu(player, menu, modifySlots)
+        openMenu(player, menu, modifySlots)
     }
 
-    fun openChestMenu(player: Player, menu: ChestMenu, modifySlots: Boolean = Cassini.MODIFY_SLOTS) {
+    fun openMenu(player: Player, menu: Menu, modifySlots: Boolean = Cassini.MODIFY_SLOTS) {
         if (menu !in hasBeenInitialized) {
             hasBeenInitialized.add(menu)
             menu.preinitialize(player)

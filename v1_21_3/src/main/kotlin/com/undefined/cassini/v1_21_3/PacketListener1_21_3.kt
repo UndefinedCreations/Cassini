@@ -1,19 +1,19 @@
 package com.undefined.cassini.v1_21_3
 
-import com.undefined.cassini.handlers.PacketListener
+import com.undefined.cassini.nms.PacketListener
+import com.undefined.cassini.nms.PacketManager
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
-object PacketListener : PacketListener {
+class PacketListener1_21_3 private constructor(manager: PacketManager) : PacketListener(manager) {
 
-    override lateinit var plugin: JavaPlugin
     private val players: HashMap<UUID, UUID> = hashMapOf()
 
     @EventHandler
@@ -32,23 +32,13 @@ object PacketListener : PacketListener {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket) {
                         println("closing...")
-                        MenuHandler.menus.getOrDefault(packet.containerId, null)?.let { config ->
-                            println("close")
-                            return MenuHandler.onClose(player, config.menu)
-                        }
+                        manager.onClose(player, packet.containerId)
                     }
 
                     if (packet is ServerboundContainerClickPacket) {
                         println("click packet")
-                        val config = MenuHandler.menus.getOrDefault(packet.containerId, null) ?: return super.channelRead(channelHandlerContext, packet)
-                        val menu = config.menu
                         val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
-                        menu.items[packet.slotNum]?.let { item ->
-                            val context = CassiniContextImpl(player, config, clickType, item)
-                            menu.onClick(context)
-                            for (action in item.actions) sync { context.action() }
-                            if (context.isCancelled) return
-                        }
+                        manager.onClick(player, packet.containerId, clickType)
                     }
 
                     super.channelRead(channelHandlerContext, packet)
@@ -67,6 +57,15 @@ object PacketListener : PacketListener {
             channel.pipeline().remove(id.toString())
         }
         players.remove(id)
+    }
+
+    companion object {
+        var instance: PacketListener1_21_3? = null
+        fun getInstance(manager: PacketManager): PacketListener1_21_3 {
+            if (instance != null) return instance!!
+            instance = PacketListener1_21_3(manager)
+            return instance!!
+        }
     }
 
 }

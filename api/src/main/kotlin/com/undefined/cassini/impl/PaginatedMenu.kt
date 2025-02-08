@@ -2,7 +2,7 @@ package com.undefined.cassini.impl
 
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
-import com.undefined.cassini.data.item.GUIItem
+import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.item.PageItem
 import com.undefined.cassini.util.openMenu
 import com.undefined.cassini.util.update
@@ -12,15 +12,15 @@ import org.bukkit.entity.Player
 abstract class PaginatedMenu(
     title: Component,
     size: Int,
-    val list: (Player) -> List<GUIItem>,
+    val list: (Player) -> List<MenuItem<ChestMenu>>,
     optimization: MenuOptimization = MenuOptimization.NORMAL,
-    parent: Menu? = null
+    parent: Menu<*>? = null
 ) : ChestMenu(title, size, optimization, parent) {
 
     abstract val backButton: PageItem
     abstract val nextButton: PageItem
 
-    var pageItems: List<GUIItem> = listOf()
+    var pageItems: List<MenuItem<ChestMenu>> = listOf()
         private set
     var currentPage: Int = 1
         private set
@@ -47,19 +47,19 @@ abstract class PaginatedMenu(
     override fun afterinitialize(player: Player) {
         updateList(player)
 
-        val items: HashMap<Int, GUIItem> = items
+        val items: HashMap<Int, MenuItem<ChestMenu>> = items
         val emptySlots: MutableList<Int> = mutableListOf()
         for (slot in 0..size)
             if (slot !in items.keys) emptySlots.add(slot)
         if (!isOnFirstPage()) emptySlots.add(nextButton.slot)
         if (!isOnLastPage()) emptySlots.add(backButton.slot)
         totalPages = pageItems.size / emptySlots.size
-        if (!isOnFirstPage()) items[backButton.slot] = GUIItem(backButton.item, { backPage(player) })
-        if (!isOnLastPage()) items[nextButton.slot] = GUIItem(nextButton.item, { nextPage(player) })
+        if (!isOnFirstPage()) items[backButton.slot] = MenuItem(backButton.item, { backPage(player) })
+        if (!isOnLastPage()) items[nextButton.slot] = MenuItem(nextButton.item, { nextPage(player) })
 
         val firstIndex = (currentPage - 1) * emptySlots.lastIndex
         val lastIndex = (currentPage) * emptySlots.lastIndex
-        val currentPageItems: MutableList<GUIItem> = if (firstIndex <= pageItems.size) pageItems.subList(
+        val currentPageItems: MutableList<MenuItem<ChestMenu>> = if (firstIndex <= pageItems.size) pageItems.subList(
             firstIndex,
             if (lastIndex <= pageItems.size) lastIndex else pageItems.lastIndex
         ).toMutableList() else mutableListOf()
@@ -72,7 +72,7 @@ abstract class PaginatedMenu(
 
     fun update(player: Player) {
         updateList(player)
-        player.update(this, true)
+        player.update(this)
         player.openMenu(this, true)
     }
 

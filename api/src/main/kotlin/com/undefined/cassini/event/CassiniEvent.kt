@@ -1,4 +1,4 @@
-package com.undefined.cassini.data.event
+package com.undefined.cassini.event
 
 import org.bukkit.event.Cancellable
 import org.bukkit.event.Event

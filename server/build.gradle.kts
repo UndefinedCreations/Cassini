@@ -6,7 +6,6 @@ plugins {
 
 repositories {
     maven("https://repo.undefinedcreations.com/releases")
-    maven("https://repo.codemc.io/repository/maven-snapshots")
 }
 
 dependencies {
@@ -15,7 +14,6 @@ dependencies {
     implementation(project(":v1_21_3:", "reobf"))
     implementation(project(":api"))
     implementation("com.undefined:stellar:0.0.70")
-    implementation("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
 }
 
 tasks {

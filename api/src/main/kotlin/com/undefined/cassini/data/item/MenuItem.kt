@@ -22,7 +22,7 @@ class MenuItem<T : Menu<T>>(val itemStack: ItemStack, vararg actions: ClickData<
 
     companion object {
         fun <T : Menu<T>> fromItem(item: ItemStack): MenuItem<T> = MenuItem(item)
-        fun fromMaterial(material: Material): MenuItem<*> = MenuItem(ItemStack(material))
+        fun <T : Menu<T>> fromMaterial(material: Material): MenuItem<T> = fromItem(ItemStack(material))
     }
 
 }

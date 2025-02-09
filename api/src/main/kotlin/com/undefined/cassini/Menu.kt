@@ -23,7 +23,7 @@ abstract class Menu<T : Menu<T>>(var title: Component, val size: Int, val optimi
     open fun preinitialize(player: Player) {}
 
     @ApiStatus.OverrideOnly
-    abstract fun initialize(player: Player)
+    open fun initialize(player: Player) {}
 
     @ApiStatus.OverrideOnly
     open fun afterinitialize(player: Player) {}

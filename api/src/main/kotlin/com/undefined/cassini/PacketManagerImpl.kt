@@ -1,26 +1,23 @@
 package com.undefined.cassini
 
+import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.nms.PacketManager
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 
 class PacketManagerImpl : PacketManager(Cassini.plugin) {
-    override fun onClick(player: Player, id: Int, type: ClickType) {
-        val menu = MenuManager.menus[id] ?: return
+    override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {
+        val menu = MenuManager.menus[id] ?: return true
         val wrapper = MenuManager.wrappers[id]!!
-        when (menu) {
-            is AnvilMenu -> menu.onClick(ClickData(player, menu, id, type, wrapper.config))
-            is ChestMenu -> menu.onClick(ClickData(player, menu, id, type, wrapper.config))
+        return when (menu) {
+            is AnvilMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
+            is ChestMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
+            else -> true
         }
-//        menu.items[packet.slotNum]?.let { item ->
-//            val context = CassiniContextImpl(player, config, clickType, item)
-//            menu.onClick(context)
-//            for (action in item.actions) Bukkit.getScheduler().runTask(manager.plugin, Runnable { context.action() })
-//            if (context.isCancelled) return
-//        }
     }
 
     override fun onClose(player: Player, id: Int) {
@@ -32,4 +29,15 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
         val menu = MenuManager.menus[id] as? AnvilMenu ?: return
         menu.createResult(player)
     }
+
+    private inline fun <reified T : Menu<T>> handleClick(player: Player, menu: T, slot: Int, id: Int, type: ClickType, config: MenuConfig): Boolean {
+        val data = ClickData(player, menu, id, slot, type, config)
+        menu.onClick(data)
+        menu.items[slot]?.let { item ->
+            for (action in item.actions) Bukkit.getScheduler().runTask(plugin, Runnable { data.action() })
+            if (data.isCancelled) return false
+        }
+        return true
+    }
+
 }

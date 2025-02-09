@@ -1,7 +1,8 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.data.MenuSize
-import com.undefined.cassini.impl.AnvilMenu
+import com.undefined.cassini.extensions.AnvilInputMenu
+import com.undefined.cassini.extensions.AnvilSlot
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
 import com.undefined.stellar.StellarCommand
@@ -28,10 +29,9 @@ class Main : JavaPlugin() {
 
         StellarCommand("test")
             .addExecution<Player> {
-                val menu = AnvilMenu.Builder("anvil")
-                    .setInputLeftItem(ItemStack(Material.PAPER))
-                    .setCost(10)
-                    .onClick {
+                val menu = AnvilInputMenu.Builder("anvil")
+                    .leftItem(ItemStack(Material.PAPER))
+                    .onClick(AnvilSlot.OUTPUT) {
                         player.sendMessage("Hello!")
                     }.build()
                 sender.openMenu(menu)

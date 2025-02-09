@@ -5,7 +5,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.plugin.java.JavaPlugin
 
 abstract class PacketManager(val plugin: JavaPlugin) {
-    abstract fun onClick(player: Player, id: Int, type: ClickType)
+    abstract fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean
     abstract fun onClose(player: Player, id: Int)
     abstract fun createResult(player: Player, id: Int)
 }

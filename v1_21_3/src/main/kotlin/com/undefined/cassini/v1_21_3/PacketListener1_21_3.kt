@@ -33,7 +33,7 @@ class PacketListener1_21_3 private constructor(manager: PacketManager) : PacketL
 
                     if (packet is ServerboundContainerClickPacket) {
                         val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
-                        manager.onClick(player, packet.containerId, clickType)
+                        if (!manager.onClick(player, packet.containerId, packet.buttonNum, clickType)) return
                     }
 
                     super.channelRead(channelHandlerContext, packet)

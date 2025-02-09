@@ -5,10 +5,13 @@ import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.pattern.MenuPattern
+import com.undefined.cassini.nms.wrapper.AnvilMenuWrapper
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.jetbrains.annotations.ApiStatus.OverrideOnly
 
 abstract class AnvilMenu(
     title: Component,
@@ -16,7 +19,7 @@ abstract class AnvilMenu(
     parent: Menu<*>? = null
 ) : Menu<AnvilMenu>(title, 3, optimization, parent) {
 
-    var text: String? = null
+    var cost: Int? = null
         private set
 
     constructor(
@@ -35,12 +38,17 @@ abstract class AnvilMenu(
     fun setInputRightItem(item: MenuItem<AnvilMenu>) = setItem(1, item)
     fun setInputRightItem(item: ItemStack) = setItem(1, item)
 
-    fun setOutputItem(item: MenuItem<AnvilMenu>) = setItem(2, item)
-    fun setOutputItem(item: ItemStack) = setItem(2, item)
-
     fun setText(text: String?) {
-        this.text = text
+        getWrapper<AnvilMenuWrapper>()?.text = text
     }
+
+    fun setCost(cost: Int?) {
+        this.cost = cost
+        cost?.let { getWrapper<AnvilMenuWrapper>()?.itemCost = cost }
+    }
+
+    @OverrideOnly
+    open fun createResult(player: Player) {}
 
     class Builder(
         title: Component,
@@ -48,8 +56,9 @@ abstract class AnvilMenu(
         parent: Menu<*>? = null
     ): Menu.Builder<Builder, AnvilMenu>(title, 3, optimization, parent) {
 
-        var text: String? = null
-            private set
+        private var text: String? = null
+        private var cost: Int? = null
+        private var createResultActions: MutableList<AnvilMenu.() -> Unit> = mutableListOf()
 
         constructor(
             title: String,
@@ -67,11 +76,12 @@ abstract class AnvilMenu(
         fun setInputRightItem(item: MenuItem<AnvilMenu>) = setItem(1, item)
         fun setInputRightItem(item: ItemStack) = setItem(1, item)
 
-        fun setOutputItem(item: MenuItem<AnvilMenu>) = setItem(2, item)
-        fun setOutputItem(item: ItemStack) = setItem(2, item)
+        fun setCost(cost: Int?) = apply {
+            this.cost = cost
+        }
 
-        fun setText(text: String?) = apply {
-            this.text = text
+        fun createResult(action: AnvilMenu.() -> Unit) = apply {
+            createResultActions.add(action)
         }
 
         override fun build(): AnvilMenu =
@@ -79,7 +89,7 @@ abstract class AnvilMenu(
                 override fun initialize(player: Player) {
                     for (initialization in initializations) initialization(player)
                     initMenu(this)
-                    setText(text)
+                    setCost(cost)
                 }
                 override fun onClick(data: ClickData<AnvilMenu>) {
                     for (action in clickActions) action(data)
@@ -89,6 +99,10 @@ abstract class AnvilMenu(
                 }
                 override fun onClose(player: Player) {
                     for (action in closeActions) action(player)
+                }
+                override fun createResult(player: Player) {
+                    if (createResultActions.isEmpty()) return super.createResult(player)
+                    for (action in createResultActions) action(this)
                 }
             }
     }

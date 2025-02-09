@@ -4,6 +4,7 @@ import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickAction
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
+import com.undefined.cassini.nms.wrapper.MenuWrapper
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -27,23 +28,22 @@ abstract class Menu<T : Menu<T>>(var title: Component, val size: Int, val optimi
     @ApiStatus.OverrideOnly
     open fun afterinitialize(player: Player) {}
 
-    fun setItem(slot: Int, item: ItemStack) {
-        items[slot] = MenuItem(item)
-    }
-
     fun setItem(slot: Int, item: MenuItem<T>) {
         items[slot] = item
+        getWrapper<MenuWrapper>()?.setItem(slot, item.itemStack)
     }
 
-    fun addItem(item: ItemStack) {
-        if (size == items.size) return
-        items[firstEmptySlot()] = MenuItem(item)
-    }
+    fun setItem(slot: Int, item: ItemStack, vararg actions: ClickData<T>.() -> Unit) = setItem(slot, MenuItem(item, *actions))
+
+    @Suppress("UNCHECKED_CAST")
+    fun setItem(slot: Int, item: ItemStack, action: ClickAction) = setItem(slot, MenuItem(item).apply { addAction(action) } as MenuItem<T>)
 
     fun addItem(item: MenuItem<T>) {
         if (size == items.size) return
-        items[firstEmptySlot()] = item
+        setItem(firstEmptySlot(), item)
     }
+
+    fun addItem(item: ItemStack) = addItem(MenuItem.fromItem(item))
 
     // Set multiple items methods
     fun setItems(item: MenuItem<T>, slots: List<Int>) {
@@ -84,6 +84,11 @@ abstract class Menu<T : Menu<T>>(var title: Component, val size: Int, val optimi
 
     @ApiStatus.OverrideOnly
     open fun onClose(player: Player) {}
+
+    protected inline fun <reified T : MenuWrapper> getWrapper(): T? {
+        val id = MenuManager.menus.entries.firstOrNull { it.value == this }?.key ?: return null
+        return MenuManager.wrappers[id] as? T
+    }
 
     @Suppress("UNCHECKED_CAST")
     abstract class Builder<T, R : Menu<R>>(

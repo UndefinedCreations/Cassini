@@ -18,6 +18,7 @@ class TestAnvilMenu : ChestMenu(Component.text("Player", NamedTextColor.RED), Me
         val meta = item.itemMeta ?: return@createInventory
         meta.setDisplayName("Test")
         item.itemMeta = meta
+        setItem(0, item)
     }
 }
 
@@ -29,7 +30,7 @@ class Main : JavaPlugin() {
             .addExecution<Player> {
                 val menu = AnvilMenu.Builder("anvil")
                     .setInputLeftItem(ItemStack(Material.PAPER))
-                    .setText("Hello world")
+                    .setCost(10)
                     .onClick {
                         player.sendMessage("Hello!")
                     }.build()

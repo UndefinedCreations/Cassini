@@ -7,7 +7,9 @@ import net.minecraft.commands.CommandBuildContext
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.inventory.*
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
 import org.bukkit.craftbukkit.inventory.CraftItemStack
 

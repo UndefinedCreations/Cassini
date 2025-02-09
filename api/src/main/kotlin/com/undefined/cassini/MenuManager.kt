@@ -13,7 +13,6 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.jetbrains.annotations.ApiStatus
-import kotlin.collections.HashMap
 
 object MenuManager : Listener {
 
@@ -21,7 +20,7 @@ object MenuManager : Listener {
         Bukkit.getPluginManager().registerEvents(this, Cassini.plugin)
     }
 
-    private val hasBeenInitialized: MutableList<Menu<*>> = mutableListOf()
+    private val hasBeenInitialized: MutableSet<Menu<*>> = mutableSetOf()
     @ApiStatus.Internal val menus: HashMap<Int, Menu<*>> = hashMapOf()
     @ApiStatus.Internal val wrappers: HashMap<Int, MenuWrapper> = hashMapOf()
     val version by lazy { Bukkit.getBukkitVersion().split("-").first() }
@@ -48,9 +47,12 @@ object MenuManager : Listener {
         update(player, menu)
         val wrapper = nms.createChestMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         if (!modifySlots) nms.sendClosePacket(player, wrapper)
+        menu.onClose(player)
         nms.sendOpenPacket(player, wrapper)
         nms.initMenu(player, wrapper)
         nms.setContainerMenu(player, wrapper)
+        for (slot in 0..menu.size)
+            menu.items[slot]?.itemStack?.let { wrapper.setItem(slot, it) }
         onOpen(player, menu, wrapper)
     }
 
@@ -58,10 +60,13 @@ object MenuManager : Listener {
         update(player, menu)
         val wrapper = nms.createAnvilMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         if (!modifySlots) nms.sendClosePacket(player, wrapper)
+        menu.onClose(player)
         nms.sendOpenPacket(player, wrapper)
         nms.initMenu(player, wrapper)
         nms.setContainerMenu(player, wrapper)
-        wrapper.text = menu.text
+        for (slot in 0..menu.size)
+            menu.items[slot]?.itemStack?.let { wrapper.setItem(slot, it) }
+        menu.cost?.let { wrapper.itemCost = it }
         onOpen(player, menu, wrapper)
     }
 

@@ -1,8 +1,5 @@
 package com.undefined.cassini
 
-import com.undefined.cassini.exception.UnsupportedVersionException
-import com.undefined.cassini.nms.PacketListener
-import com.undefined.cassini.v1_21_3.PacketListener1_21_3
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 

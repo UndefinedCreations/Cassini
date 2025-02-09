@@ -6,7 +6,6 @@ import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
-import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
@@ -30,13 +29,9 @@ class PacketListener1_21_3 private constructor(manager: PacketManager) : PacketL
             id.toString(),
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
-                    if (packet is ServerboundContainerClosePacket) {
-                        println("closing...")
-                        manager.onClose(player, packet.containerId)
-                    }
+                    if (packet is ServerboundContainerClosePacket) manager.onClose(player, packet.containerId)
 
                     if (packet is ServerboundContainerClickPacket) {
-                        println("click packet")
                         val clickType = MojangAdapter.getClickType(packet.clickType, packet.buttonNum, packet.changedSlots.count())
                         manager.onClick(player, packet.containerId, clickType)
                     }

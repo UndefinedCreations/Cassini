@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.ClickType
 
 class PacketManagerImpl : PacketManager(Cassini.plugin) {
     override fun onClick(player: Player, id: Int, type: ClickType) {
-        val menu = MenuManager.menus[id]!!
+        val menu = MenuManager.menus[id] ?: return
         val wrapper = MenuManager.wrappers[id]!!
         when (menu) {
             is AnvilMenu -> menu.onClick(ClickData(player, menu, id, type, wrapper.config))
@@ -26,5 +26,10 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
     override fun onClose(player: Player, id: Int) {
         MenuManager.menus[id]?.onClose(player)
         MenuManager.menus.remove(id)
+    }
+
+    override fun createResult(player: Player, id: Int) {
+        val menu = MenuManager.menus[id] as? AnvilMenu ?: return
+        menu.createResult(player)
     }
 }

@@ -1,9 +1,9 @@
 package com.undefined.cassini.v1_21_3
 
 import com.undefined.cassini.data.MenuConfig
-import com.undefined.cassini.nms.wrapper.MenuWrapper
 import com.undefined.cassini.nms.NMS
 import com.undefined.cassini.nms.wrapper.AnvilMenuWrapper
+import com.undefined.cassini.nms.wrapper.MenuWrapper
 import com.undefined.cassini.v1_21_3.wrapper.AnvilMenuWrapper1_21_3
 import com.undefined.cassini.v1_21_3.wrapper.ChestMenuWrapper1_21_3
 import net.kyori.adventure.text.Component

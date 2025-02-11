@@ -1,5 +1,7 @@
-package com.undefined.cassini
+package com.undefined.cassini.manager
 
+import com.undefined.cassini.Cassini
+import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.impl.AnvilMenu
@@ -30,7 +32,7 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
         menu.createResult(player)
     }
 
-    private inline fun <reified T : Menu<T>> handleClick(player: Player, menu: T, slot: Int, id: Int, type: ClickType, config: MenuConfig): Boolean {
+    private inline fun <reified T : ContainerMenu<T>> handleClick(player: Player, menu: T, slot: Int, id: Int, type: ClickType, config: MenuConfig): Boolean {
         val data = ClickData(player, menu, id, slot, type, config)
         menu.onClick(data)
         menu.items[slot]?.let { item ->

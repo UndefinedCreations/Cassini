@@ -1,13 +1,14 @@
 package com.undefined.cassini.data.click
 
-import com.undefined.cassini.Menu
-import com.undefined.cassini.MenuManager
+import com.undefined.cassini.ContainerMenu
+import com.undefined.cassini.manager.MenuManager
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.util.openMenu
+import com.undefined.cassini.util.openBuilderMenu
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 
-class ClickData<T : Menu<T>>(val player: Player, val menu: T, val slot: Int, val id: Int, val type: ClickType, val config: MenuConfig) {
+class ClickData<T : ContainerMenu<*>>(val player: Player, val menu: T, val slot: Int, val id: Int, val type: ClickType, val config: MenuConfig) {
 
     var isCancelled: Boolean = false
 
@@ -25,7 +26,7 @@ class ClickData<T : Menu<T>>(val player: Player, val menu: T, val slot: Int, val
 
     fun close() {
         val wrapper = MenuManager.wrappers[id]!!
-        MenuManager.nms.sendClosePacket(player, wrapper)
+        MenuManager.nms.sendContainerClosePacket(player, wrapper)
         MenuManager.packetManager.onClose(player, id)
     }
 

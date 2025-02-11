@@ -1,5 +1,6 @@
 package com.undefined.cassini
 
+import com.undefined.cassini.manager.MenuManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 

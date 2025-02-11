@@ -1,5 +1,6 @@
 package com.undefined.cassini.impl
 
+import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickData
@@ -16,7 +17,7 @@ abstract class ChestMenu(
     size: Int,
     optimization: MenuOptimization = MenuOptimization.NORMAL,
     parent: Menu<*>? = null
-) : Menu<ChestMenu>(title, size, optimization, parent) {
+) : ContainerMenu<ChestMenu>(title, size, optimization, parent) {
 
     constructor(
         title: String,
@@ -24,8 +25,6 @@ abstract class ChestMenu(
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
     ) : this(MiniMessage.miniMessage().deserialize(title), size, optimization, parent)
-
-    fun createInventory(init: ChestMenu.() -> Unit) { this.init() }
 
     fun applyPattern(pattern: MenuPattern<ChestMenu>) = pattern.apply(this)
 
@@ -66,7 +65,7 @@ abstract class ChestMenu(
         size: Int,
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
-    ): Menu.Builder<Builder, ChestMenu>(title, size, optimization, parent) {
+    ): ContainerMenu.Builder<Builder, ChestMenu>(title, size, optimization, parent) {
 
         constructor(
             title: String,

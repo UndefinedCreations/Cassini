@@ -2,6 +2,7 @@ package com.undefined.cassini.v1_21_3
 
 import com.undefined.cassini.nms.PacketListener
 import com.undefined.cassini.nms.PacketManager
+import com.undefined.cassini.v1_21_3.NMS1_21_3.connection
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket

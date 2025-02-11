@@ -1,11 +1,13 @@
 package com.undefined.cassini.extensions
 
+import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.item.PageItem
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
+import com.undefined.cassini.util.openBuilderMenu
 import com.undefined.cassini.util.update
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player

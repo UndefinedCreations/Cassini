@@ -3,7 +3,7 @@ package com.undefined.cassini.v1_21_3.wrapper
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.nms.wrapper.MenuWrapper
 import com.undefined.cassini.v1_21_3.MojangAdapter
-import com.undefined.cassini.v1_21_3.serverPlayer
+import com.undefined.cassini.v1_21_3.NMS1_21_3.serverPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.minecraft.world.inventory.ChestMenu

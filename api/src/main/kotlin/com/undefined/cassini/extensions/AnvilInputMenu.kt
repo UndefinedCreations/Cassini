@@ -1,5 +1,6 @@
 package com.undefined.cassini.extensions
 
+import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickData
@@ -21,13 +22,13 @@ abstract class AnvilInputMenu(
 
     constructor(title: String,
                 optimization: MenuOptimization,
-                parent: Menu<*>) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
+                parent: ContainerMenu<*>) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
 
     open val leftItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)
     open val rightItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)
     open val outputItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)
 
-    override fun preinitialize(player: Player) = createInventory {
+    override fun preinitialize(player: Player) = create {
         setItem(0, leftItem)
         setItem(1, rightItem)
         setItem(2, outputItem)
@@ -49,7 +50,7 @@ abstract class AnvilInputMenu(
         title: Component,
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
-    ): Menu.Builder<Builder, AnvilMenu>(title, 3, optimization, parent) {
+    ): ContainerMenu.Builder<Builder, AnvilMenu>(title, 3, optimization, parent) {
 
         private var text: String? = null
         private var leftItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)

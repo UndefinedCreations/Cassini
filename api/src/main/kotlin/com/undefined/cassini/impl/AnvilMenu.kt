@@ -1,5 +1,6 @@
 package com.undefined.cassini.impl
 
+import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickData
@@ -16,7 +17,7 @@ abstract class AnvilMenu(
     title: Component,
     optimization: MenuOptimization = MenuOptimization.NORMAL,
     parent: Menu<*>? = null
-) : Menu<AnvilMenu>(title, 3, optimization, parent) {
+) : ContainerMenu<AnvilMenu>(title, 3, optimization, parent) {
 
     var cost: Int? = null
         private set
@@ -26,8 +27,6 @@ abstract class AnvilMenu(
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
     ) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
-
-    fun createInventory(init: AnvilMenu.() -> Unit) { this.init() }
 
     fun applyPattern(pattern: MenuPattern<AnvilMenu>) = pattern.apply(this)
 
@@ -53,7 +52,7 @@ abstract class AnvilMenu(
         title: Component,
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
-    ): Menu.Builder<Builder, AnvilMenu>(title, 3, optimization, parent) {
+    ): ContainerMenu.Builder<Builder, AnvilMenu>(title, 3, optimization, parent) {
 
         private var text: String? = null
         private var cost: Int? = null

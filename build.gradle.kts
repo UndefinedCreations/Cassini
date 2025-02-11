@@ -11,8 +11,8 @@ plugins {
 
 apply(plugin = "maven-publish")
 
-val versionVar = "0.0.6"
-val groupIdVar = "com.undefined"
+val projectVersion = "0.0.2"
+val projectGroupId = "com.undefined"
 
 group = "com.undefined"
 version = "0.0.1"
@@ -20,12 +20,20 @@ version = "0.0.1"
 publishing {
     repositories {
         maven {
-            name = "UndefinedCreation"
-            url = uri("https://repo.undefinedcreation.com/releases")
+            name = "UndefinedCreations"
+            url = uri("https://repo.undefinedcreations.com/releases")
             credentials(PasswordCredentials::class) {
-                username = System.getenv("MAVEN_NAME")
-                password = System.getenv("MAVEN_SECRET")
+                username = project.properties["mavenUser"].toString()
+                password = project.properties["mavenPassword"].toString()
             }
+        }
+    }
+    publications {
+        register<MavenPublication>("maven") {
+            groupId = projectGroupId
+            version = projectVersion
+
+            from(components["java"])
         }
     }
 }
@@ -35,8 +43,8 @@ allprojects {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
 
-    group = groupIdVar
-    version = versionVar
+    group = projectGroupId
+    version = projectVersion
 
     repositories {
         mavenCentral()
@@ -48,24 +56,13 @@ allprojects {
         }
     }
 
-    publishing {
-        publications {
-            register<MavenPublication>("maven") {
-                groupId = groupIdVar
-                artifactId = "cassini"
-                version = versionVar
-
-                from(components["java"])
-            }
-        }
-    }
-
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("net.kyori:adventure-api:4.17.0")
+        implementation("net.kyori:adventure-api:4.3.4")
         implementation("net.kyori:adventure-platform-bukkit:4.3.4")
-        implementation("net.kyori:adventure-text-minimessage:4.17.0")
-        implementation("net.kyori:adventure-text-serializer-legacy:4.17.0")
+        implementation("net.kyori:adventure-text-minimessage:4.3.4")
+        implementation("net.kyori:adventure-text-serializer-legacy:4.3.4")
+        implementation("net.kyori:adventure-text-serializer-bungeecord:4.3.4")
     }
 
 }
@@ -86,8 +83,8 @@ tasks {
     }
 
     withType<ShadowJar> {
-        archiveClassifier.set("mapped")
-        archiveFileName.set("${project.name}-${project.version}.jar")
+        archiveClassifier = ""
+        archiveFileName = "${project.name}-${project.version}.jar"
     }
 
     compileKotlin {

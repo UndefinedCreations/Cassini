@@ -1,8 +1,7 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.data.MenuSize
-import com.undefined.cassini.extensions.AnvilInputMenu
-import com.undefined.cassini.extensions.AnvilSlot
+import com.undefined.cassini.impl.BookMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
 import com.undefined.stellar.StellarCommand
@@ -14,9 +13,9 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 class TestAnvilMenu : ChestMenu(Component.text("Player", NamedTextColor.RED), MenuSize.CHEST_9X3) {
-    override fun initialize(player: Player) = createInventory {
+    override fun initialize(player: Player) = create {
         val item = ItemStack(Material.PAPER)
-        val meta = item.itemMeta ?: return@createInventory
+        val meta = item.itemMeta ?: return@create
         meta.setDisplayName("Test")
         item.itemMeta = meta
         setItem(0, item)
@@ -29,11 +28,10 @@ class Main : JavaPlugin() {
 
         StellarCommand("test")
             .addExecution<Player> {
-                val menu = AnvilInputMenu.Builder("anvil")
-                    .leftItem(ItemStack(Material.PAPER))
-                    .onClick(AnvilSlot.OUTPUT) {
-                        player.sendMessage("Hello!")
-                    }.build()
+                val menu = BookMenu.builder()
+                    .addPage("<green>Test", "another test")
+                    .addPage("test")
+                    .build()
                 sender.openMenu(menu)
             }
             .register(this)

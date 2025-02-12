@@ -1,7 +1,8 @@
 package com.undefined.cassini.impl
 
+import com.undefined.cassini.Cassini
 import com.undefined.cassini.Menu
-import com.undefined.cassini.data.BookPage
+import com.undefined.cassini.data.book.BookPage
 import com.undefined.cassini.data.MenuOptimization
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -57,10 +58,10 @@ abstract class BookMenu(
         fun addAdvancedPage(components: Iterable<Component>): Builder = addPage(BookPage(components))
         fun addAdvancedPage(components: Sequence<Component>): Builder = addPage(BookPage(components.toList()))
 
-        fun addPage(vararg components: String): Builder = addPage(BookPage(components.map { MiniMessage.miniMessage().deserialize(it) }))
-        fun addPage(components: Collection<String>): Builder = addPage(BookPage(components.map { MiniMessage.miniMessage().deserialize(it) }))
-        fun addPage(components: Iterable<String>): Builder = addPage(BookPage(components.map { MiniMessage.miniMessage().deserialize(it) }))
-        fun addPage(components: Sequence<String>): Builder = addPage(BookPage(components.map { MiniMessage.miniMessage().deserialize(it) }.toList()))
+        fun addPage(vararg components: String): Builder = addPage(BookPage(components.map { Cassini.miniMessage.deserialize(it) }))
+        fun addPage(components: Collection<String>): Builder = addPage(BookPage(components.map { Cassini.miniMessage.deserialize(it) }))
+        fun addPage(components: Iterable<String>): Builder = addPage(BookPage(components.map { Cassini.miniMessage.deserialize(it) }))
+        fun addPage(components: Sequence<String>): Builder = addPage(BookPage(components.map { Cassini.miniMessage.deserialize(it) }.toList()))
 
         fun clearPages(): Builder = apply { pages.clear() }
 

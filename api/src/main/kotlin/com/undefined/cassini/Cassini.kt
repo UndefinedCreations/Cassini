@@ -1,6 +1,7 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.manager.MenuManager
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -10,6 +11,9 @@ object Cassini {
         private set
 
     var modifySlots = true
+        private set
+    var miniMessage: MiniMessage = MiniMessage.miniMessage()
+        private set
 
     fun initialize(plugin: JavaPlugin): Cassini {
         if (::plugin.isInitialized) return this
@@ -19,9 +23,12 @@ object Cassini {
         return this
     }
 
-    fun setModifySlots(modifySlots: Boolean): Cassini {
+    fun setModifySlots(modifySlots: Boolean): Cassini = apply {
         this.modifySlots = modifySlots
-        return this
+    }
+
+    fun setMiniMessage(miniMessage: MiniMessage): Cassini = apply {
+        this.miniMessage = miniMessage
     }
 
 }

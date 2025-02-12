@@ -1,5 +1,6 @@
 package com.undefined.cassini.impl
 
+import com.undefined.cassini.Cassini
 import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
@@ -26,7 +27,7 @@ abstract class AnvilMenu(
         title: String,
         optimization: MenuOptimization = MenuOptimization.NORMAL,
         parent: Menu<*>? = null
-    ) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
+    ) : this(Cassini.miniMessage.deserialize(title), optimization, parent)
 
     fun applyPattern(pattern: MenuPattern<AnvilMenu>) = pattern.apply(this)
 
@@ -62,7 +63,7 @@ abstract class AnvilMenu(
             title: String,
             optimization: MenuOptimization = MenuOptimization.NORMAL,
             parent: Menu<*>? = null
-        ) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
+        ) : this(Cassini.miniMessage.deserialize(title), optimization, parent)
 
         private val patternList: MutableList<MenuPattern<ChestMenu>> = mutableListOf()
 

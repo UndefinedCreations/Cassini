@@ -1,5 +1,6 @@
 package com.undefined.cassini.extensions
 
+import com.undefined.cassini.Cassini
 import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.Menu
 import com.undefined.cassini.data.MenuOptimization
@@ -22,7 +23,7 @@ abstract class AnvilInputMenu(
 
     constructor(title: String,
                 optimization: MenuOptimization,
-                parent: ContainerMenu<*>) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
+                parent: ContainerMenu<*>) : this(Cassini.miniMessage.deserialize(title), optimization, parent)
 
     open val leftItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)
     open val rightItem: MenuItem<AnvilMenu> = MenuItem.fromMaterial(Material.AIR)
@@ -65,7 +66,7 @@ abstract class AnvilInputMenu(
             title: String,
             optimization: MenuOptimization = MenuOptimization.NORMAL,
             parent: Menu<*>? = null
-        ) : this(MiniMessage.miniMessage().deserialize(title), optimization, parent)
+        ) : this(Cassini.miniMessage.deserialize(title), optimization, parent)
 
         private val patternList: MutableList<MenuPattern<AnvilInputMenu>> = mutableListOf()
 

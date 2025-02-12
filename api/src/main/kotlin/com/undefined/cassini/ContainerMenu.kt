@@ -29,7 +29,7 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
         getWrapper<MenuWrapper>()?.setItem(slot, item.itemStack)
     }
 
-    fun setItem(slot: Int, item: ItemStack, vararg actions: ClickData<T>.() -> Unit) = setItem(slot, MenuItem(item, *actions))
+    fun setItem(slot: Int, item: ItemStack, action: ClickData<T>.() -> Unit) = setItem(slot, MenuItem(item, action))
 
     @Suppress("UNCHECKED_CAST")
     fun setItem(slot: Int, item: ItemStack, action: ClickAction) = setItem(slot, MenuItem(item).apply { addAction(action) } as MenuItem<T>)

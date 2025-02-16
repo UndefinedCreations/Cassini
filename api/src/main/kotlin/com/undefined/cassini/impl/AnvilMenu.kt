@@ -46,7 +46,9 @@ abstract class AnvilMenu(
     }
 
     @OverrideOnly
-    open fun createResult(player: Player) {}
+    open fun createResult(player: Player) {
+        // should be overridden
+    }
 
     class Builder(
         title: Component,

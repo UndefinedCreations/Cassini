@@ -13,7 +13,6 @@ import com.undefined.cassini.nms.PacketListener
 import com.undefined.cassini.nms.PacketManager
 import com.undefined.cassini.nms.wrapper.MenuWrapper
 import com.undefined.cassini.v1_21_3.PacketListener1_21_3
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player

@@ -12,7 +12,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.lang.IndexOutOfBoundsException
 
 abstract class AnvilInputMenu(
     title: Component,
@@ -41,10 +40,14 @@ abstract class AnvilInputMenu(
     override fun onClick(data: ClickData<AnvilMenu>) {
         try {
             onSlotClick(data, AnvilSlot.fromSlotNumber(data.slot))
-        } catch (_: IndexOutOfBoundsException) {}
+        } catch (_: IndexOutOfBoundsException) {
+            // shouldn't do anything if slot isn't a valid anvil slot
+        }
     }
 
-    open fun onSlotClick(data: ClickData<AnvilMenu>, slot: AnvilSlot) {}
+    open fun onSlotClick(data: ClickData<AnvilMenu>, slot: AnvilSlot) {
+        // should be overridden
+    }
 
     class Builder(
         title: Component,

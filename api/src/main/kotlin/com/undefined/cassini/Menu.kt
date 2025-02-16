@@ -13,23 +13,33 @@ abstract class Menu<T : Menu<T>>(var title: Component, val optimization: MenuOpt
     fun create(init: T.() -> Unit) { (this as T).init() }
 
     @ApiStatus.OverrideOnly
-    open fun preinitialize(player: Player) {}
+    open fun preinitialize(player: Player) {
+        // should be overridden
+    }
 
     @ApiStatus.OverrideOnly
-    open fun initialize(player: Player) {}
+    open fun initialize(player: Player) {
+        // should be overridden
+    }
 
     @ApiStatus.OverrideOnly
-    open fun afterinitialize(player: Player) {}
+    open fun afterinitialize(player: Player) {
+        // should be overridden
+    }
 
     @ApiStatus.OverrideOnly
-    open fun onOpen(player: Player) {}
+    open fun onOpen(player: Player) {
+        // should be overridden
+    }
 
     @ApiStatus.OverrideOnly
-    open fun onClose(player: Player) {}
+    open fun onClose(player: Player) {
+        // should be overridden
+    }
 
     protected inline fun <reified T : MenuWrapper> getWrapper(): T? {
         val id = MenuManager.menus.entries.firstOrNull { it.value == this }?.key ?: return null
-        return MenuManager.wrappers[id] as? T
+        return MenuManager.wrappers[id] as T?
     }
 
     @Suppress("UNCHECKED_CAST")

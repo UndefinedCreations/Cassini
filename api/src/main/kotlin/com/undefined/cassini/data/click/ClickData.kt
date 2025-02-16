@@ -1,10 +1,9 @@
 package com.undefined.cassini.data.click
 
 import com.undefined.cassini.ContainerMenu
-import com.undefined.cassini.manager.MenuManager
 import com.undefined.cassini.data.MenuConfig
+import com.undefined.cassini.manager.MenuManager
 import com.undefined.cassini.util.openMenu
-import com.undefined.cassini.util.openBuilderMenu
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 

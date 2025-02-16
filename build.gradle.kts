@@ -21,6 +21,7 @@ sonar {
 
 val projectVersion = "0.0.2"
 val projectGroupId = "com.undefined"
+val adventureVersion = properties["adventure_version"]
 
 group = "com.undefined"
 version = "0.0.1"
@@ -66,11 +67,11 @@ allprojects {
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("net.kyori:adventure-api:4.3.4")
-        implementation("net.kyori:adventure-platform-bukkit:4.3.4")
-        implementation("net.kyori:adventure-text-minimessage:4.3.4")
-        implementation("net.kyori:adventure-text-serializer-legacy:4.3.4")
-        implementation("net.kyori:adventure-text-serializer-bungeecord:4.3.4")
+        implementation("net.kyori:adventure-api:$adventureVersion")
+        implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
+        implementation("net.kyori:adventure-text-minimessage:$adventureVersion")
+        implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
+        implementation("net.kyori:adventure-text-serializer-bungeecord:$adventureVersion")
     }
 
 }

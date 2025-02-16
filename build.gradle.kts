@@ -7,9 +7,17 @@ plugins {
     kotlin("jvm") version "1.9.22"
     id("maven-publish")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 apply(plugin = "maven-publish")
+
+sonar {
+    properties {
+        property("sonar.projectKey", "Cassini")
+        property("sonar.projectName", "Cassini")
+    }
+}
 
 val projectVersion = "0.0.2"
 val projectGroupId = "com.undefined"

@@ -1,8 +1,8 @@
-package com.undefined.cassini.v1_21_3
+package com.undefined.cassini.v1_21_4
 
 import com.undefined.cassini.nms.PacketListener
 import com.undefined.cassini.nms.PacketManager
-import com.undefined.cassini.v1_21_3.NMS1_21_3.connection
+import com.undefined.cassini.v1_21_4.NMS1_21_4.connection
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import java.util.*
 
-class PacketListener1_21_3 private constructor(manager: PacketManager) : PacketListener(manager) {
+class PacketListener1_21_4 private constructor(manager: PacketManager) : PacketListener(manager) {
 
     private val players: HashMap<UUID, UUID> = hashMapOf()
 
@@ -56,10 +56,10 @@ class PacketListener1_21_3 private constructor(manager: PacketManager) : PacketL
     }
 
     companion object {
-        var instance: PacketListener1_21_3? = null
-        fun getInstance(manager: PacketManager): PacketListener1_21_3 {
+        var instance: PacketListener1_21_4? = null
+        fun getInstance(manager: PacketManager): PacketListener1_21_4 {
             if (instance != null) return instance!!
-            instance = PacketListener1_21_3(manager)
+            instance = PacketListener1_21_4(manager)
             return instance!!
         }
     }

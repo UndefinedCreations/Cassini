@@ -2,12 +2,11 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     `java-library`
-    java
     `maven-publish`
     kotlin("jvm") version "1.9.22"
-    id("maven-publish")
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("org.sonarqube") version "6.0.1.5171"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14" apply false
 }
 
 apply(plugin = "maven-publish")
@@ -48,7 +47,6 @@ publishing {
 }
 
 allprojects {
-    apply(plugin = "java")
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
 
@@ -78,7 +76,7 @@ allprojects {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":v1_21_3:", "reobf"))
+    implementation(project(":v1_21_4:", "reobf"))
     implementation(project(":api"))
 }
 

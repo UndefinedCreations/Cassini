@@ -1,4 +1,4 @@
-package com.undefined.cassini.v1_21_3
+package com.undefined.cassini.v1_21_4
 
 import com.undefined.cassini.exception.InvalidChestSizeException
 import com.undefined.cassini.nms.wrapper.MenuWrapper

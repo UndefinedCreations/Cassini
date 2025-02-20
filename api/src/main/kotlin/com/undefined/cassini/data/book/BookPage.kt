@@ -1,5 +1,6 @@
 package com.undefined.cassini.data.book
 
+import com.undefined.cassini.Cassini
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.JoinConfiguration
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer

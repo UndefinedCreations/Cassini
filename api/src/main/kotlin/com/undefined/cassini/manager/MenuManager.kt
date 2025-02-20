@@ -12,7 +12,7 @@ import com.undefined.cassini.nms.NMS
 import com.undefined.cassini.nms.PacketListener
 import com.undefined.cassini.nms.PacketManager
 import com.undefined.cassini.nms.wrapper.MenuWrapper
-import com.undefined.cassini.v1_21_3.PacketListener1_21_3
+import com.undefined.cassini.v1_21_4.PacketListener1_21_4
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -34,12 +34,12 @@ object MenuManager : Listener {
     val nms: NMS by lazy { versions[version] ?: throw UnsupportedVersionException(versions.keys) }
     val packetManager: PacketManager by lazy { PacketManagerImpl() }
     private val versions: Map<String, NMS> = mapOf(
-        "1.21.3" to com.undefined.cassini.v1_21_3.NMS1_21_3
+        "1.21.4" to com.undefined.cassini.v1_21_4.NMS1_21_4
     )
 
     fun getPacketListener(): PacketListener = when (version) {
-        "1.21.3" -> PacketListener1_21_3.getInstance(packetManager)
-        else -> throw UnsupportedVersionException(listOf("1.21.3"))
+        "1.21.4" -> PacketListener1_21_4.getInstance(packetManager)
+        else -> throw UnsupportedVersionException(listOf("1.21.4"))
     }
 
     fun update(player: Player, menu: Menu<*>) {

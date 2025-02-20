@@ -1,9 +1,9 @@
-package com.undefined.cassini.v1_21_3.wrapper
+package com.undefined.cassini.v1_21_4.wrapper
 
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.nms.wrapper.MenuWrapper
-import com.undefined.cassini.v1_21_3.MojangAdapter
-import com.undefined.cassini.v1_21_3.NMS1_21_3.serverPlayer
+import com.undefined.cassini.v1_21_4.MojangAdapter
+import com.undefined.cassini.v1_21_4.NMS1_21_4.serverPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.minecraft.world.inventory.ChestMenu
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 @Suppress("ClassName")
-class ChestMenuWrapper1_21_3(
+class ChestMenuWrapper1_21_4(
     player: Player,
     override val size: Int,
     override val title: Component,

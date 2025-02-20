@@ -4,10 +4,8 @@ import com.undefined.cassini.data.MenuOptimization
 import com.undefined.cassini.data.click.ClickAction
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
-import com.undefined.cassini.manager.MenuManager
 import com.undefined.cassini.nms.wrapper.MenuWrapper
 import net.kyori.adventure.text.Component
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.ApiStatus
 
@@ -73,7 +71,9 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
     fun clear() = items.clear()
 
     @ApiStatus.OverrideOnly
-    open fun onClick(data: ClickData<T>) {}
+    open fun onClick(data: ClickData<T>) {
+        // should be overridden
+    }
 
     @Suppress("UNCHECKED_CAST")
     abstract class Builder<T, R : ContainerMenu<R>>(

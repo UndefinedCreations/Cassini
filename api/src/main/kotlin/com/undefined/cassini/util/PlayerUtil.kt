@@ -2,11 +2,11 @@ package com.undefined.cassini.util
 
 import com.undefined.cassini.Cassini
 import com.undefined.cassini.Menu
-import com.undefined.cassini.manager.MenuManager
 import com.undefined.cassini.exception.InvalidMenuTypeException
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.BookMenu
 import com.undefined.cassini.impl.ChestMenu
+import com.undefined.cassini.manager.MenuManager
 import org.bukkit.entity.Player
 
 fun <T : Menu<*>> Player.openMenu(menu: T, modifySlots: Boolean = Cassini.modifySlots): T {

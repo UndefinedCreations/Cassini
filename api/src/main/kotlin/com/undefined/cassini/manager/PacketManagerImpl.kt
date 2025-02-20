@@ -16,8 +16,8 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
         val menu = MenuManager.menus[id] ?: return true
         val wrapper = MenuManager.wrappers[id]!!
         return when (menu) {
-            is AnvilMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
             is ChestMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
+            is AnvilMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
             else -> true
         }
     }

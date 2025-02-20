@@ -1,7 +1,5 @@
 package com.undefined.cassini.extensions
 
-import java.lang.IndexOutOfBoundsException
-
 enum class AnvilSlot {
     LEFT,
     RIGHT,

@@ -81,7 +81,7 @@ abstract class ChestMenu(
 
         fun setRow(item: MenuItem<ChestMenu>, row: Int) =
             ((ROW_SIZE * (row - 1)) until (ROW_SIZE * (row - 1) + ROW_SIZE)).run {
-                if (row in 1..9 && (row * ROW_SIZE) < size) setItems(item, this) else throw InvalidSlotException(this)
+                if (row in 1..9 && (row * ROW_SIZE) <= size) setItems(item, this) else throw InvalidSlotException(this)
             }
         fun setRow(item: ItemStack, row: Int) = setRow(MenuItem(item), row)
         fun setRows(item: MenuItem<ChestMenu>, rows: List<Int>) {

@@ -17,16 +17,13 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         Cassini.initialize(this)
 
-        val main = StellarCommand("test")
-        main.addArgument("test")
+        StellarCommand("test")
             .addExecution<Player> {
-                sender.openMenu(object : PaginatedMenu(Component.text("hi1"), MenuSize.CHEST_9X3, {
-                    listOf()
-                }) {
-                    override val backButton = PageItem(size - 8, ItemStack(Material.RED_STAINED_GLASS_PANE))
-                    override val nextButton = PageItem(size, ItemStack(Material.GREEN_STAINED_GLASS_PANE))
-
-                })
+                sender.openMenu(ChestMenu.Builder("<red>Hi!", MenuSize.CHEST_9X3)
+                    .setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 1)
+                    .setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 3)
+                    .setItem(4, ItemStack(Material.BARRIER))
+                    .build())
             }
             .register(this)
     }

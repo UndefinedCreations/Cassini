@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":v1_21_4:", "reobf"))
     implementation(project(":api"))
-    implementation("com.undefined:stellar:0.0.70")
+    implementation("com.undefined:stellar:0.0.81")
 }
 
 tasks {
@@ -30,6 +30,7 @@ tasks {
         minecraftVersion("1.21.4")
         serverType(ServerType.PAPERMC)
         allowedRam(2, RamAmount.GIGABYTE)
+        serverFolderName { "run" }
         acceptMojangEula()
     }
 }

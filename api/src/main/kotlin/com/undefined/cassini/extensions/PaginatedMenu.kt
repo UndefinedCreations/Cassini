@@ -58,6 +58,8 @@ abstract class PaginatedMenu(
         if (!isOnFirstPage()) items[backButton.slot] = MenuItem(backButton.item, { backPage(player) })
         if (!isOnLastPage()) items[nextButton.slot] = MenuItem(nextButton.item, { nextPage(player) })
 
+        if (pageItems.isEmpty()) return
+
         val firstIndex = (currentPage - 1) * emptySlots.lastIndex
         val lastIndex = (currentPage) * emptySlots.lastIndex
         val currentPageItems: MutableList<MenuItem<ChestMenu>> = if (firstIndex <= pageItems.size) pageItems.subList(

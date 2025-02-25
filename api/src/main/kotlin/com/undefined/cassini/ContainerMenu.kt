@@ -16,10 +16,11 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
     parent: Menu<*>?
 ) : Menu<T>(title, optimization, parent) {
 
-    open val items: HashMap<Int, MenuItem<T>> = hashMapOf()
+    val items: HashMap<Int, MenuItem<T>> = hashMapOf()
     fun firstEmptySlot(): Int {
-        if (size == items.size) return -1
-        return items.size + 1
+        for (i in 0..<size)
+            if (items[i] == null) return i
+        return -1
     }
 
     fun setItem(slot: Int, item: MenuItem<T>) {

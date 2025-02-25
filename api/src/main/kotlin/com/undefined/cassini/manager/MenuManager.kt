@@ -84,8 +84,6 @@ object MenuManager : Listener {
         meta.title = "A Custom Cassini Book Menu."
         meta.author = "Undefined Creations"
         for (page in menu.pages) meta.spigot().addPage(page.toBungee())
-        println(meta.spigot().pages)
-        println(menu.pages)
         book.itemMeta = meta
 
         val hand: ItemStack = player.inventory.itemInMainHand

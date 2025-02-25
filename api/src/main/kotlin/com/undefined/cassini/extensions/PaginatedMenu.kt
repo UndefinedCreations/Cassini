@@ -66,11 +66,7 @@ abstract class PaginatedMenu(
             firstIndex,
             if (lastIndex <= pageItems.size) lastIndex else pageItems.size
         ).toMutableList() else mutableListOf()
-        for (slot in 0..<size)
-            if (slot !in items.keys) {
-                currentPageItems.firstOrNull()?.let { items[slot] = it } ?: break
-                currentPageItems.removeFirst()
-            }
+        for (item in currentPageItems) addItem(item)
     }
 
     fun update(player: Player) {

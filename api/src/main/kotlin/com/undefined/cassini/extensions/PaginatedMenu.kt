@@ -64,11 +64,11 @@ abstract class PaginatedMenu(
         val lastIndex = (currentPage) * emptySlots.lastIndex
         val currentPageItems: MutableList<MenuItem<ChestMenu>> = if (firstIndex <= pageItems.size) pageItems.subList(
             firstIndex,
-            if (lastIndex <= pageItems.size) lastIndex else pageItems.lastIndex
+            if (lastIndex <= pageItems.size) lastIndex else pageItems.size
         ).toMutableList() else mutableListOf()
         for (slot in 0..<size)
             if (slot !in items.keys) {
-                items[slot] = currentPageItems.first()
+                currentPageItems.firstOrNull()?.let { items[slot] = it } ?: break
                 currentPageItems.removeFirst()
             }
     }

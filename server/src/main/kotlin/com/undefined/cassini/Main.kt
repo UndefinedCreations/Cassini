@@ -19,11 +19,17 @@ class Main : JavaPlugin() {
 
         StellarCommand("test")
             .addExecution<Player> {
-                sender.openMenu(ChestMenu.Builder("<red>Hi!", MenuSize.CHEST_9X3)
-                    .setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 1)
-                    .setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 3)
-                    .setItem(4, ItemStack(Material.BARRIER))
-                    .build())
+                sender.openMenu(object : PaginatedMenu(Component.text("hi1"), MenuSize.CHEST_9X3, {
+                    listOf(MenuItem.fromMaterial(Material.BOOK))
+                }) {
+                    override val backButton = PageItem(size - 8, ItemStack(Material.RED_STAINED_GLASS_PANE))
+                    override val nextButton = PageItem(size, ItemStack(Material.GREEN_STAINED_GLASS_PANE))
+
+                    override fun initialize(player: Player) {
+                        setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 1)
+                        setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 3)
+                    }
+                })
             }
             .register(this)
     }

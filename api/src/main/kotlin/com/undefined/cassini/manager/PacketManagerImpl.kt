@@ -4,12 +4,15 @@ import com.undefined.cassini.Cassini
 import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
+import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.nms.PacketManager
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
+import org.bukkit.inventory.ItemStack
 
 class PacketManagerImpl : PacketManager(Cassini.plugin) {
     override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {
@@ -36,10 +39,9 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
         val data = ClickData(player, menu, id, slot, type, config)
         menu.onClick(data)
         menu.items[slot]?.let { item ->
-            for (action in item.actions) Bukkit.getScheduler().runTask(plugin, Runnable { data.action() })
-            if (data.isCancelled) return false
+            for (action in item.actions) data.action()
         }
-        return true
+        return !data.isCancelled
     }
 
 }

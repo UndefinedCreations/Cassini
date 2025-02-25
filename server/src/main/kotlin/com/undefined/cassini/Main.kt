@@ -1,6 +1,7 @@
 package com.undefined.cassini
 
 import com.undefined.cassini.data.MenuSize
+import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.item.PageItem
 import com.undefined.cassini.extensions.PaginatedMenu
@@ -20,7 +21,7 @@ class Main : JavaPlugin() {
         StellarCommand("test")
             .addExecution<Player> {
                 sender.openMenu(object : PaginatedMenu(Component.text("hi1"), MenuSize.CHEST_9X3, {
-                    listOf(MenuItem.fromMaterial(Material.BOOK))
+                    listOf(MenuItem(ItemStack(Material.BOOK), { isCancelled = true }))
                 }) {
                     override val backButton = PageItem(size - 8, ItemStack(Material.RED_STAINED_GLASS_PANE))
                     override val nextButton = PageItem(size, ItemStack(Material.GREEN_STAINED_GLASS_PANE))
@@ -29,6 +30,8 @@ class Main : JavaPlugin() {
                         setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 1)
                         setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 3)
                     }
+
+                    override fun onClick(data: ClickData<ChestMenu>) { data.isCancelled = true }
                 })
             }
             .register(this)

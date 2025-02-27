@@ -4,6 +4,7 @@ import com.undefined.cassini.data.MenuSize
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.item.PageItem
+import com.undefined.cassini.data.iterator.MenuIterator
 import com.undefined.cassini.extensions.PaginatedMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
@@ -29,6 +30,10 @@ class Main : JavaPlugin() {
                     override fun initialize(player: Player) {
                         setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 1)
                         setRow(ItemStack(Material.BLACK_STAINED_GLASS_PANE), 3)
+
+                        val iterator: MenuIterator = MenuIterator(9..14)
+                        for (slot in iterator)
+                            setItem(slot, ItemStack(Material.BOOK))
                     }
 
                     override fun onClick(data: ClickData<ChestMenu>) { data.isCancelled = true }

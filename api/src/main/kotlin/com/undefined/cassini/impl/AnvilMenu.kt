@@ -9,7 +9,6 @@ import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.pattern.MenuPattern
 import com.undefined.cassini.nms.wrapper.AnvilMenuWrapper
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.ApiStatus.OverrideOnly

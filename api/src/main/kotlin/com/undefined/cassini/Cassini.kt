@@ -19,7 +19,6 @@ object Cassini {
         if (::plugin.isInitialized) return this
         this.plugin = plugin
         Bukkit.getPluginManager().registerEvents(MenuManager.getPacketListener(), plugin)
-        Bukkit.getPluginManager().registerEvents(MenuManager, plugin)
         return this
     }
 

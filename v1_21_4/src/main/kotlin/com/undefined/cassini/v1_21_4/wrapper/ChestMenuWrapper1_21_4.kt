@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
 class ChestMenuWrapper1_21_4(
     player: Player,
     override val size: Int,
-    override val title: Component,
+    override var title: Component,
     override val config: MenuConfig
 ) : ChestMenu(
     MojangAdapter.getMenuType(size),

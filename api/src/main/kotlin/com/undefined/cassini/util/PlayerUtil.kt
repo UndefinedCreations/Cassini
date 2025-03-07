@@ -33,6 +33,6 @@ val Player.containerId: Int
 fun Player.updateTitle(menu: Menu<*>, newTitle: Component = menu.title): Boolean { // whether it was successful
     val wrapper = MenuManager.wrappers[containerId] ?: return false
     if (wrapper.title != newTitle) wrapper.title = newTitle
-    MenuManager.nms.sendOpenScreenPacket(this, wrapper)
+    MenuManager.nms.sendOpenContainerScreenPacket(this, wrapper)
     return true
 }

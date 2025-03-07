@@ -2,10 +2,9 @@ package com.undefined.cassini.nms
 
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
-import org.bukkit.plugin.java.JavaPlugin
 
-abstract class PacketManager(val plugin: JavaPlugin) {
-    abstract fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean
-    abstract fun onClose(player: Player, id: Int)
-    abstract fun createResult(player: Player, id: Int)
+interface PacketManager {
+    fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean
+    fun onClose(player: Player, id: Int)
+    fun createResult(player: Player, id: Int)
 }

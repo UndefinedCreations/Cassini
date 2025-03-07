@@ -9,7 +9,6 @@ import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.data.pattern.MenuPattern
 import com.undefined.cassini.impl.AnvilMenu
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

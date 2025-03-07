@@ -1,22 +1,20 @@
 package com.undefined.cassini.manager
 
-import com.undefined.cassini.Cassini
 import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
-import com.undefined.cassini.data.item.MenuItem
+import com.undefined.cassini.event.MenuOpenEvent
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.nms.PacketManager
-import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
-import org.bukkit.inventory.ItemStack
 
-class PacketManagerImpl : PacketManager(Cassini.plugin) {
+class PacketManagerImpl : PacketManager {
     override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {
         val menu = MenuManager.menus[id] ?: return true
+        if (MenuOpenEvent(player, menu).apply { callEvent() }.isCancelled) return false
+
         val wrapper = MenuManager.wrappers[id]!!
         return when (menu) {
             is ChestMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
@@ -26,6 +24,9 @@ class PacketManagerImpl : PacketManager(Cassini.plugin) {
     }
 
     override fun onClose(player: Player, id: Int) {
+        val menu = MenuManager.menus[id] ?: throw IllegalArgumentException("No menu with id!")
+        if (MenuOpenEvent(player, menu).apply { callEvent() }.isCancelled) return
+
         MenuManager.menus[id]?.onClose(player)
         MenuManager.menus.remove(id)
     }

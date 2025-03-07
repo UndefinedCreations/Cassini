@@ -11,7 +11,7 @@ interface NMS {
     fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
     fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper
     fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper)
-    fun sendOpenScreenPacket(player: Player, wrapper: MenuWrapper)
+    fun sendOpenContainerScreenPacket(player: Player, wrapper: MenuWrapper)
     fun sendOpenBookPacket(player: Player, book: ItemStack)
     fun sendContentsPacket(player: Player, wrapper: MenuWrapper)
     fun setContainerMenu(player: Player, wrapper: MenuWrapper)

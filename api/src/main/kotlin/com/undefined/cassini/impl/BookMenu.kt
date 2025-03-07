@@ -2,10 +2,9 @@ package com.undefined.cassini.impl
 
 import com.undefined.cassini.Cassini
 import com.undefined.cassini.Menu
-import com.undefined.cassini.data.book.BookPage
 import com.undefined.cassini.data.MenuOptimization
+import com.undefined.cassini.data.book.BookPage
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Player
 
 abstract class BookMenu(

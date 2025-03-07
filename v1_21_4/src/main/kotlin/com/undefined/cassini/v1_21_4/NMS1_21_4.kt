@@ -28,7 +28,7 @@ object NMS1_21_4 : NMS {
     override fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper = AnvilMenuWrapper1_21_4(player, size, title, config)
 
     override fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper) = player.sendPacket(ClientboundContainerClosePacket(wrapper.id))
-    override fun sendOpenScreenPacket(player: Player, wrapper: MenuWrapper) {
+    override fun sendOpenContainerScreenPacket(player: Player, wrapper: MenuWrapper) {
         val type: MenuType<*> = when (wrapper) {
             is AnvilMenuWrapper -> MenuType.ANVIL
             else -> MojangAdapter.getMenuType(wrapper.size)

@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack
 interface MenuWrapper {
     val id: Int
     val size: Int
-    val title: Component
+    var title: Component
     val config: MenuConfig
     fun setItem(slot: Int, item: ItemStack)
 }

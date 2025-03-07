@@ -29,7 +29,7 @@ tasks {
     runServer {
         minecraftVersion("1.21.4")
         serverType(ServerType.PAPERMC)
-        allowedRam(2, RamAmount.GIGABYTE)
+        allowedRam(1, RamAmount.GIGABYTE)
         serverFolderName { "run" }
         acceptMojangEula()
     }

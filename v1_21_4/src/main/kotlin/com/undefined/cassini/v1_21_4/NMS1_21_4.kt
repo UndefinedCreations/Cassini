@@ -48,6 +48,8 @@ object NMS1_21_4 : NMS {
     override fun setContainerMenu(player: Player, wrapper: MenuWrapper) { player.serverPlayer().containerMenu = wrapper as AbstractContainerMenu }
     override fun initMenu(player: Player, wrapper: MenuWrapper) = player.serverPlayer().initMenu(wrapper as AbstractContainerMenu)
 
+    override fun getContainerId(player: Player): Int = player.serverPlayer().containerMenu.containerId
+
     fun Player.craftPlayer(): CraftPlayer = player as CraftPlayer
     fun Player.serverPlayer(): ServerPlayer = craftPlayer().handle
     fun Player.connection(): ServerGamePacketListenerImpl = serverPlayer().connection

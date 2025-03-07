@@ -7,7 +7,6 @@ publishing {
         register<MavenPublication>("maven") {
             groupId = group.toString()
             version = version.toString()
-
             from(components["java"])
         }
     }

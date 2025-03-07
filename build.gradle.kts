@@ -18,7 +18,7 @@ sonar {
     }
 }
 
-val projectVersion = "0.0.13"
+val projectVersion = "0.0.14"
 val projectGroupId = "com.undefined"
 val adventureVersion = properties["adventure_version"]
 
@@ -88,12 +88,10 @@ tasks {
         dependsOn("shadowJar")
         archiveClassifier.set("dev")
     }
-
     withType<ShadowJar> {
         archiveClassifier = ""
         archiveFileName = "${project.name}-${project.version}.jar"
     }
-
     compileKotlin {
         kotlinOptions.jvmTarget = "21"
     }

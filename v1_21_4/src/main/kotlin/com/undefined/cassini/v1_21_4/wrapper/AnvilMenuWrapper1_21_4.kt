@@ -15,12 +15,17 @@ import org.bukkit.inventory.ItemStack
 class AnvilMenuWrapper1_21_4(
     val bukkitPlayer: Player,
     override val size: Int,
-    override val title: Component,
+    title: Component,
     override val config: MenuConfig
 ) : AnvilMenu(
     bukkitPlayer.serverPlayer().nextContainerCounter(),
     bukkitPlayer.serverPlayer().inventory
 ), AnvilMenuWrapper {
+
+    override var title: Component = title
+        set(value) {
+            field = value
+        }
 
     init {
         this.checkReachable = false

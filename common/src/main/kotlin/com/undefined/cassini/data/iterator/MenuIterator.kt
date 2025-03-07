@@ -6,6 +6,7 @@ class MenuIterator(private val slots: Array<Slot>) : ListIterator<Slot> {
 
 	constructor(vararg slots: Slot) : this(slots.toTypedArray())
 	constructor(vararg slots: IntRange) : this(slots.flatMap { it.toList() }.toTypedArray())
+	constructor(vararg slots: Iterable<Int>) : this(slots.flatMap { it.toList() }.toTypedArray())
 
 	private var index: Int = 0
 

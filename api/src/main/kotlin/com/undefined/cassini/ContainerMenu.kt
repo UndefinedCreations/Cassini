@@ -6,6 +6,7 @@ import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.data.item.MenuItem
 import com.undefined.cassini.nms.wrapper.MenuWrapper
 import net.kyori.adventure.text.Component
+import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.ApiStatus
 
@@ -27,8 +28,8 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
         items[slot] = item
         getWrapper<MenuWrapper>()?.setItem(slot, item.itemStack)
     }
-
     fun setItem(slot: Int, item: ItemStack, action: ClickData<T>.() -> Unit = {}) = setItem(slot, MenuItem(item, action))
+    fun setItem(slot: Int, material: Material, action: ClickData<T>.() -> Unit = {}) = setItem(slot, MenuItem(ItemStack(material), action))
 
     @Suppress("UNCHECKED_CAST")
     fun setItem(slot: Int, item: ItemStack, action: ClickAction) = setItem(slot, MenuItem(item).apply { addAction(action) } as MenuItem<T>)
@@ -37,36 +38,51 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
         if (size == items.size) return
         setItem(firstEmptySlot(), item)
     }
-
     fun addItem(item: ItemStack) = addItem(MenuItem.fromItem(item))
+    fun addItem(material: Material) = addItem(MenuItem.fromItem(ItemStack(material)))
 
     // Set multiple items methods
     fun setItems(item: MenuItem<T>, slots: List<Int>) {
         for (slot in slots) setItem(slot, item)
     }
+    fun setItems(item: ItemStack, slots: List<Int>) = setItems(MenuItem(item), slots)
+    fun setItems(material: Material, slots: List<Int>) = setItems(MenuItem(ItemStack(material)), slots)
+
     fun setItems(item: MenuItem<T>, vararg slots: Int) = setItems(item, slots.toList())
     fun setItems(item: ItemStack, vararg slots: Int) = setItems(item, slots.toList())
-    fun setItems(item: ItemStack, slots: List<Int>) = setItems(MenuItem(item), slots)
+    fun setItems(material: Material, vararg slots: Int) = setItems(ItemStack(material), slots.toList())
+
     fun setItems(item: MenuItem<T>, slots: IntRange) = setItems(item, slots.toList())
     fun setItems(item: ItemStack, slots: IntRange) = setItems(item, slots.toList())
+    fun setItems(material: Material, slots: IntRange) = setItems(ItemStack(material), slots.toList())
 
     fun setItems(item: MenuItem<T>, action: ClickAction, slots: List<Int>) {
         for (slot in slots) setItem(slot, item.apply { addAction(action) })
     }
+    fun setItems(item: ItemStack, action: ClickAction, slots: List<Int>) = setItems(MenuItem(item), action, slots)
+    fun setItems(material: Material, action: ClickAction, slots: List<Int>) = setItems(MenuItem(ItemStack(material)), action, slots)
+
     fun setItems(item: MenuItem<T>, action: ClickAction, vararg slots: Int) = setItems(item, action, slots.toList())
     fun setItems(item: ItemStack, action: ClickAction, vararg slots: Int) = setItems(item, action, slots.toList())
-    fun setItems(item: ItemStack, action: ClickAction, slots: List<Int>) = setItems(MenuItem(item), action, slots)
+    fun setItems(material: Material, action: ClickAction, vararg slots: Int) = setItems(ItemStack(material), action, slots.toList())
+
     fun setItems(item: MenuItem<T>, action: ClickAction, slots: IntRange) = setItems(item, action, slots.toList())
     fun setItems(item: ItemStack, action: ClickAction, slots: IntRange) = setItems(item, action, slots.toList())
+    fun setItems(material: Material, action: ClickAction, slots: IntRange) = setItems(ItemStack(material), action, slots.toList())
 
     fun setItems(item: MenuItem<T>, action: ClickData<T>.() -> Unit, slots: List<Int>) {
         for (slot in slots) setItem(slot, item.apply { addAction(action) })
     }
+    fun setItems(item: ItemStack, action: ClickData<T>.() -> Unit, slots: List<Int>) = setItems(MenuItem(item), action, slots)
+    fun setItems(material: Material, action: ClickData<T>.() -> Unit, slots: List<Int>) = setItems(MenuItem(ItemStack(material)), action, slots)
+
     fun setItems(item: MenuItem<T>, action: ClickData<T>.() -> Unit, vararg slots: Int) = setItems(item, action, slots.toList())
     fun setItems(item: ItemStack, action: ClickData<T>.() -> Unit, vararg slots: Int) = setItems(item, action, slots.toList())
-    fun setItems(item: ItemStack, action: ClickData<T>.() -> Unit, slots: List<Int>) = setItems(MenuItem(item), action, slots)
+    fun setItems(material: Material, action: ClickData<T>.() -> Unit, vararg slots: Int) = setItems(ItemStack(material), action, slots.toList())
+
     fun setItems(item: MenuItem<T>, action: ClickData<T>.() -> Unit, slots: IntRange) = setItems(item, action, slots.toList())
     fun setItems(item: ItemStack, action: ClickData<T>.() -> Unit, slots: IntRange) = setItems(item, action, slots.toList())
+    fun setItems(material: Material, action: ClickData<T>.() -> Unit, slots: IntRange) = setItems(ItemStack(material), action, slots.toList())
 
     fun isSlotEmpty(slot: Int) = !items.containsKey(slot)
     fun clear() = items.clear()

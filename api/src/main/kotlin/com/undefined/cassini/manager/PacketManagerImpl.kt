@@ -1,19 +1,26 @@
 package com.undefined.cassini.manager
 
+import com.undefined.cassini.Cassini
 import com.undefined.cassini.ContainerMenu
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
+import com.undefined.cassini.event.MenuClickEvent
 import com.undefined.cassini.event.MenuOpenEvent
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.nms.PacketManager
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
+import org.bukkit.plugin.java.JavaPlugin
 
 class PacketManagerImpl : PacketManager {
     override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {
-        val menu = MenuManager.menus[id] ?: return true
-        if (MenuOpenEvent(player, menu).apply { callEvent() }.isCancelled) return false
+        val menu = MenuManager.menus[id] as? ContainerMenu<*> ?: return true
+
+        if (MenuClickEvent(player, menu, slot, type).apply {
+            Bukkit.getScheduler().runTask(Cassini.plugin, Runnable { callEvent() })
+        }.isCancelled) return false
 
         val wrapper = MenuManager.wrappers[id]!!
         return when (menu) {

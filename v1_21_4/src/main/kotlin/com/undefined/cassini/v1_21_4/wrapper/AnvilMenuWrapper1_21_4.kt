@@ -11,9 +11,8 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-@Suppress("ClassName")
 class AnvilMenuWrapper1_21_4(
-    val bukkitPlayer: Player,
+    private val bukkitPlayer: Player,
     override val size: Int,
     override var title: Component,
     override val config: MenuConfig

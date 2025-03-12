@@ -12,7 +12,6 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-@Suppress("ClassName")
 class ChestMenuWrapper1_21_4(
     player: Player,
     override val size: Int,

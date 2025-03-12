@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":v1_21_4:", "reobf"))
     implementation(project(":api"))
-    implementation("com.undefined:stellar:0.0.81")
+    implementation("com.undefined:stellar:0.1.36:spigot")
 }
 
 tasks {

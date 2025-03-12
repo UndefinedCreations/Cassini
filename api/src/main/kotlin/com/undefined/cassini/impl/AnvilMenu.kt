@@ -21,6 +21,12 @@ abstract class AnvilMenu(
 
     var cost: Int? = null
         private set
+    var text: String = ""
+        get() = getWrapper<AnvilMenuWrapper>()?.text!!
+        set(value) {
+            field = value
+            getWrapper<AnvilMenuWrapper>()?.text = value
+        }
 
     constructor(
         title: String,

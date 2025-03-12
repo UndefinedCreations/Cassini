@@ -18,7 +18,7 @@ sonar {
     }
 }
 
-val projectVersion = "0.0.16"
+val projectVersion = "0.0.17"
 val projectGroupId = "com.undefined"
 val adventureVersion = properties["adventure_version"]
 

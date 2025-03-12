@@ -18,7 +18,10 @@ object Cassini {
     fun initialize(plugin: JavaPlugin): Cassini {
         if (::plugin.isInitialized) return this
         this.plugin = plugin
+
         Bukkit.getPluginManager().registerEvents(MenuManager.getPacketListener(), plugin)
+        if (!CassiniRunnable.isRunning) CassiniRunnable.run()
+
         return this
     }
 

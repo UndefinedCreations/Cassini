@@ -1,14 +1,7 @@
 package com.undefined.cassini
 
-import com.undefined.cassini.data.MenuSize
-import com.undefined.cassini.data.click.ClickData
-import com.undefined.cassini.data.item.MenuItem
-import com.undefined.cassini.data.item.PageItem
-import com.undefined.cassini.data.iterator.MenuIterator
 import com.undefined.cassini.extensions.AnvilInputMenu
 import com.undefined.cassini.extensions.AnvilSlot
-import com.undefined.cassini.extensions.PaginatedMenu
-import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.util.openMenu
 import com.undefined.stellar.StellarCommand
 import org.bukkit.ChatColor

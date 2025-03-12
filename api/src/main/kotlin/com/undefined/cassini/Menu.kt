@@ -13,6 +13,11 @@ abstract class Menu<T : Menu<T>>(var title: Component, val optimization: MenuOpt
     fun create(init: T.() -> Unit) { (this as T).init() }
 
     @ApiStatus.OverrideOnly
+    open fun onTick() {
+        // should be overridden
+    }
+
+    @ApiStatus.OverrideOnly
     open fun preinitialize(player: Player) {
         // should be overridden
     }

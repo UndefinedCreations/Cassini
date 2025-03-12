@@ -12,7 +12,6 @@ import com.undefined.cassini.nms.PacketManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
-import org.bukkit.plugin.java.JavaPlugin
 
 class PacketManagerImpl : PacketManager {
     override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {

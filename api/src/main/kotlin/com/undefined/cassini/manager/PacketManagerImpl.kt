@@ -30,7 +30,7 @@ class PacketManagerImpl : PacketManager {
     }
 
     override fun onClose(player: Player, id: Int) {
-        val menu = MenuManager.menus[id] ?: throw IllegalArgumentException("No menu with id!")
+        val menu = MenuManager.menus[id] ?: return
         if (MenuOpenEvent(player, menu).apply { callEvent() }.isCancelled) return
 
         MenuManager.menus[id]?.onClose(player)

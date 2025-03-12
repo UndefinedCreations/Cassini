@@ -15,6 +15,7 @@ interface NMS {
     fun sendOpenBookPacket(player: Player, book: ItemStack)
     fun sendContentsPacket(player: Player, wrapper: MenuWrapper)
     fun setContainerMenu(player: Player, wrapper: MenuWrapper)
+    fun resetContainerMenu(player: Player)
     fun initMenu(player: Player, wrapper: MenuWrapper)
     fun getContainerId(player: Player): Int
 }

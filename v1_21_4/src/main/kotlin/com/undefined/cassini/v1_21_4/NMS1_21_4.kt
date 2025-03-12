@@ -46,6 +46,7 @@ object NMS1_21_4 : NMS {
     }
 
     override fun setContainerMenu(player: Player, wrapper: MenuWrapper) { player.serverPlayer().containerMenu = wrapper as AbstractContainerMenu }
+    override fun resetContainerMenu(player: Player) { player.serverPlayer().containerMenu = player.serverPlayer().inventoryMenu }
     override fun initMenu(player: Player, wrapper: MenuWrapper) = player.serverPlayer().initMenu(wrapper as AbstractContainerMenu)
 
     override fun getContainerId(player: Player): Int = player.serverPlayer().containerMenu.containerId

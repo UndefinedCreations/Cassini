@@ -8,8 +8,6 @@ object CassiniRunnable : BukkitRunnable() {
 	override fun run() {
 		isRunning = true
 
-		for ((_, menu) in MenuManager.menus) {
-			menu.onTick()
-		}
+		for ((_, menu) in MenuManager.menus) menu.onTick()
 	}
 }

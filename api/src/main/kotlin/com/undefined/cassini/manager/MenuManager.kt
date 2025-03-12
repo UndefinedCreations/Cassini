@@ -50,18 +50,17 @@ object MenuManager {
         update(player, menu)
         val wrapper = nms.createChestMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         openContainerMenu(player, menu, wrapper, modifySlots)
-        onOpen(player, menu, wrapper)
     }
 
     fun openAnvilMenu(player: Player, menu: AnvilMenu, modifySlots: Boolean = Cassini.modifySlots) {
         val wrapper = nms.createAnvilMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         openContainerMenu(player, menu, wrapper, modifySlots)
         menu.cost?.let { wrapper.itemCost = it }
-        onOpen(player, menu, wrapper)
     }
 
     fun openBookMenu(player: Player, menu: BookMenu) {
         update(player, menu)
+
         val book = ItemStack(Material.WRITTEN_BOOK)
         val meta: BookMeta = book.itemMeta as BookMeta
         meta.title = "A Custom Cassini Book Menu."

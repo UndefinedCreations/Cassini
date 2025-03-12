@@ -29,6 +29,7 @@ class PacketManagerImpl : PacketManager {
 
         MenuManager.menus[id]?.onClose(player)
         MenuManager.menus.remove(id)
+        MenuManager.wrappers.remove(id)
     }
 
     override fun createResult(player: Player, id: Int) {
@@ -37,7 +38,7 @@ class PacketManagerImpl : PacketManager {
     }
 
     private inline fun <reified T : ContainerMenu<T>> handleClick(player: Player, menu: T, slot: Int, id: Int, type: ClickType, config: MenuConfig): Boolean {
-        val data = ClickData(player, menu, id, slot, type, config)
+        val data = ClickData(player, menu, slot, id, type, config)
         menu.onClick(data)
         menu.items[slot]?.let { item ->
             for (action in item.actions) data.action()

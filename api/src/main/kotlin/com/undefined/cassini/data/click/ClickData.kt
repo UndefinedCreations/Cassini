@@ -24,7 +24,7 @@ class ClickData<T : ContainerMenu<*>>(val player: Player, val menu: T, val slot:
     }
 
     fun close() {
-        val wrapper = MenuManager.wrappers[id]!!
+        val wrapper = MenuManager.wrappers[id] ?: throw IllegalArgumentException("No wrapper with id!")
         MenuManager.nms.sendContainerClosePacket(player, wrapper)
         MenuManager.packetManager.onClose(player, id)
     }

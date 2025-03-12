@@ -42,10 +42,6 @@ abstract class AnvilMenu(
     fun setInputRightItem(item: MenuItem<AnvilMenu>) = setItem(1, item)
     fun setInputRightItem(item: ItemStack) = setItem(1, item)
 
-    fun setText(text: String?) {
-        getWrapper<AnvilMenuWrapper>()?.text = text
-    }
-
     fun setCost(cost: Int?) {
         this.cost = cost
         cost?.let { getWrapper<AnvilMenuWrapper>()?.itemCost = cost }

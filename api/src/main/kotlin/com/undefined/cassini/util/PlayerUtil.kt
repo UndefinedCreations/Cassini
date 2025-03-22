@@ -6,6 +6,7 @@ import com.undefined.cassini.exception.InvalidMenuTypeException
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.BookMenu
 import com.undefined.cassini.impl.ChestMenu
+import com.undefined.cassini.impl.SmithingMenu
 import com.undefined.cassini.manager.MenuManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -14,6 +15,7 @@ fun <T : Menu<*>> Player.openMenu(menu: T, modifySlots: Boolean = Cassini.modify
     when (menu) {
         is ChestMenu -> MenuManager.openChestMenu(this, menu, modifySlots)
         is AnvilMenu -> MenuManager.openAnvilMenu(this, menu, modifySlots)
+        is SmithingMenu -> MenuManager.openSmithingMenu(this, menu, modifySlots)
         is BookMenu -> MenuManager.openBookMenu(this, menu)
         else -> throw InvalidMenuTypeException()
     }

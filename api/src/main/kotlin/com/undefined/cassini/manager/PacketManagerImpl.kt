@@ -9,6 +9,7 @@ import com.undefined.cassini.event.MenuCloseEvent
 import com.undefined.cassini.event.MenuOpenEvent
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
+import com.undefined.cassini.impl.SmithingMenu
 import com.undefined.cassini.manager.MenuManager.nms
 import com.undefined.cassini.nms.PacketManager
 import org.bukkit.Bukkit
@@ -28,6 +29,7 @@ class PacketManagerImpl : PacketManager {
         return when (menu) {
             is ChestMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
             is AnvilMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
+            is SmithingMenu -> handleClick(player, menu, slot, id, type, wrapper.config)
             else -> true
         }
     }
@@ -48,7 +50,10 @@ class PacketManagerImpl : PacketManager {
     }
 
     override fun createResult(player: Player, id: Int) {
-        val menu = MenuManager.menus[id] as? AnvilMenu ?: return
+        val menu = MenuManager.menus[id] as? AnvilMenu ?: return run {
+            val menu = MenuManager.menus[id] as? SmithingMenu ?: return@run
+            menu.createResult(player)
+        }
         menu.createResult(player)
     }
 

@@ -6,6 +6,7 @@ import com.undefined.cassini.nms.wrapper.AnvilMenuWrapper
 import com.undefined.cassini.nms.wrapper.MenuWrapper
 import com.undefined.cassini.v1_21_4.wrapper.AnvilMenuWrapper1_21_4
 import com.undefined.cassini.v1_21_4.wrapper.ChestMenuWrapper1_21_4
+import com.undefined.cassini.v1_21_4.wrapper.SmithingMenuWrapper1_21_4
 import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientboundContainerClosePacket
@@ -26,6 +27,7 @@ object NMS1_21_4 : NMS {
 
     override fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper = ChestMenuWrapper1_21_4(player, size, title, config)
     override fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper = AnvilMenuWrapper1_21_4(player, size, title, config)
+    override fun createSmithingMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper = SmithingMenuWrapper1_21_4(player, size, title, config)
 
     override fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper) = player.sendPacket(ClientboundContainerClosePacket(wrapper.id))
     override fun sendOpenContainerScreenPacket(player: Player, wrapper: MenuWrapper) {

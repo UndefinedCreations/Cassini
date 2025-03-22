@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack
 interface NMS {
     fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
     fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper
+    fun createSmithingMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
     fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper)
     fun sendOpenContainerScreenPacket(player: Player, wrapper: MenuWrapper)
     fun sendOpenBookPacket(player: Player, book: ItemStack)

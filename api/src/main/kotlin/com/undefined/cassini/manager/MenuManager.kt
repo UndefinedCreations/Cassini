@@ -9,6 +9,7 @@ import com.undefined.cassini.exception.UnsupportedVersionException
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.BookMenu
 import com.undefined.cassini.impl.ChestMenu
+import com.undefined.cassini.impl.SmithingMenu
 import com.undefined.cassini.nms.NMS
 import com.undefined.cassini.nms.PacketListener
 import com.undefined.cassini.nms.PacketManager
@@ -47,7 +48,6 @@ object MenuManager {
     }
 
     fun openChestMenu(player: Player, menu: ChestMenu, modifySlots: Boolean = Cassini.modifySlots) {
-        update(player, menu)
         val wrapper = nms.createChestMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         openContainerMenu(player, menu, wrapper, modifySlots)
     }
@@ -56,6 +56,11 @@ object MenuManager {
         val wrapper = nms.createAnvilMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
         openContainerMenu(player, menu, wrapper, modifySlots)
         menu.cost?.let { wrapper.itemCost = it }
+    }
+
+    fun openSmithingMenu(player: Player, menu: SmithingMenu, modifySlots: Boolean = Cassini.modifySlots) {
+        val wrapper = nms.createSmithingMenu(player, menu.size, menu.title, MenuConfig(modifySlots))
+        openContainerMenu(player, menu, wrapper, modifySlots)
     }
 
     fun openBookMenu(player: Player, menu: BookMenu) {

@@ -48,7 +48,7 @@ abstract class PaginatedMenu(
     override fun afterinitialize(player: Player) {
         updateList(player)
 
-        val items: HashMap<Int, MenuItem<ChestMenu>> = items
+        val items: HashMap<Int, MenuItem<ChestMenu>> = internalItems
         val emptySlots: MutableList<Int> = mutableListOf()
         for (slot in 0..size)
             if (slot !in items.keys) emptySlots.add(slot)

@@ -4,6 +4,7 @@ import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.nms.NMS
 import com.undefined.cassini.nms.wrapper.AnvilMenuWrapper
 import com.undefined.cassini.nms.wrapper.MenuWrapper
+import com.undefined.cassini.nms.wrapper.SmithingMenuWrapper
 import com.undefined.cassini.v1_21_4.wrapper.AnvilMenuWrapper1_21_4
 import com.undefined.cassini.v1_21_4.wrapper.ChestMenuWrapper1_21_4
 import com.undefined.cassini.v1_21_4.wrapper.SmithingMenuWrapper1_21_4
@@ -17,6 +18,7 @@ import net.minecraft.server.network.ServerGamePacketListenerImpl
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.inventory.SmithingMenu
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.entity.Player
@@ -33,6 +35,7 @@ object NMS1_21_4 : NMS {
     override fun sendOpenContainerScreenPacket(player: Player, wrapper: MenuWrapper) {
         val type: MenuType<*> = when (wrapper) {
             is AnvilMenuWrapper -> MenuType.ANVIL
+            is SmithingMenuWrapper -> MenuType.SMITHING
             else -> MojangAdapter.getMenuType(wrapper.size)
         }
         player.sendPacket(ClientboundOpenScreenPacket(wrapper.id, type, MojangAdapter.getComponent(wrapper.title)))

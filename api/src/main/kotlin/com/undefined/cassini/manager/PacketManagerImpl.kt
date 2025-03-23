@@ -6,7 +6,6 @@ import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.data.click.ClickData
 import com.undefined.cassini.event.MenuClickEvent
 import com.undefined.cassini.event.MenuCloseEvent
-import com.undefined.cassini.event.MenuOpenEvent
 import com.undefined.cassini.impl.AnvilMenu
 import com.undefined.cassini.impl.ChestMenu
 import com.undefined.cassini.impl.SmithingMenu
@@ -15,7 +14,6 @@ import com.undefined.cassini.nms.PacketManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
-import java.lang.IllegalArgumentException
 
 class PacketManagerImpl : PacketManager {
     override fun onClick(player: Player, id: Int, slot: Int, type: ClickType): Boolean {
@@ -60,7 +58,7 @@ class PacketManagerImpl : PacketManager {
     private inline fun <reified T : ContainerMenu<T>> handleClick(player: Player, menu: T, slot: Int, id: Int, type: ClickType, config: MenuConfig): Boolean {
         val data = ClickData(player, menu, slot, id, type, config)
         menu.onClick(data)
-        menu.items[slot]?.let { item ->
+        menu.internalItems[slot]?.let { item ->
             for (action in item.actions) data.action()
         }
         return !data.isCancelled

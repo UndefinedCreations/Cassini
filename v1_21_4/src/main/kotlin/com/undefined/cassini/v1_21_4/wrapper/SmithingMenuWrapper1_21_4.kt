@@ -2,6 +2,7 @@ package com.undefined.cassini.v1_21_4.wrapper
 
 import com.undefined.cassini.data.MenuConfig
 import com.undefined.cassini.nms.wrapper.MenuWrapper
+import com.undefined.cassini.nms.wrapper.SmithingMenuWrapper
 import com.undefined.cassini.v1_21_4.MojangAdapter
 import com.undefined.cassini.v1_21_4.NMS1_21_4.serverPlayer
 import com.undefined.cassini.v1_21_4.PacketListener1_21_4
@@ -19,7 +20,7 @@ class SmithingMenuWrapper1_21_4(
 ) : SmithingMenu(
     bukkitPlayer.serverPlayer().nextContainerCounter(),
     bukkitPlayer.serverPlayer().inventory
-), MenuWrapper {
+), SmithingMenuWrapper {
 
     init {
         this.checkReachable = false

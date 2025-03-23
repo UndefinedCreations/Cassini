@@ -41,7 +41,7 @@ object MenuManager {
 
     fun update(player: Player, menu: Menu<*>) {
         if (menu !in hasBeenInitialized) hasBeenInitialized.add(menu)
-        if (menu is ContainerMenu<*>) menu.items.clear()
+        if (menu is ContainerMenu<*>) menu.internalItems.clear()
         menu.preinitialize(player)
         menu.initialize(player)
         menu.afterinitialize(player)
@@ -92,7 +92,7 @@ object MenuManager {
         nms.initMenu(player, wrapper)
         nms.setContainerMenu(player, wrapper)
         for (slot in 0..menu.size)
-            menu.items[slot]?.itemStack?.let { wrapper.setItem(slot, it) }
+            menu.internalItems[slot]?.itemStack?.let { wrapper.setItem(slot, it) }
     }
 
     private fun onOpen(player: Player, menu: Menu<*>, wrapper: MenuWrapper): Boolean { // whether to continue

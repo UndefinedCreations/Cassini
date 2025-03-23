@@ -34,7 +34,7 @@ abstract class AnvilInputMenu(
     }
 
     override fun createResult(player: Player) {
-        if (items[2] == null) setItem(2, (items[0]?.itemStack ?: ItemStack(Material.AIR)).clone())
+        if (internalItems[2] == null) setItem(2, (internalItems[0]?.itemStack ?: ItemStack(Material.AIR)).clone())
     }
 
     override fun onClick(data: ClickData<AnvilMenu>) {

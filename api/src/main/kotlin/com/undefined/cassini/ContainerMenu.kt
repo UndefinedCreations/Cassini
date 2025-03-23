@@ -17,15 +17,15 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
     parent: Menu<*>?
 ) : Menu<T>(title, optimization, parent) {
 
-    val items: HashMap<Int, MenuItem<T>> = hashMapOf()
+    val internalItems: HashMap<Int, MenuItem<T>> = hashMapOf()
     fun firstEmptySlot(): Int {
         for (i in 0..<size)
-            if (items[i] == null) return i
+            if (internalItems[i] == null) return i
         return -1
     }
 
     fun setItem(slot: Int, item: MenuItem<T>) {
-        items[slot] = item
+        internalItems[slot] = item
         getWrapper<MenuWrapper>()?.setItem(slot, item.itemStack)
     }
     fun setItem(slot: Int, item: ItemStack, action: ClickData<T>.() -> Unit = {}) = setItem(slot, MenuItem(item, action))
@@ -35,7 +35,7 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
     fun setItem(slot: Int, item: ItemStack, action: ClickAction) = setItem(slot, MenuItem(item).apply { addAction(action) } as MenuItem<T>)
 
     fun addItem(item: MenuItem<T>) {
-        if (size == items.size) return
+        if (size == internalItems.size) return
         setItem(firstEmptySlot(), item)
     }
     fun addItem(item: ItemStack) = addItem(MenuItem.fromItem(item))
@@ -84,8 +84,8 @@ abstract class ContainerMenu<T : ContainerMenu<T>>(
     fun setItems(item: ItemStack, action: ClickData<T>.() -> Unit, slots: IntRange) = setItems(item, action, slots.toList())
     fun setItems(material: Material, action: ClickData<T>.() -> Unit, slots: IntRange) = setItems(ItemStack(material), action, slots.toList())
 
-    fun isSlotEmpty(slot: Int) = !items.containsKey(slot)
-    fun clear() = items.clear()
+    fun isSlotEmpty(slot: Int) = !internalItems.containsKey(slot)
+    fun clear() = internalItems.clear()
 
     @ApiStatus.OverrideOnly
     open fun onClick(data: ClickData<T>) {

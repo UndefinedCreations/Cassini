@@ -23,6 +23,9 @@ tasks {
     assemble {
         dependsOn(shadowJar)
     }
+    shadowJar {
+        archiveFileName = "server.jar"
+    }
     compileKotlin {
         kotlinOptions.jvmTarget = "21"
     }

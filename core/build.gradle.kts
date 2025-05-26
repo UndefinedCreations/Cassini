@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     compileOnly(libs.spigotmc)
+
+    api(project(":common"))
 }

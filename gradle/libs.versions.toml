@@ -1,0 +1,7 @@
+[versions]
+spigotmc = "1.21.4-R0.1-SNAPSHOT"
+papermc = "1.21.4-R0.1-SNAPSHOT"
+
+[libraries]
+spigotmc = { module = "org.spigotmc:spigot-api", version.ref = "spigotmc" }
+papermc = { module = "io.papermc.paper:paper-api", version.ref = "papermc" }

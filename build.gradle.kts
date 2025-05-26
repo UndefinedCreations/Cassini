@@ -1,103 +1,112 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.jvm.tasks.Jar
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
-    `java-library`
+    id("setup")
+    id("com.gradleup.shadow")
     `maven-publish`
-    kotlin("jvm") version "1.9.22"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.sonarqube") version "6.0.1.5171"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
-}
-
-apply(plugin = "maven-publish")
-
-sonar {
-    properties {
-        property("sonar.projectKey", "Cassini")
-        property("sonar.projectName", "Cassini")
-    }
-}
-
-val projectVersion = "0.0.23"
-val projectGroupId = "com.undefined"
-val adventureVersion = properties["adventure_version"]
-
-group = "com.undefined"
-version = "0.0.1"
-
-publishing {
-    repositories {
-        maven {
-            name = "UndefinedCreations"
-            url = uri("https://repo.undefinedcreations.com/releases")
-            credentials(PasswordCredentials::class) {
-                username = project.properties["mavenUser"].toString()
-                password = project.properties["mavenPassword"].toString()
-            }
-        }
-    }
-    publications {
-        register<MavenPublication>("maven") {
-            groupId = projectGroupId
-            version = projectVersion
-
-            from(components["java"])
-        }
-    }
-}
-
-allprojects {
-    apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
-
-    group = projectGroupId
-    version = projectVersion
-
-    repositories {
-        mavenCentral()
-        maven("https://repo.papermc.io/repository/maven-public/")
-        maven("https://repo.codemc.io/repository/nms/")
-        maven {
-            name = "sonatype"
-            url = uri("https://oss.sonatype.org/content/groups/public/")
-        }
-    }
-
-    dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("net.kyori:adventure-api:$adventureVersion")
-        implementation("net.kyori:adventure-platform-bukkit:$adventureVersion")
-        implementation("net.kyori:adventure-text-minimessage:$adventureVersion")
-        implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
-        implementation("net.kyori:adventure-text-serializer-bungeecord:$adventureVersion")
-    }
-
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation(project(":v1_21_4:", "reobf"))
-    implementation(project(":api"))
+    compileOnly(libs.spigotmc)
+
+    api(project(":nms"))
+
+    dokkaPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
+}
+
+subprojects {
+    apply(plugin = "org.jetbrains.dokka")
+    tasks.withType<DokkaTask>()
+
+    tasks.register<Jar>("sourceJar") {
+        archiveClassifier = "sources"
+        from(sourceSets.main.get().allSource)
+    }
+}
+
+val packageJavadoc by tasks.registering(Jar::class) {
+    group = "stellar"
+    archiveClassifier = "javadoc"
+
+    dependsOn(tasks.dokkaJavadocCollector)
+    from(tasks.dokkaJavadocCollector.flatMap { it.outputDirectory })
+}
+
+val packageSources by tasks.registering(Jar::class) {
+    group = "stellar"
+    archiveClassifier = "sources"
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from(subprojects.map { it.sourceSets.main.get().allSource })
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("kotlin") {
+            artifactId = rootProject.name
+            from(components["shadow"])
+            artifact(packageJavadoc)
+            artifact(packageSources)
+
+            pom {
+                name = "Cassini"
+                description = "Cassini is a simplistic, yet very extensive Menu library."
+                url = "https://www.github.com/UndefinedCreations/Cassini"
+                licenses {
+                    license {
+                        name = "MIT"
+                        url = "https://mit-license.org/"
+                        distribution = "https://mit-license.org/"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "lutto"
+                        name = "StillLutto"
+                        url = "https://github.com/StillLutto/"
+                    }
+                }
+                scm {
+                    url = "https://github.com/UndefinedCreations/Cassini/"
+                    connection = "scm:git:git://github.com/UndefinedCreations/Cassini.git"
+                    developerConnection = "scm:git:ssh://git@github.com/UndefinedCreations/Cassini.git"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "undefined-releases"
+            url = uri("https://repo.undefinedcreations.com/releases")
+            credentials(PasswordCredentials::class) {
+                username = System.getenv("MAVEN_NAME") ?: property("mavenUser").toString()
+                password = System.getenv("MAVEN_SECRET") ?: property("mavenPassword").toString()
+            }
+        }
+        maven {
+            name = "undefined-snapshots"
+            url = uri("https://repo.undefinedcreations.com/snapshots")
+            credentials(PasswordCredentials::class) {
+                username = System.getenv("MAVEN_NAME") ?: property("mavenUser").toString()
+                password = System.getenv("MAVEN_SECRET") ?: property("mavenPassword").toString()
+            }
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks {
-    assemble {
-        dependsOn("shadowJar")
-    }
-    jar.configure {
-        dependsOn("shadowJar")
-        archiveClassifier.set("dev")
-    }
-    withType<ShadowJar> {
+    shadowJar {
+        minimize {
+            exclude("**/kotlin/**")
+            exclude("**/intellij/**")
+            exclude("**/jetbrains/**")
+        }
         archiveClassifier = ""
-        archiveFileName = "${project.name}-${project.version}.jar"
     }
-    compileKotlin {
-        kotlinOptions.jvmTarget = "21"
-    }
-}
-
-
-kotlin {
-    jvmToolchain(21)
 }

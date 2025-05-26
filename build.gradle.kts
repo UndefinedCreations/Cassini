@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.22"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("org.sonarqube") version "6.0.1.5171"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14" apply false
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17" apply false
 }
 
 apply(plugin = "maven-publish")
@@ -18,7 +18,7 @@ sonar {
     }
 }
 
-val projectVersion = "0.0.21"
+val projectVersion = "0.0.23"
 val projectGroupId = "com.undefined"
 val adventureVersion = properties["adventure_version"]
 

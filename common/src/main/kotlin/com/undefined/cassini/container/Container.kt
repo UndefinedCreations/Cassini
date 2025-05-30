@@ -20,6 +20,7 @@ abstract class Container<C : Container<C, *>, E : Element> {
 
     fun addElement(element: E) {
         this.elements.add(element)
+        element.containers.add(this)
     }
 
     fun addContainer(container: C) {

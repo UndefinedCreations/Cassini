@@ -1,6 +1,6 @@
 package com.undefined.cassini.menu.item
 
-import com.undefined.cassini.data.config.ItemMenuSettings
+import com.undefined.cassini.menu.item.ItemMenuSettings
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
 

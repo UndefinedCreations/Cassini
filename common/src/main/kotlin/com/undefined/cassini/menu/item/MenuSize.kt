@@ -1,4 +1,4 @@
-package com.undefined.cassini.data
+package com.undefined.cassini.menu.item
 
 object MenuSize {
     const val CHEST_9X1 = 9

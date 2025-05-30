@@ -1,4 +1,4 @@
-package com.undefined.cassini.data
+package com.undefined.cassini.menu
 
 /**
  * An enum class that dictates how the menu works on the client and server.

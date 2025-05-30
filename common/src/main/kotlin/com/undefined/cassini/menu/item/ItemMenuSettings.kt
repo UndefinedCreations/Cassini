@@ -1,7 +1,7 @@
-package com.undefined.cassini.data.config
+package com.undefined.cassini.menu.item
 
-import com.undefined.cassini.data.MenuOptimization
-import com.undefined.cassini.menu.item.ItemMenu
+import com.undefined.cassini.menu.MenuOptimization
+import com.undefined.cassini.menu.MenuSettings
 
 /**
  * Contains information about any [ItemMenu].

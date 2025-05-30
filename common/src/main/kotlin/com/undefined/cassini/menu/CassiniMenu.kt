@@ -1,6 +1,5 @@
 package com.undefined.cassini.menu
 
-import com.undefined.cassini.data.config.MenuSettings
 import net.kyori.adventure.text.Component
 
 /**

@@ -1,6 +1,6 @@
 package com.undefined.cassini.nms
 
-import com.undefined.cassini.data.exception.UnsupportedVersionException
+import com.undefined.cassini.exception.UnsupportedVersionException
 import com.undefined.cassini.internal.NMS
 import org.bukkit.Bukkit
 import org.jetbrains.annotations.ApiStatus

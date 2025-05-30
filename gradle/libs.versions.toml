@@ -1,7 +1,10 @@
 [versions]
 spigotmc = "1.21.4-R0.1-SNAPSHOT"
 papermc = "1.21.4-R0.1-SNAPSHOT"
+reactor-bom = "2024.0.6"
 
 [libraries]
 spigotmc = { module = "org.spigotmc:spigot-api", version.ref = "spigotmc" }
 papermc = { module = "io.papermc.paper:paper-api", version.ref = "papermc" }
+reactor = { module = "io.projectreactor:reactor-core" }
+reactor-bom = { module = "io.projectreactor:reactor-bom", version.ref = "reactor-bom" }

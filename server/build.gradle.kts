@@ -35,6 +35,9 @@ dependencies {
 }
 
 tasks {
+    jar {
+        archiveFileName = "test.jar"
+    }
     shadowJar {
         archiveFileName = "server.jar"
     }

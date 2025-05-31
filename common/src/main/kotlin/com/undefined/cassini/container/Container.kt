@@ -13,10 +13,8 @@ import com.undefined.cassini.state.PrimitiveStateObserver
  */
 abstract class Container<C : Container<C, *>, E : Element> {
 
-    val elements: MutableList<E> = mutableListOf()
-        private set
-    val containers: MutableList<C> = mutableListOf()
-        private set
+    private val elements: MutableList<E> = mutableListOf()
+    private val containers: MutableList<C> = mutableListOf()
 
     fun addElement(element: E) {
         this.elements.add(element)

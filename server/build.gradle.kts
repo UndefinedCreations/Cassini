@@ -31,7 +31,7 @@ dependencies {
     implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
 
     // Project Dependencies
-    implementation(project(":core"))
+    implementation(project(":"))
 }
 
 tasks {

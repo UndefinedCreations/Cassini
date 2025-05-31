@@ -8,10 +8,17 @@ plugins {
     id("org.jetbrains.dokka") version "2.0.0"
 }
 
+private val submodules: HashMap<String, String> = hashMapOf(
+    ":core" to "core", // project name to classifier
+    ":modules:chest" to "chest",
+)
+
 dependencies {
     compileOnly(libs.spigotmc)
 
-    api(project(":nms"))
+    api(project(":common"))
+    api(project(":nms:v1_21_4"))
+    for (module in submodules) api(project(module.key))
 
     dokkaPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
 }
@@ -48,6 +55,8 @@ publishing {
             from(components["shadow"])
             artifact(packageJavadoc)
             artifact(packageSources)
+            for (module in submodules)
+                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("lynx-$version-${module.value}.jar")) { classifier = module.value }
 
             pom {
                 name = "Cassini"
@@ -108,5 +117,7 @@ tasks {
             exclude("**/jetbrains/**")
         }
         archiveClassifier = ""
+
+        for (module in submodules) dependsOn(project(module.key).tasks.named("shadowJar"))
     }
 }

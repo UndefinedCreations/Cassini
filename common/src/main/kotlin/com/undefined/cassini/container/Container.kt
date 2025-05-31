@@ -37,7 +37,7 @@ abstract class Container<C : Container<C, *>, E : Element> {
         ObjectStateObserver(initialState).apply { observe { update() } }
 
     /**
-     * Updates the contents of this page to the user.
+     * Updates the contents of this container to the user.
      */
     fun update() {
         TODO()

@@ -15,3 +15,14 @@ package com.undefined.cassini.state
 //
 //    }
 //}
+
+fun main() {
+    val state = objectState(mutableListOf("test")) {
+
+    }
+
+    state.update {
+        it.clear()
+        it.add("potatoe")
+    }
+}

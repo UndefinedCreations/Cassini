@@ -6,7 +6,7 @@ package com.undefined.cassini.state
 fun <T : Any> state(initialState: T, observer: (T) -> Unit = {}): PrimitiveStateObserver<T> = PrimitiveStateObserver(initialState).apply { observe(observer) }
 
 @JvmOverloads
-fun <T : Any> listState(initialState: MutableCollection<T>, observer: (MutableCollection<T>) -> Unit = {}): ListStateObserver<T> = ListStateObserver(initialState).apply { observe(observer) }
+fun <T : Any> listState(initialState: MutableCollection<T>, observer: (MutableCollection<T>) -> Unit = {}): ListStateObserver<T> = ListStateObserver(initialState).apply { observe(observer) } // TODO IMPROVED!
 
 @JvmOverloads
 fun <T : Any> objectState(initialState: T, observer: (T) -> Unit = {}): ObjectStateObserver<T> = ObjectStateObserver(initialState).apply { observe(observer) }

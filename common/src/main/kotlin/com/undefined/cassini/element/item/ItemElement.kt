@@ -1,8 +1,8 @@
 package com.undefined.cassini.element.item
 
 import com.undefined.cassini.element.CartesianCoordinate
-import com.undefined.cassini.element.Element
 import com.undefined.cassini.menu.item.ItemMenu
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -17,6 +17,7 @@ class ItemElement private constructor(cardinalSlot: CartesianCoordinate? = null,
     constructor(slot: Int, item: ItemStack) : this(null, slot, { item })
     constructor(item: (Player) -> ItemStack) : this(0, 0, item)
     constructor(item: ItemStack) : this(0, 0, { item })
+    constructor(material: Material) : this(0, 0, ItemStack(material))
 
     override fun getItem(player: Player): ItemStack = item(player)
 

@@ -1,6 +1,8 @@
 package com.undefined.cassini.menu
 
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
+import java.util.UUID
 
 /**
  * This is the base for any menu, although it's no menu in itself.
@@ -16,5 +18,13 @@ abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
     val title: Component,
     val parent: CassiniMenu<*, *>?,
 ) {
+
+    val viewers: MutableList<UUID> = mutableListOf() // player uuid
     abstract val settings: C
+
+    open fun open(player: Player) {
+        if (player.uniqueId in viewers) return
+        viewers.add(player.uniqueId)
+    }
+
 }

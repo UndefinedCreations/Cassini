@@ -1,6 +1,7 @@
 package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.container.item.ItemContainer
+import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
 
@@ -13,7 +14,8 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
     title: Component,
     size: Int,
     parent: CassiniMenu<*, *>?,
-) : ItemMenu<T>(title, size, parent) {
+    type: MenuType
+) : ItemMenu<T>(title, size, parent, type) {
 
     abstract val rootContainer: ItemContainer
 

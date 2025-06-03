@@ -1,6 +1,7 @@
 package com.undefined.cassini.container
 
 import com.undefined.cassini.element.Element
+import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.state.ListStateObserver
 import com.undefined.cassini.state.ObjectStateObserver
 import com.undefined.cassini.state.PrimitiveStateObserver
@@ -13,8 +14,8 @@ import com.undefined.cassini.state.PrimitiveStateObserver
  */
 abstract class Container<C : Container<C, *>, E : Element> {
 
-    private val elements: MutableList<E> = mutableListOf()
-    private val containers: MutableList<C> = mutableListOf()
+    val elements: MutableList<E> = mutableListOf()
+    val containers: MutableList<C> = mutableListOf()
 
     fun addElement(element: E) {
         this.elements.add(element)
@@ -40,5 +41,13 @@ abstract class Container<C : Container<C, *>, E : Element> {
     fun update() {
         TODO()
     }
+
+    /**
+     * Gets all elements, including from sub-containers.
+     *
+     * @param E What the elements will be cast into.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun <E : Element> getAllElements(): List<E> = (elements + containers.flatMap { it.getAllElements() }) as List<E>
 
 }

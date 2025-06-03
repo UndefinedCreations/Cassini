@@ -2,10 +2,15 @@ package com.undefined.cassini.internal
 
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.minecraft.commands.CommandBuildContext
+import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.kyori.adventure.text.Component as AdventureComponent
 import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.item.ItemStack
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack
+import org.bukkit.inventory.ItemStack as BukkitItemStack
 import com.undefined.cassini.data.MenuType as CassiniMenuType
 
 object MojangAdapter {
@@ -29,5 +34,9 @@ object MojangAdapter {
     }
 
     fun getMojangComponent(component: AdventureComponent): Component = Component.Serializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)!!
+
+    fun getItems(bukkitItems: List<BukkitItemStack>): NonNullList<ItemStack> = NonNullList.create<ItemStack>().apply {
+        for (item in bukkitItems) add(CraftItemStack.asNMSCopy(item))
+    }
 
 }

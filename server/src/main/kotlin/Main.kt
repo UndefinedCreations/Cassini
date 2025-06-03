@@ -1,4 +1,3 @@
-import com.undefined.cassini.menu.item.ChestMenu
 import com.undefined.stellar.StellarCommand
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -11,7 +10,7 @@ class Main : JavaPlugin() {
             .addArgument("open")
             .addExecution<Player> {
 //                NMSManager.nms.sendOpenScreenPacket(sender, MenuType.CHEST_9X3)
-                ChestMenu(Component.text("test"), 6).open(sender)
+                TestMenu().open(sender)
             }
             .register(this)
     }

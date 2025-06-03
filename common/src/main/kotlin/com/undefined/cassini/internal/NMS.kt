@@ -3,17 +3,34 @@ package com.undefined.cassini.internal
 import com.undefined.cassini.data.MenuType
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 interface NMS {
 //    fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
 //    fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper
 //    fun createSmithingMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
 //    fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper)
+
+    /**
+     * Send the [player], an open screen packet with [type] and [title].
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Open_Screen">Protocol Reference</a>
+     */
     fun sendOpenScreenPacket(player: Player, type: MenuType, title: Component)
+
+    /**
+     * Send the [player], a set container content packet with [contents].
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Content">Protocol Reference</a>
+     */
+    fun sendContentsPacket(player: Player, contents: List<ItemStack>)
 //    fun sendOpenBookPacket(player: Player, book: ItemStack)
-//    fun sendContentsPacket(player: Player, wrapper: MenuWrapper)
 //    fun setContainerMenu(player: Player, wrapper: MenuWrapper)
 //    fun resetContainerMenu(player: Player)
 //    fun initMenu(player: Player, wrapper: MenuWrapper)
-//    fun getContainerId(player: Player): Int
+
+    /**
+     * Get the next container id for [player].
+     */
+    fun getContainerId(player: Player): Int
 }

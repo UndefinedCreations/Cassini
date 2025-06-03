@@ -4,6 +4,7 @@ import com.undefined.cassini.container.Container
 import com.undefined.cassini.element.CartesianCoordinate
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.menu.item.ItemMenu
+import org.bukkit.inventory.ItemStack
 
 /**
  * Represents a container in an [ItemMenu].

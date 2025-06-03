@@ -7,9 +7,9 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 /**
- * Represents an item to be displayed in a [ItemMenu]. If both [cardinalSlot] and [slot] are `null`, then it will attempt to use the next available slot.
+ * Represents an item to be displayed in a [ItemMenu]. If both [cartesianCoordinate] and [slot] are `null`, then it will attempt to use the next available slot.
  */
-class ItemElement private constructor(cardinalSlot: CartesianCoordinate? = null, slot: Int? = null, val item: (Player) -> ItemStack) : AbstractItemElement(cardinalSlot, slot) {
+class ItemElement private constructor(cartesianCoordinate: CartesianCoordinate? = null, slot: Int? = null, private val item: (Player) -> ItemStack) : AbstractItemElement(cartesianCoordinate, slot) {
 
     constructor(x: Int, y: Int, item: (Player) -> ItemStack) : this(CartesianCoordinate(x, y), null, item)
     constructor(slot: Int, item: (Player) -> ItemStack) : this(null, slot, item)

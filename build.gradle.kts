@@ -4,6 +4,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 plugins {
     id("setup")
     id("com.gradleup.shadow")
+    `java-library`
     `maven-publish`
     id("org.jetbrains.dokka") version "2.0.0"
 }
@@ -34,7 +35,7 @@ subprojects {
 }
 
 val packageJavadoc by tasks.registering(Jar::class) {
-    group = "stellar"
+    group = "cassini"
     archiveClassifier = "javadoc"
 
     dependsOn(tasks.dokkaJavadocCollector)
@@ -42,7 +43,7 @@ val packageJavadoc by tasks.registering(Jar::class) {
 }
 
 val packageSources by tasks.registering(Jar::class) {
-    group = "stellar"
+    group = "cassini"
     archiveClassifier = "sources"
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from(subprojects.map { it.sourceSets.main.get().allSource })
@@ -56,7 +57,9 @@ publishing {
             artifact(packageJavadoc)
             artifact(packageSources)
             for (module in submodules)
-                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("lynx-$version-${module.value}.jar")) { classifier = module.value }
+                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("lynx-$version-${module.value}.jar")) {
+                    classifier = module.value
+                }
 
             pom {
                 name = "Cassini"
@@ -110,6 +113,9 @@ java {
 }
 
 tasks {
+    jar {
+        dependsOn(shadowJar)
+    }
     shadowJar {
         minimize {
             exclude("**/kotlin/**")

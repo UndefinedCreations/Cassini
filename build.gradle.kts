@@ -57,7 +57,7 @@ publishing {
             artifact(packageJavadoc)
             artifact(packageSources)
             for (module in submodules)
-                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("lynx-$version-${module.value}.jar")) {
+                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("${rootProject.name}-$version-${module.value}.jar")) {
                     classifier = module.value
                 }
 

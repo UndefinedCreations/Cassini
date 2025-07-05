@@ -13,6 +13,9 @@ class TestMenu : ChestMenu(Component.text("test"), 3) {
             println(data.menu.size)
             data.player.sendMessage("Clicked menu!")
         }
+        onClose { player ->
+            player.sendMessage("Closed menu!")
+        }
     }
 
 }

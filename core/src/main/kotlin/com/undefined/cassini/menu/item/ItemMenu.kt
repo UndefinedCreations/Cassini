@@ -20,6 +20,7 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 ) : CassiniMenu<T, ItemMenuSettings>(title, parent) {
 
     val clickActions: MutableList<(ClickData<T>) -> Unit> = mutableListOf() // int is slot
+    val closeActions: MutableList<(Player) -> Unit> = mutableListOf() // int is slot
 
     override val settings: ItemMenuSettings = ItemMenuSettings()
 
@@ -38,6 +39,10 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 
     fun onClick(action: (ClickData<T>) -> Unit): T = apply {
         clickActions.add(action)
+    } as T
+
+    fun onClose(action: (Player) -> Unit): T = apply {
+        closeActions.add(action)
     } as T
 
     fun createClickData(player: Player, slot: Int): ClickData<T> = ClickData(this as T, player, slot)

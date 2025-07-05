@@ -2,6 +2,7 @@ package com.undefined.cassini.internal
 
 import com.undefined.cassini.internal.NMS1_21_4.connection
 import com.undefined.cassini.internal.info.PacketClickInformation
+import com.undefined.cassini.internal.info.PacketCloseInformation
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.Connection
@@ -43,7 +44,9 @@ object NMSPacketListener1_21_4 : Listener {
             id.toString(),
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
-                    if (packet is ServerboundContainerClosePacket) player.sendMessage("close packet")
+                    if (packet is ServerboundContainerClosePacket) {
+                        listener.onClose(PacketCloseInformation(player))
+                    }
                     if (packet is ServerboundContainerClickPacket) {
                         listener.onClick(PacketClickInformation(player, packet.slotNum))
                     }

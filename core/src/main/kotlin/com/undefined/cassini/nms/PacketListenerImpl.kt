@@ -2,6 +2,7 @@ package com.undefined.cassini.nms
 
 import com.undefined.cassini.internal.PacketListener
 import com.undefined.cassini.internal.info.PacketClickInformation
+import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.menu.item.ItemMenu
 
 object PacketListenerImpl : PacketListener {
@@ -12,4 +13,8 @@ object PacketListenerImpl : PacketListener {
         menu.callClickActions(clickData)
     }
 
+    override fun onClose(closeInformation: PacketCloseInformation) {
+        val menu = NMSManager.openMenus[closeInformation.player.uniqueId] as? ItemMenu<*> ?: return
+        for (closeAction in menu.closeActions) closeAction(closeInformation.player)
+    }
 }

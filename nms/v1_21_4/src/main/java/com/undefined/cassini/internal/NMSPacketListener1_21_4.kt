@@ -1,6 +1,7 @@
 package com.undefined.cassini.internal
 
 import com.undefined.cassini.internal.NMS1_21_4.connection
+import com.undefined.cassini.internal.info.PacketClickInformation
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.Connection
@@ -18,9 +19,12 @@ import java.util.UUID
 
 object NMSPacketListener1_21_4 : Listener {
 
+    lateinit var listener: PacketListener
+
     private val players: HashMap<UUID, UUID> = hashMapOf()
 
-    fun initialize(plugin: JavaPlugin) {
+    fun initialize(plugin: JavaPlugin, listener: PacketListener) {
+        this.listener = listener
         Bukkit.getPluginManager().registerEvents(this, plugin)
     }
 
@@ -30,7 +34,6 @@ object NMSPacketListener1_21_4 : Listener {
         val id = UUID.randomUUID()
         players[player.uniqueId] = id
 
-        println(ServerCommonPacketListenerImpl::class.java.declaredFields.map { it.name })
         val connection = player.connection
         val channel = connection.channel
         val pipeline = channel.pipeline()
@@ -41,7 +44,9 @@ object NMSPacketListener1_21_4 : Listener {
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket) player.sendMessage("close packet")
-                    if (packet is ServerboundContainerClickPacket) player.sendMessage("click packet")
+                    if (packet is ServerboundContainerClickPacket) {
+                        listener.onClick(PacketClickInformation(player, packet.slotNum))
+                    }
 
                     super.channelRead(channelHandlerContext, packet)
                 }

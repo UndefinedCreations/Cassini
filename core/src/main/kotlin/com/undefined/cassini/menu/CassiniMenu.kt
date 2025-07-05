@@ -1,5 +1,6 @@
 package com.undefined.cassini.menu
 
+import com.undefined.cassini.nms.NMSManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.ApiStatus
@@ -26,6 +27,7 @@ abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
     open fun open(player: Player) {
         if (player.uniqueId in viewers) return
         viewers.add(player.uniqueId)
+        NMSManager.openMenus[player.uniqueId] = this
     }
     open fun update() {}
 

@@ -1,10 +1,10 @@
-package com.undefined.cassini.menu
+package com.undefined.cassini.internal
 
 import org.bukkit.inventory.ItemStack
 import java.util.UUID
 
 /**
- * Contains and stores information that should be shared throughout the entire project, including NMS.
+ * Contains, manages and stores information that is shared throughout the entire project, including NMS.
  */
 object CommonMenuManager {
 

@@ -40,4 +40,13 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         clickActions.add(action)
     } as T
 
+    fun createClickData(player: Player, slot: Int): ClickData<T> = ClickData(this as T, player, slot)
+
+    fun callClickActions(clickData: ClickData<*>) {
+        for (clickAction in clickActions) {
+            val data = clickData as? ClickData<T> ?: continue
+            clickAction(data)
+        }
+    }
+
 }

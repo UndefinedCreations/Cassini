@@ -1,14 +1,12 @@
 package com.undefined.cassini.internal
 
 import com.undefined.cassini.data.MenuType
-import com.undefined.cassini.menu.CommonMenuManager
 import net.kyori.adventure.text.Component
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerCommonPacketListenerImpl
-import net.minecraft.server.network.ServerGamePacketListenerImpl
 import net.minecraft.world.item.ItemStack
 import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack
@@ -39,7 +37,7 @@ object NMS1_21_4 : NMS {
 
     override fun getContainerId(player: Player): Int = player.serverPlayer.nextContainerCounter()
 
-    override fun initializePacketListener(plugin: JavaPlugin) = NMSPacketListener1_21_4.initialize(plugin)
+    override fun initializePacketListener(plugin: JavaPlugin, listener: PacketListener) = NMSPacketListener1_21_4.initialize(plugin, listener)
 
     val Player.serverPlayer: ServerPlayer
         get() = (player as CraftPlayer).handle

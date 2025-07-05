@@ -38,6 +38,6 @@ interface NMS {
     /**
      * Initialize the NMS packet listener.
      */
-    fun initializePacketListener(plugin: JavaPlugin)
+    fun initializePacketListener(plugin: JavaPlugin, listener: PacketListener)
 
 }

@@ -11,7 +11,6 @@ object NMSManager {
 
     val nms: NMS by lazy { versions[version]?.let { it() } ?: throw UnsupportedVersionException(versions.keys) }
     val openMenus: HashMap<UUID, CassiniMenu<*, *>> = hashMapOf()  // player uuid to menu
-    val containerIds: HashMap<Int, CassiniMenu<*, *>> = hashMapOf()  // container id to menu
 
     private val version by lazy { Bukkit.getBukkitVersion().split("-")[0] }
     private val versions: Map<String, () -> NMS> = mapOf(

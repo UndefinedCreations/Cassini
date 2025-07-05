@@ -15,6 +15,7 @@ object PacketListenerImpl : PacketListener {
 
     override fun onClose(closeInformation: PacketCloseInformation) {
         val menu = NMSManager.openMenus[closeInformation.player.uniqueId] as? ItemMenu<*> ?: return
+        NMSManager.openMenus.remove(closeInformation.player.uniqueId)
         for (closeAction in menu.closeActions) closeAction(closeInformation.player)
     }
 }

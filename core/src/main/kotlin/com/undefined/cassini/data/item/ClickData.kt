@@ -10,7 +10,7 @@ class ClickData<T : ItemMenu<*>>(
     val menu: T,
     val slot: Int,
     val id: Int,
-    val type: ClickType,
+//    val type: ClickType, TODO add custom click type
     val items: List<ItemStack> = player.openInventory.topInventory.contents.toList(),
 ) {
 

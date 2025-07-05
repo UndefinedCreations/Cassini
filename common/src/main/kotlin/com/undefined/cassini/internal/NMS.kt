@@ -4,6 +4,7 @@ import com.undefined.cassini.data.MenuType
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.plugin.java.JavaPlugin
 
 interface NMS {
 //    fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
@@ -33,4 +34,10 @@ interface NMS {
      * Get the next container id for [player].
      */
     fun getContainerId(player: Player): Int
+
+    /**
+     * Initialize the NMS packet listener.
+     */
+    fun initializePacketListener(plugin: JavaPlugin)
+
 }

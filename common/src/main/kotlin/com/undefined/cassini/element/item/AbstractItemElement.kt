@@ -2,12 +2,11 @@ package com.undefined.cassini.element.item
 
 import com.undefined.cassini.element.CartesianCoordinate
 import com.undefined.cassini.element.Element
-import com.undefined.cassini.menu.item.ItemMenu
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 /**
- * Represents an element in an [ItemMenu]. If both [cartesianCoordinate] and [slot] are `null`, then it will attempt to use the next available slot.
+ * Represents an element in an [com.undefined.cassini.menu.item.ItemMenu]. If both [cartesianCoordinate] and [slot] are `null`, then it will attempt to use the next available slot.
  */
 abstract class AbstractItemElement(val cartesianCoordinate: CartesianCoordinate? = null, val slot: Int? = null) : Element() {
 

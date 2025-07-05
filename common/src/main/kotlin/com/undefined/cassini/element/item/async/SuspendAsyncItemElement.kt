@@ -1,7 +1,6 @@
 package com.undefined.cassini.element.item.async
 
 import com.undefined.cassini.element.CartesianCoordinate
-import com.undefined.cassini.menu.item.ItemMenu
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 

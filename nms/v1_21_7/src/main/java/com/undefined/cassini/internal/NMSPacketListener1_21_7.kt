@@ -1,16 +1,14 @@
 package com.undefined.cassini.internal
 
-import com.undefined.cassini.internal.NMS1_21_4.connection
+import com.undefined.cassini.internal.NMS1_21_7.connection
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
-import net.minecraft.network.Connection
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
-import net.minecraft.server.network.ServerCommonPacketListenerImpl
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -18,7 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
-object NMSPacketListener1_21_4 : Listener {
+object NMSPacketListener1_21_7 : Listener {
 
     lateinit var listener: PacketListener
 
@@ -44,12 +42,11 @@ object NMSPacketListener1_21_4 : Listener {
             id.toString(),
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
-                    if (packet is ServerboundContainerClosePacket) {
+                    if (packet is ServerboundContainerClosePacket)
                         listener.onClose(PacketCloseInformation(player))
-                    }
-                    if (packet is ServerboundContainerClickPacket) {
+
+                    if (packet is ServerboundContainerClickPacket)
                         listener.onClick(PacketClickInformation(player, packet.slotNum))
-                    }
 
                     super.channelRead(channelHandlerContext, packet)
                 }

@@ -45,7 +45,7 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         closeActions.add(action)
     } as T
 
-    fun createClickData(player: Player, slot: Int): ClickData<T> = ClickData(this as T, player, slot)
+    fun createClickData(player: Player, slot: Short): ClickData<T> = ClickData(this as T, player, slot)
 
     fun callClickActions(clickData: ClickData<*>) {
         for (clickAction in clickActions) {

@@ -6,6 +6,6 @@ plugins {
 dependencies {
     compileOnly(libs.spigotmc)
 
-    implementation(project(":nms:v1_21_4"))
+    implementation(project(":nms:v1_21_7"))
     implementation(project(":common"))
 }

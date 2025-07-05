@@ -1,17 +1,21 @@
 package com.undefined.cassini.internal
 
+import com.google.gson.*
+import com.mojang.serialization.JsonOps
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.minecraft.commands.CommandBuildContext
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentSerialization
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.inventory.AbstractContainerMenu
-import net.kyori.adventure.text.Component as AdventureComponent
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack
-import org.bukkit.inventory.ItemStack as BukkitItemStack
+import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack
 import com.undefined.cassini.data.MenuType as CassiniMenuType
+import net.kyori.adventure.text.Component as AdventureComponent
+import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 object MojangAdapter {
 
@@ -33,10 +37,19 @@ object MojangAdapter {
         CassiniMenuType.ANVIL -> MenuType.ANVIL
     }
 
-    fun getMojangComponent(component: AdventureComponent): Component = Component.Serializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)!!
+    fun getMojangComponent(component: AdventureComponent): Component =
+        ComponentSerializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)
 
     fun getItems(bukkitItems: List<BukkitItemStack>): NonNullList<ItemStack> = NonNullList.create<ItemStack>().apply {
         for (item in bukkitItems) add(CraftItemStack.asNMSCopy(item))
+    }
+
+    object ComponentSerializer {
+        fun deserialize(json: JsonElement, provider: HolderLookup.Provider): MutableComponent =
+            ComponentSerialization.CODEC.parse(provider.createSerializationContext(JsonOps.INSTANCE), json)
+                .getOrThrow { JsonParseException(it) } as MutableComponent
+
+        fun fromJson(json: JsonElement, registries: HolderLookup.Provider): MutableComponent = deserialize(json, registries)
     }
 
 }

@@ -1,6 +1,6 @@
 [versions]
-spigotmc = "1.21.4-R0.1-SNAPSHOT"
-papermc = "1.21.4-R0.1-SNAPSHOT"
+spigotmc = "1.21.7-R0.1-SNAPSHOT"
+papermc = "1.21.7-R0.1-SNAPSHOT"
 reactor-bom = "2024.0.6"
 
 [libraries]

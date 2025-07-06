@@ -49,7 +49,6 @@ object NMS1_21_7 : NMS {
 
     override fun showDialog(player: Player, json: JsonElement) {
         val serverPlayer = player.serverPlayer
-
         serverPlayer.openDialog(Dialog.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow { JsonParseException(it) })
     }
 

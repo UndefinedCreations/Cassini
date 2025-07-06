@@ -32,7 +32,7 @@ abstract class DialogMenu(
         NMSManager.nms.showDialog(player, toJson())
     }
 
-    open fun toJson(): JsonElement = JsonObject().also { json ->
+    open fun toJson(): JsonObject = JsonObject().also { json ->
         json.addProperty("type", type)
         json.add("title", GsonComponentSerializer.gson().serializeToTree(title))
         json.add("external_title", GsonComponentSerializer.gson().serializeToTree(settings.externalTitle))

@@ -18,4 +18,5 @@ object PacketListenerImpl : PacketListener {
         NMSManager.openMenus.remove(closeInformation.player.uniqueId)
         for (closeAction in menu.closeActions) closeAction(closeInformation.player)
     }
+
 }

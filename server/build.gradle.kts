@@ -27,25 +27,22 @@ dependencies {
     implementation("com.undefined:stellar:1.0.3")
 
     // Adventure
-    compileOnly("net.kyori:adventure-api:$adventureVersion")
-    compileOnly("net.kyori:adventure-text-minimessage:$adventureVersion")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.4.0")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
+    implementation("net.kyori:adventure-api:$adventureVersion")
+    implementation("net.kyori:adventure-text-minimessage:$adventureVersion")
+    implementation("net.kyori:adventure-platform-bukkit:4.4.0")
+    implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
 
     // Project Dependencies
     implementation(project(":"))
 }
 
 tasks {
-    jar {
-        archiveFileName = "test.jar"
-    }
     shadowJar {
         archiveFileName = "server.jar"
     }
     runServer {
         minecraftVersion("1.21.7")
-        serverType(ServerType.PAPERMC)
+        serverType(ServerType.SPIGOT)
         perVersionFolder(true)
         acceptMojangEula()
     }

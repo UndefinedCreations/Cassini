@@ -1,5 +1,6 @@
 package com.undefined.cassini.internal
 
+import com.google.gson.JsonElement
 import com.undefined.cassini.data.MenuType
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -39,5 +40,17 @@ interface NMS {
      * Initialize the NMS packet listener.
      */
     fun initializePacketListener(plugin: JavaPlugin, listener: PacketListener)
+
+    /**
+     * Encode the [item] into a [JsonElement].
+     */
+    fun encodeItemStack(item: ItemStack): JsonElement
+
+    /**
+     * Shows a dialog to [player] from NBT.
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Show_Dialog_(play)">Protocol Reference</a>
+     */
+    fun showDialog(player: Player, json: JsonElement)
 
 }

@@ -1,19 +1,16 @@
-import com.undefined.cassini.element.item.ItemElement
-import com.undefined.cassini.menu.item.ChestMenu
+import com.undefined.cassini.element.dialog.body.ItemDialogElement
+import com.undefined.cassini.element.dialog.body.TextDialogElement
+import com.undefined.cassini.menu.dialog.NoticeDialogMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
-class TestMenu : ChestMenu(Component.text("test"), 3) {
+class TestMenu : NoticeDialogMenu(Component.text("test")) {
 
     override fun initialize(player: Player) {
-        rootContainer.addElement(ItemElement(Material.ANVIL))
-        onClick { data ->
-            data.player.sendMessage("Clicked menu!")
-        }
-        onClose { player ->
-            player.sendMessage("Closed menu!")
-        }
+        bodyContainer.addElement(TextDialogElement(Component.text("test"), 150))
+        bodyContainer.addElement(ItemDialogElement(ItemStack(Material.GRASS_BLOCK, 2)))
     }
 
 }

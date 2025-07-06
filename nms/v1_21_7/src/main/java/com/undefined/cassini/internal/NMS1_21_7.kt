@@ -1,10 +1,15 @@
 package com.undefined.cassini.internal
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParseException
+import com.mojang.serialization.JsonOps
 import com.undefined.cassini.data.MenuType
 import net.kyori.adventure.text.Component
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
+import net.minecraft.server.dialog.Dialog
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerCommonPacketListenerImpl
 import net.minecraft.world.item.ItemStack
@@ -38,6 +43,15 @@ object NMS1_21_7 : NMS {
     override fun getContainerId(player: Player): Int = player.serverPlayer.nextContainerCounter()
 
     override fun initializePacketListener(plugin: JavaPlugin, listener: PacketListener) = NMSPacketListener1_21_7.initialize(plugin, listener)
+
+    override fun encodeItemStack(item: BukkitItemStack): JsonElement =
+        ItemStack.CODEC.encode(CraftItemStack.asNMSCopy(item), JsonOps.INSTANCE, JsonObject()).result().get()
+
+    override fun showDialog(player: Player, json: JsonElement) {
+        val serverPlayer = player.serverPlayer
+
+        serverPlayer.openDialog(Dialog.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow { JsonParseException(it) })
+    }
 
     val Player.serverPlayer: ServerPlayer
         get() = (player as CraftPlayer).handle

@@ -12,6 +12,7 @@ plugins {
 private val submodules: HashMap<String, String> = hashMapOf(
     ":core" to "core", // project name to classifier
     ":modules:chest" to "chest",
+    ":modules:dialog" to "dialog",
 )
 
 dependencies {

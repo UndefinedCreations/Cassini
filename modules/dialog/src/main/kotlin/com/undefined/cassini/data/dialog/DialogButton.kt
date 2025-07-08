@@ -21,7 +21,7 @@ import java.util.UUID
 class DialogButton(
     val label: Component,
     val tooltip: Component? = null,
-    val width: Int = 150,
+    val width: Int = DEFAULT_WIDTH,
     val action: DialogAction? = CassiniDialogAction(UUID.randomUUID()),
 ) : DialogElement() {
 
@@ -37,6 +37,10 @@ class DialogButton(
 
     fun addAction(action: (Player) -> Unit) {
         actions.add(action)
+    }
+
+    companion object {
+        const val DEFAULT_WIDTH: Int = 150
     }
 
 }

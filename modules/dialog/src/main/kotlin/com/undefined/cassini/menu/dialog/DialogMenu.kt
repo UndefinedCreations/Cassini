@@ -19,7 +19,7 @@ abstract class DialogMenu(
 ) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent) {
 
     val bodyContainer: DialogBodyContainer = DialogBodyContainer()
-    open val buttons: List<DialogButton>
+    open val totalButtons: List<DialogButton>
         get() = bodyContainer.elements.filterIsInstance<DialogButton>() // TODO
 
     override fun open(player: Player) {

@@ -11,7 +11,12 @@ open class NoticeDialogMenu(
     parent: CassiniMenu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : DialogMenu("minecraft:notice", title, parent, settings) {
+
+    override val buttons: List<DialogButton>
+        get() = super.buttons + button
+
     override fun toJson() = super.toJson().also { json ->
         json.add("action", button.toJson())
     }
+
 }

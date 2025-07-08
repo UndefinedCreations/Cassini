@@ -10,7 +10,10 @@ import org.bukkit.inventory.ItemStack
 
 class TestMenu : NoticeDialogMenu(
     Component.text("test"),
-    DialogButton(Component.text("Got it!"), Component.text("Click to leave dialog"), 300, StaticDialogAction.RunCommand("kick Stilllutto"))
+    DialogButton(Component.text("Got it!"), Component.text("Click to leave dialog"), 300).also {
+        it.addAction { player -> player.sendMessage("You clicked on this button!") }
+        it.addAction { player -> player.sendMessage("test") }
+    }
 ) {
 
     override fun initialize(player: Player) {

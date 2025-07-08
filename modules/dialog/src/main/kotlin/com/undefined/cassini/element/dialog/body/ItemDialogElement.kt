@@ -3,9 +3,7 @@ package com.undefined.cassini.element.dialog.body
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.undefined.cassini.element.dialog.DialogText
-import com.undefined.cassini.nms.NMSManager
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
+import com.undefined.cassini.internal.NMSManager
 import org.bukkit.inventory.ItemStack
 
 /**

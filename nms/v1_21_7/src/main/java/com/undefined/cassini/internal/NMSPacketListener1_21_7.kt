@@ -3,6 +3,7 @@ package com.undefined.cassini.internal
 import com.undefined.cassini.internal.NMS1_21_7.connection
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
+import com.undefined.cassini.internal.listener.PacketHandler
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
@@ -18,12 +19,12 @@ import java.util.UUID
 
 object NMSPacketListener1_21_7 : Listener {
 
-    lateinit var listener: PacketListener
+    lateinit var handler: PacketHandler
 
     private val players: HashMap<UUID, UUID> = hashMapOf()
 
-    fun initialize(plugin: JavaPlugin, listener: PacketListener) {
-        this.listener = listener
+    fun initialize(plugin: JavaPlugin, listener: PacketHandler) {
+        this.handler = listener
         Bukkit.getPluginManager().registerEvents(this, plugin)
     }
 
@@ -43,10 +44,10 @@ object NMSPacketListener1_21_7 : Listener {
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
                     if (packet is ServerboundContainerClosePacket)
-                        listener.onClose(PacketCloseInformation(player))
+                        handler.onClose(PacketCloseInformation(player))
 
                     if (packet is ServerboundContainerClickPacket)
-                        listener.onClick(PacketClickInformation(player, packet.slotNum))
+                        handler.onClick(PacketClickInformation(player, packet.slotNum))
 
                     super.channelRead(channelHandlerContext, packet)
                 }

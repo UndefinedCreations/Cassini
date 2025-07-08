@@ -1,17 +1,12 @@
 package com.undefined.cassini.menu.dialog
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.undefined.cassini.container.dialog.DialogBodyContainer
-import com.undefined.cassini.container.item.ItemContainer
-import com.undefined.cassini.data.MenuType
+import com.undefined.cassini.data.dialog.DialogButton
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.menu.CassiniMenu
-import com.undefined.cassini.menu.MenuSettings
-import com.undefined.cassini.menu.item.ItemMenuSettings
-import com.undefined.cassini.menu.item.SingleContainerItemMenu
-import com.undefined.cassini.nms.NMSManager
+import com.undefined.cassini.internal.NMSManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player
@@ -24,6 +19,8 @@ abstract class DialogMenu(
 ) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent) {
 
     val bodyContainer: DialogBodyContainer = DialogBodyContainer()
+    open val buttons: List<DialogButton>
+        get() = bodyContainer.elements.filterIsInstance<DialogButton>() // TODO
 
     override fun open(player: Player) {
         if (player.uniqueId !in viewers) initialize(player)

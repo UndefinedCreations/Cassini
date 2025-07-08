@@ -1,6 +1,6 @@
 package com.undefined.cassini.menu
 
-import com.undefined.cassini.nms.NMSManager
+import com.undefined.cassini.internal.NMSManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.ApiStatus

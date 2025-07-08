@@ -1,16 +1,14 @@
-package com.undefined.cassini.nms
+package com.undefined.cassini.internal
 
 import com.undefined.cassini.exception.UnsupportedVersionException
-import com.undefined.cassini.internal.NMS
-import com.undefined.cassini.internal.NMS1_21_7
 import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.util.delegate.UpdatablePlayerMapDelegate
 import org.bukkit.Bukkit
-import java.util.UUID
 
 object NMSManager {
 
     val nms: NMS by lazy { versions[version]?.let { it() } ?: throw UnsupportedVersionException(versions.keys) }
-    val openMenus: HashMap<UUID, CassiniMenu<*, *>> = hashMapOf()  // player uuid to menu
+    val openMenus: UpdatablePlayerMapDelegate<CassiniMenu<*, *>> by UpdatablePlayerMapDelegate(hashMapOf()) // player uuid to menu
 
     private val version by lazy { Bukkit.getBukkitVersion().split("-")[0] }
     private val versions: Map<String, () -> NMS> = mapOf(

@@ -3,7 +3,7 @@ package com.undefined.cassini.menu.item
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.menu.CassiniMenu
-import com.undefined.cassini.nms.NMSManager
+import com.undefined.cassini.internal.NMSManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

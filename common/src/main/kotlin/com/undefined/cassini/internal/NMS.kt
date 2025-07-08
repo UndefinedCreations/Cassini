@@ -2,10 +2,12 @@ package com.undefined.cassini.internal
 
 import com.google.gson.JsonElement
 import com.undefined.cassini.data.MenuType
+import com.undefined.cassini.internal.listener.PacketHandler
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.UUID
 
 interface NMS {
 //    fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
@@ -39,12 +41,17 @@ interface NMS {
     /**
      * Initialize the NMS packet listener.
      */
-    fun initializePacketListener(plugin: JavaPlugin, listener: PacketListener)
+    fun initializePacketListener(plugin: JavaPlugin, listener: PacketHandler)
 
     /**
      * Encode the [item] into a [JsonElement].
      */
     fun encodeItemStack(item: ItemStack): JsonElement
+
+    /**
+     * Registers the `_cassini_dialog` command used for custom dialog actions.
+     */
+    fun registerDialogCommand(players: Map<UUID, *>)
 
     /**
      * Shows a dialog to [player] from NBT.

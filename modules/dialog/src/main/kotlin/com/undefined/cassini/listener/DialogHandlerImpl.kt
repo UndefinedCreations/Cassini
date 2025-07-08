@@ -10,8 +10,7 @@ object DialogHandlerImpl : DialogHandler {
 
     override fun onDialogClick(player: Player, buttonUUID: UUID) {
         val menu = NMSManager.openMenus[player.uniqueId] as? DialogMenu ?: return
-        for (buttonAction in menu.buttons.flatMap { it.actions }) buttonAction(player)
-//        for (buttonAction in menu.buttons.filter { it.action }.flatMap { it.actions }) buttonAction(player) TODO properly filter
+        for (buttonAction in menu.buttons.filter { it.uuid == buttonUUID }.flatMap { it.actions }) buttonAction(player)
     }
 
 }

@@ -5,10 +5,13 @@ import com.undefined.cassini.data.dialog.DialogListOption
 import net.kyori.adventure.text.Component
 
 /**
- * A [DialogInputElement] that represents a list. // TODO-DOCS
+ * A [DialogInputElement] that represents a list.
  *
  * @param key A string identifier of value used when submitting data, must be a valid template argument (letters, digits and _).
  * @param label The label to be displayed to the right.
+ * @param labelVisible Whether the label is visible. Defaults to `true`.
+ * @param width The width of the input. A value between `1` and `1024`, defaults to `200`.
+ * @param options A non-empty list of [DialogListOption].
  */
 class ListDialogInput(
     key: String,

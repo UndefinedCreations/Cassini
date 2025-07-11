@@ -5,14 +5,16 @@ import com.undefined.cassini.element.dialog.input.ListDialogInput
 import com.undefined.cassini.data.dialog.MultiLineOptions
 import com.undefined.cassini.element.dialog.input.SliderDialogInput
 import com.undefined.cassini.element.dialog.input.TextDialogInput
-import com.undefined.cassini.menu.dialog.ServerLinksDialogMenu
-import com.undefined.cassini.util.openMenu
+import com.undefined.cassini.menu.dialog.DialogListDialogMenu
+import com.undefined.cassini.menu.dialog.DialogMenu
+import com.undefined.cassini.menu.dialog.NoticeDialogMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class TestMenu : ServerLinksDialogMenu(
+class TestMenu : DialogListDialogMenu(
     Component.text("Dialog!"),
+    listOf(NoticeDialogMenu(!"Notice!"), NoticeDialogMenu(!"Install Stellar!")),
     DialogButton(Component.text("Yeah man!"), Component.text("Click to yes-and.")),
     0b1,
 ) {

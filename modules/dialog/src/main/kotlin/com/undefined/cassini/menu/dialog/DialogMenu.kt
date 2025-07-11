@@ -1,6 +1,7 @@
 package com.undefined.cassini.menu.dialog
 
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.undefined.cassini.container.dialog.DialogBodyContainer
 import com.undefined.cassini.container.dialog.DialogInputContainer
 import com.undefined.cassini.element.dialog.DialogButton

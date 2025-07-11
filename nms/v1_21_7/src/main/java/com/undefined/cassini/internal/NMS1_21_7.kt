@@ -1,5 +1,6 @@
 package com.undefined.cassini.internal
 
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
@@ -49,6 +50,7 @@ object NMS1_21_7 : NMS {
         ItemStack.CODEC.encode(CraftItemStack.asNMSCopy(item), JsonOps.INSTANCE, JsonObject()).result().get()
 
     override fun showDialog(player: Player, json: JsonElement) {
+        println("showing dialog: ${Gson().newBuilder().setPrettyPrinting().create().toJson(json)}")
         player.serverPlayer.openDialog(Dialog.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow { JsonParseException(it) })
     }
 

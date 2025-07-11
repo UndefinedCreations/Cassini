@@ -5,6 +5,7 @@ import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
 
+// TOTO-DOCS
 open class NoticeDialogMenu(
     title: Component,
     val button: DialogButton = DialogButton(Component.translatable("gui.ok")),

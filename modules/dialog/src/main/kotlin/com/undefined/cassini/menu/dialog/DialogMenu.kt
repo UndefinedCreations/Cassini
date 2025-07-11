@@ -14,6 +14,8 @@ import org.bukkit.entity.Player
 /**
  * Represents a Minecraft dialog. Dialogs are simple modal windows that can display information and receive player input.
  *
+ * // TODO-DOCS
+ *
  * @see <a href="https://minecraft.wiki/w/Dialog">https://minecraft.wiki/w/Dialog</a>
  */
 abstract class DialogMenu(

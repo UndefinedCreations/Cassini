@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component
 
 /**
  * A dialog screen with two action buttons in footer, specified by [yes] and [no].
+ * // TODO-DOCS
  */
 open class ConfirmationDialogMenu(
     title: Component,

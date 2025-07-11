@@ -5,23 +5,16 @@ import com.undefined.cassini.element.dialog.input.ListDialogInput
 import com.undefined.cassini.data.dialog.MultiLineOptions
 import com.undefined.cassini.element.dialog.input.SliderDialogInput
 import com.undefined.cassini.element.dialog.input.TextDialogInput
-import com.undefined.cassini.menu.dialog.MultiActionDialogMenu
+import com.undefined.cassini.menu.dialog.ServerLinksDialogMenu
 import com.undefined.cassini.util.openMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class TestMenu : MultiActionDialogMenu(
+class TestMenu : ServerLinksDialogMenu(
     Component.text("Dialog!"),
-    listOf(
-        DialogButton(Component.text("Yeah man!"), Component.text("Click to yes-and.")).also { button ->
-            button.addAction { player ->
-                player.openMenu(TestMenu())
-            }
-        },
-    ),
+    DialogButton(Component.text("Yeah man!"), Component.text("Click to yes-and.")),
     0b1,
-    DialogButton(Component.text("EXIT BITCH!")),
 ) {
 
     override fun initialize(player: Player) {

@@ -1,12 +1,13 @@
 package com.undefined.cassini.element.dialog.input
 
+import com.undefined.cassini.data.dialog.MultiLineOptions
 import net.kyori.adventure.text.Component
 
 /**
  * A [DialogInputElement] that enables users to enter text input within a dialog.
  *
  * @param key A string identifier of value used when submitting data, must be a valid template argument (letters, digits and _).
- * @param label The label to be displayed to the left or right.
+ * @param label The label to be displayed above the text input.
  * @param width The width of the input. A value between `1` and `1024`, and defaults to `200`.
  * @param labelVisible Controls if the label is visible. Default to `true`.
  * @param initial The initial value of the text input.

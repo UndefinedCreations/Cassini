@@ -2,7 +2,8 @@ import com.undefined.cassini.data.dialog.DialogListOption
 import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.element.dialog.input.BooleanDialogInput
 import com.undefined.cassini.element.dialog.input.ListDialogInput
-import com.undefined.cassini.element.dialog.input.MultiLineOptions
+import com.undefined.cassini.data.dialog.MultiLineOptions
+import com.undefined.cassini.element.dialog.input.SliderDialogInput
 import com.undefined.cassini.element.dialog.input.TextDialogInput
 import com.undefined.cassini.menu.dialog.MultiActionDialogMenu
 import com.undefined.cassini.util.openMenu
@@ -32,6 +33,7 @@ class TestMenu : MultiActionDialogMenu(
         options.add(DialogListOption("id", Component.text("test"), true))
         for (i in 0..3) options.add(DialogListOption(UUID.randomUUID().toString(), Component.text(i.toString()), false))
         inputContainer.addElement(ListDialogInput("key", Component.text("test"), options = options))
+        inputContainer.addElement(SliderDialogInput("key", Component.text("test"), 1F, 100F, null, 75F, "%s, %s"))
     }
 
 }

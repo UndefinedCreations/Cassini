@@ -1,6 +1,7 @@
-package com.undefined.cassini.element.dialog.input
+package com.undefined.cassini.data.dialog
 
 import com.google.gson.JsonObject
+import com.undefined.cassini.element.dialog.input.TextDialogInput
 
 /**
  * Multi line options for [TextDialogInput].

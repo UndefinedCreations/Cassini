@@ -16,16 +16,15 @@ import org.bukkit.inventory.ItemStack
  * @param width Value between `1` and `256` — Horizontal size of element. Defaults to `16`.
  * @param height Value between `1` and `256` — Vertical size of element. Defaults to `16`.
  */
-class ItemDialogElement(
+class ItemDialogBody(
     val item: ItemStack,
     val description: DialogText? = null,
     val showDecoration: Boolean = true,
     val showTooltip: Boolean = true,
     val width: Int = 16,
     val height: Int = 16,
-) : DialogBodyElement() {
-    override fun toJson(): JsonElement = JsonObject().also { json ->
-        json.addProperty("type", "minecraft:item")
+) : DialogBodyElement("minecraft:item") {
+    override fun toJson() = JsonObject().also { json ->
         json.add("item", NMSManager.nms.encodeItemStack(item))
         json.addProperty("show_decoration", showDecoration)
         json.addProperty("show_tooltip", showTooltip)

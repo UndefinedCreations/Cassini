@@ -1,17 +1,15 @@
-package com.undefined.cassini.data.dialog
+package com.undefined.cassini.element.dialog
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.undefined.cassini.Cassini
-import com.undefined.cassini.element.dialog.DialogElement
-import com.undefined.cassini.menu.dialog.DialogMenu
+import com.undefined.cassini.data.dialog.CassiniDialogAction
+import com.undefined.cassini.data.dialog.DialogAction
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player
 import java.util.UUID
 
 /**
- * Represents a button inside a [DialogMenu].
+ * Represents a button inside a [com.undefined.cassini.menu.dialog.DialogMenu].
  *
  * @param label The button's text.
  * @param tooltip The tooltip shown on hover.
@@ -23,12 +21,12 @@ class DialogButton(
     val tooltip: Component? = null,
     val width: Int = DEFAULT_WIDTH,
     val action: DialogAction? = CassiniDialogAction(UUID.randomUUID()),
-) : DialogElement() {
+) : AbstractDialogElement() {
 
     val uuid: UUID by lazy { if (action is CassiniDialogAction) action.button else UUID.randomUUID() }
     val actions: MutableList<(Player) -> Unit> = mutableListOf()
 
-    override fun toJson(): JsonElement = JsonObject().also { json ->
+    override fun toJson() = JsonObject().also { json ->
         json.add("label", GsonComponentSerializer.gson().serializeToTree(label))
         if (tooltip != null) json.add("tooltip", GsonComponentSerializer.gson().serializeToTree(tooltip))
         json.addProperty("width", width)

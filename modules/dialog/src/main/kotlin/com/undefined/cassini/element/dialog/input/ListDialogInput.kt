@@ -1,0 +1,30 @@
+package com.undefined.cassini.element.dialog.input
+
+import com.google.gson.JsonArray
+import com.undefined.cassini.data.dialog.DialogListOption
+import net.kyori.adventure.text.Component
+
+/**
+ * A [DialogInputElement] that represents a list. // TODO-DOCS
+ *
+ * @param key A string identifier of value used when submitting data, must be a valid template argument (letters, digits and _).
+ * @param label The label to be displayed to the right.
+ */
+class ListDialogInput(
+    key: String,
+    label: Component,
+    val labelVisible: Boolean = true,
+    val width: Int = 200,
+    val options: MutableList<DialogListOption> = mutableListOf()
+) : DialogInputElement("minecraft:single_option", key, label) {
+
+    override fun toJson() = super.toJson().also { json ->
+        if (options.isEmpty()) throw IllegalArgumentException("List dialog options cannot ")
+        json.addProperty("label_visible", labelVisible)
+        json.addProperty("width", width)
+        json.add("options", JsonArray().also { optionsJson ->
+            for (option in options) optionsJson.add(option.toJson())
+        })
+    }
+
+}

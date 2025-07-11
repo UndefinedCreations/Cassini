@@ -1,11 +1,14 @@
+import com.undefined.cassini.data.dialog.DialogListOption
 import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.element.dialog.input.BooleanDialogInput
+import com.undefined.cassini.element.dialog.input.ListDialogInput
 import com.undefined.cassini.element.dialog.input.MultiLineOptions
 import com.undefined.cassini.element.dialog.input.TextDialogInput
 import com.undefined.cassini.menu.dialog.MultiActionDialogMenu
 import com.undefined.cassini.util.openMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
+import java.util.UUID
 
 class TestMenu : MultiActionDialogMenu(
     Component.text("Dialog!"),
@@ -23,8 +26,12 @@ class TestMenu : MultiActionDialogMenu(
     override fun initialize(player: Player) {
 //        bodyContainer.addElement(TextDialogBody(Component.text("test"), 150))
 //        bodyContainer.addElement(ItemDialogBody(ItemStack(Material.GRASS_BLOCK, 2)))
-        inputContainer.addElement(TextDialogInput("key", Component.text("Label"), 300, true, "This is a test!", 300, MultiLineOptions(256, 5)))
+        inputContainer.addElement(TextDialogInput("key", Component.text("Label"), initial = "This is a test!", multiline =  MultiLineOptions(32, 2)))
         inputContainer.addElement(BooleanDialogInput("key", Component.text("test"), true))
+        val options: MutableList<DialogListOption> = mutableListOf()
+        options.add(DialogListOption("id", Component.text("test"), true))
+        for (i in 0..3) options.add(DialogListOption(UUID.randomUUID().toString(), Component.text(i.toString()), false))
+        inputContainer.addElement(ListDialogInput("key", Component.text("test"), options = options))
     }
 
 }

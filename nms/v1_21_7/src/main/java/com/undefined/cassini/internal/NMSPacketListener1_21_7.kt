@@ -6,9 +6,11 @@ import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.internal.listener.PacketHandler
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
+import net.minecraft.network.protocol.common.ServerboundCustomClickActionPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
 import org.bukkit.Bukkit
+import org.bukkit.NamespacedKey
 import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -48,6 +50,9 @@ object NMSPacketListener1_21_7 : Listener {
 
                     if (packet is ServerboundContainerClickPacket)
                         handler.onClick(PacketClickInformation(player, packet.slotNum))
+
+                    if (packet is ServerboundCustomClickActionPacket)
+                        handler.onCustomClickAction(player, NamespacedKey(packet.id.path, packet.id.namespace), "")
 
                     super.channelRead(channelHandlerContext, packet)
                 }

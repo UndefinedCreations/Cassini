@@ -1,12 +1,13 @@
 package com.undefined.cassini.data.dialog
 
+import com.google.gson.JsonObject
 import java.util.UUID
 
 /**
  * A click action that allows you to run a button's click actions.
  */
-class CassiniDialogAction(val button: UUID) : StaticDialogAction("run_command") {
-    override fun toJson() = super.toJson().also { json ->
-        json.addProperty("command", "_cassini_dialog click $button ' '")
+class CassiniDialogAction(val button: UUID) : DialogAction("custom") {
+    override fun toJson(): JsonObject = super.toJson().also { json ->
+        json.addProperty("id", "cassini:$button")
     }
 }

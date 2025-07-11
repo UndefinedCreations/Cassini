@@ -3,6 +3,7 @@ package com.undefined.cassini.data.dialog
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.undefined.cassini.menu.dialog.DialogMenu
+import org.bukkit.NamespacedKey
 
 /**
  * Static actions are actions that don't depend on the value of an input field.
@@ -40,9 +41,12 @@ sealed class StaticDialogAction(type: String) : DialogAction(type) {
         }
     }
 
-    class Custom(val id: String, val payload: String) : DialogAction("copy_to_clipboard") {
+    class Custom(val id: NamespacedKey, val payload: String) : DialogAction("custom") {
+        constructor(id: String, payload: String) : this(
+            NamespacedKey.fromString(id) ?: throw IllegalArgumentException("Could not parse NamespacedKey!"), payload
+        )
         override fun toJson(): JsonObject = super.toJson().also { json ->
-            json.addProperty("id", id)
+            json.addProperty("id", id.toString())
             json.addProperty("payload", payload)
         }
     }

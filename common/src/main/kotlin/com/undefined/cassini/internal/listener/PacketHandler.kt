@@ -2,6 +2,7 @@ package com.undefined.cassini.internal.listener
 
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import java.util.UUID
 
@@ -12,5 +13,5 @@ import java.util.UUID
 interface PacketHandler {
     fun onClick(clickInformation: PacketClickInformation)
     fun onClose(closeInformation: PacketCloseInformation)
-    fun onDialogClick(player: Player, buttonUUID: UUID)
+    fun onCustomClickAction(player: Player, key: NamespacedKey, payload: String)
 }

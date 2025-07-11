@@ -49,11 +49,6 @@ interface NMS {
     fun encodeItemStack(item: ItemStack): JsonElement
 
     /**
-     * Registers the `_cassini_dialog` command used for custom dialog actions.
-     */
-    fun registerDialogCommand(players: Map<UUID, *>)
-
-    /**
      * Shows a dialog to [player] from NBT.
      *
      * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Show_Dialog_(play)">Protocol Reference</a>

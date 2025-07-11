@@ -2,6 +2,10 @@ import com.undefined.cassini.data.dialog.DialogButton
 import com.undefined.cassini.element.dialog.body.ItemDialogElement
 import com.undefined.cassini.element.dialog.body.TextDialogElement
 import com.undefined.cassini.menu.dialog.MultiActionDialogMenu
+import com.undefined.cassini.state.ObjectStateObserver
+import com.undefined.cassini.state.StateObserver
+import com.undefined.cassini.state.objectState
+import com.undefined.cassini.state.state
 import com.undefined.cassini.util.openMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.Material

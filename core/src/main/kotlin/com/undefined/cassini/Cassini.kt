@@ -11,7 +11,6 @@ object Cassini {
      */
     fun initialize(plugin: JavaPlugin) {
         NMSManager.nms.initializePacketListener(plugin, PacketHandlerImpl)
-        NMSManager.nms.registerDialogCommand(NMSManager.openMenus)
     }
 
 }

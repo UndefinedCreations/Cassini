@@ -1,8 +1,8 @@
 package com.undefined.cassini.element.dialog
 
 import com.google.gson.JsonObject
-import com.undefined.cassini.data.dialog.CassiniDialogAction
-import com.undefined.cassini.data.dialog.DialogAction
+import com.undefined.cassini.data.dialog.action.CassiniDialogAction
+import com.undefined.cassini.data.dialog.action.DialogAction
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player

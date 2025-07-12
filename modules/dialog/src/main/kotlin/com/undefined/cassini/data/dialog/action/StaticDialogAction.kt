@@ -1,4 +1,4 @@
-package com.undefined.cassini.data.dialog
+package com.undefined.cassini.data.dialog.action
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject

@@ -2,8 +2,10 @@ package com.undefined.cassini.internal
 
 import com.google.gson.JsonElement
 import com.undefined.cassini.data.MenuType
+import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.internal.listener.PacketHandler
 import net.kyori.adventure.text.Component
+import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
@@ -54,5 +56,17 @@ interface NMS {
      * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Show_Dialog_(play)">Protocol Reference</a>
      */
     fun showDialog(player: Player, json: JsonElement)
+
+    /**
+     * Modifies the server links in NMS.
+     */
+    fun setServerLinks(server: Server, serverLinks: Collection<ServerLink>)
+
+    /**
+     * Sets a list of server links on the server and sends that list to the player.
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Server_Links">Protocol Reference</a>
+     */
+    fun sendServerLinks(player: Player, serverLinks: Collection<ServerLink>)
 
 }

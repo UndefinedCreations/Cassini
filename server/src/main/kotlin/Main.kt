@@ -1,41 +1,33 @@
-import com.google.gson.JsonParser
-import com.undefined.cassini.Cassini
-import com.undefined.cassini.internal.NMSManager
+import com.undefined.cassini.CassiniConfig
+import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.util.openMenu
+import com.undefined.cassini.util.setServerLinks
 import com.undefined.stellar.StellarCommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import java.net.URI
 
 class Main : JavaPlugin() {
 
     override fun onEnable() {
-        Cassini.initialize(this)
+        CassiniConfig.initialize(this)
 
         StellarCommand("menu")
-            .addArgument("open")
-            .addExecution<Player> {
-                sender.openMenu(TestMenu())
-//                NMSManager.nms.showDialog(sender, JsonParser.parseString("""
-//                    {
-//                      "type": "minecraft:dialog_list",
-//                      "title": "Test",
-//                      "external_title": "Test",
-//                      "inputs": [],
-//                      "can_close_with_escape": true,
-//                      "dialogs": [
-//                        {
-//                          "type": "minecraft:notice",
-//                          "title": "Test!"
-//                        },
-//                        {
-//                          "type": "minecraft:notice",
-//                          "title": "Test"
-//                        }
-//                      ]
-//                    }
-//                """.trimIndent()))
+            .then("links") {
+                addExecution<Player> {
+                    sender.setServerLinks(listOf(
+                        ServerLink.KnownLink(ServerLink.Type.ANNOUNCEMENTS, URI.create("https://github.com/undefinedcreations")),
+                        ServerLink.KnownLink(ServerLink.Type.BUG_REPORT, URI.create("https://discord.undefinedcreations.com")),
+                        ServerLink.Custom(!"<red>test!!", URI.create("https://discord.undefinedcreations.com")),
+                    ))
+                }
+            }
+            .then("open") {
+                addExecution<Player> {
+                    sender.openMenu(TestMenu())
+                }
             }
             .register(this)
     }

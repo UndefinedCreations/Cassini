@@ -1,25 +1,33 @@
 package com.undefined.cassini.internal
 
-import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.mojang.serialization.JsonOps
 import com.undefined.cassini.data.MenuType
+import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.internal.listener.PacketHandler
+import net.kyori.adventure.platform.bukkit.MinecraftComponentSerializer
 import net.kyori.adventure.text.Component
 import net.minecraft.network.Connection
+import net.minecraft.network.chat.Component as MojangComponent
+import net.minecraft.network.protocol.common.ClientboundServerLinksPacket
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
+import net.minecraft.server.ServerLinks
+import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dialog.Dialog
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerCommonPacketListenerImpl
 import net.minecraft.world.item.ItemStack
+import org.bukkit.Server
+import org.bukkit.craftbukkit.v1_21_R5.CraftServer
 import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.ApiStatus
+import java.net.URI
 import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 @ApiStatus.Internal
@@ -50,8 +58,45 @@ object NMS1_21_7 : NMS {
         ItemStack.CODEC.encode(CraftItemStack.asNMSCopy(item), JsonOps.INSTANCE, JsonObject()).result().get()
 
     override fun showDialog(player: Player, json: JsonElement) {
-        println("showing dialog: ${Gson().newBuilder().setPrettyPrinting().create().toJson(json)}")
         player.serverPlayer.openDialog(Dialog.CODEC.parse(JsonOps.INSTANCE, json).getOrThrow { JsonParseException(it) })
+    }
+
+    override fun setServerLinks(server: Server, serverLinks: Collection<ServerLink>) {
+        for (serverLink in serverLinks) {
+            val entry: ServerLinks.Entry = when (serverLink) {
+                is ServerLink.KnownLink -> ServerLinks.Entry.knownType(
+                    ServerLinks.KnownLinkType.entries.first { it.ordinal == serverLink.type.ordinal }, // VERCHECK
+                    serverLink.url
+                )
+                is ServerLink.Custom -> ServerLinks.Entry.custom(
+                    MinecraftComponentSerializer.get().serialize(serverLink.label) as MojangComponent,
+                    serverLink.url
+                )
+            }
+
+            (server as CraftServer).server.serverLinks().entries().add(entry)
+        }
+    }
+
+    override fun sendServerLinks(player: Player, serverLinks: Collection<ServerLink>) {
+        val entries: MutableList<ServerLinks.Entry> = mutableListOf()
+        for (serverLink in serverLinks) {
+            val entry: ServerLinks.Entry = when (serverLink) {
+                is ServerLink.KnownLink -> ServerLinks.Entry.knownType(
+                    ServerLinks.KnownLinkType.entries.first { it.ordinal == serverLink.type.ordinal }, // VERCHECK
+                    serverLink.url
+                )
+                is ServerLink.Custom -> ServerLinks.Entry.custom(
+                    MojangAdapter.getMojangComponent(serverLink.label),
+                    serverLink.url
+                )
+            }
+            entries.add(entry)
+        }
+
+        (player.serverPlayer.server as? DedicatedServer)?.serverLinks = ServerLinks(entries)
+
+        player.connection.send(ClientboundServerLinksPacket(player.serverPlayer.server.serverLinks().untrust()))
     }
 
     val Player.serverPlayer: ServerPlayer

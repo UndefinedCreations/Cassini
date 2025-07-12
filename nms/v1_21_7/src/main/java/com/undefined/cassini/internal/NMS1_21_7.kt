@@ -62,23 +62,6 @@ object NMS1_21_7 : NMS {
     }
 
     override fun setServerLinks(server: Server, serverLinks: Collection<ServerLink>) {
-        for (serverLink in serverLinks) {
-            val entry: ServerLinks.Entry = when (serverLink) {
-                is ServerLink.KnownLink -> ServerLinks.Entry.knownType(
-                    ServerLinks.KnownLinkType.entries.first { it.ordinal == serverLink.type.ordinal }, // VERCHECK
-                    serverLink.url
-                )
-                is ServerLink.Custom -> ServerLinks.Entry.custom(
-                    MinecraftComponentSerializer.get().serialize(serverLink.label) as MojangComponent,
-                    serverLink.url
-                )
-            }
-
-            (server as CraftServer).server.serverLinks().entries().add(entry)
-        }
-    }
-
-    override fun sendServerLinks(player: Player, serverLinks: Collection<ServerLink>) {
         val entries: MutableList<ServerLinks.Entry> = mutableListOf()
         for (serverLink in serverLinks) {
             val entry: ServerLinks.Entry = when (serverLink) {
@@ -94,8 +77,10 @@ object NMS1_21_7 : NMS {
             entries.add(entry)
         }
 
-        (player.serverPlayer.server as? DedicatedServer)?.serverLinks = ServerLinks(entries)
+        (server as? DedicatedServer)?.serverLinks = ServerLinks(entries)
+    }
 
+    override fun sendServerLinks(player: Player, serverLinks: Collection<ServerLink>) {
         player.connection.send(ClientboundServerLinksPacket(player.serverPlayer.server.serverLinks().untrust()))
     }
 

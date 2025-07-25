@@ -4,6 +4,6 @@ include(
     ":core",
     ":modules:chest",
     ":modules:dialog",
-    ":nms:v1_21_7",
+    ":nms:v1_21_8",
     ":server",
 )

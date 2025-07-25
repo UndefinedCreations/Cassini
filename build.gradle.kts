@@ -19,7 +19,7 @@ dependencies {
     compileOnly(libs.spigotmc)
 
     api(project(":common"))
-    api(project(":nms:v1_21_7"))
+    api(project(":nms:v1_21_8"))
     for (module in submodules) api(project(module.key))
 
     dokkaPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")

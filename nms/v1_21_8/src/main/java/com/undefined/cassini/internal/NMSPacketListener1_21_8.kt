@@ -1,6 +1,6 @@
 package com.undefined.cassini.internal
 
-import com.undefined.cassini.internal.NMS1_21_7.connection
+import com.undefined.cassini.internal.NMS1_21_8.connection
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.internal.listener.PacketHandler
@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
-object NMSPacketListener1_21_7 : Listener {
+object NMSPacketListener1_21_8 : Listener {
 
     lateinit var handler: PacketHandler
 

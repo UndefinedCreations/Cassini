@@ -8,10 +8,12 @@ object CassiniConfig {
 
     lateinit var plugin: JavaPlugin
 
-    /**
-     * WARNING: Make sure this is only called once! Only use this if you don't use the plugin.
-     */
+    private var initialized = false
+
     fun initialize(plugin: JavaPlugin) {
+        if (initialized) return
+        initialized = true
+
         this.plugin = plugin
         NMSManager.nms.initializePacketListener(plugin, PacketHandlerImpl)
     }

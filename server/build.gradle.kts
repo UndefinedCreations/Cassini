@@ -41,7 +41,7 @@ tasks {
         archiveFileName = "server.jar"
     }
     runServer {
-        minecraftVersion("1.21.7")
+        minecraftVersion("1.21.8")
         serverType(ServerType.SPIGOT)
         perVersionFolder(true)
         acceptMojangEula()

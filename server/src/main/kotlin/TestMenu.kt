@@ -6,7 +6,6 @@ import com.undefined.cassini.data.dialog.MultiLineOptions
 import com.undefined.cassini.element.dialog.input.SliderDialogInput
 import com.undefined.cassini.element.dialog.input.TextDialogInput
 import com.undefined.cassini.menu.dialog.DialogListDialogMenu
-import com.undefined.cassini.menu.dialog.DialogMenu
 import com.undefined.cassini.menu.dialog.NoticeDialogMenu
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player

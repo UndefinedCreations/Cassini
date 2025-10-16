@@ -29,7 +29,7 @@ dependencies {
     // Adventure
     implementation("net.kyori:adventure-api:$adventureVersion")
     implementation("net.kyori:adventure-text-minimessage:$adventureVersion")
-    implementation("net.kyori:adventure-platform-bukkit:4.4.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.4.1")
     implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
 
     // Project Dependencies

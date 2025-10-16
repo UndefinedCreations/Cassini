@@ -16,9 +16,9 @@ import net.kyori.adventure.text.Component
 class ListDialogInput(
     key: String,
     label: Component,
+    val options: MutableList<DialogListOption> = mutableListOf(),
     val labelVisible: Boolean = true,
     val width: Int = 200,
-    val options: MutableList<DialogListOption> = mutableListOf()
 ) : DialogInputElement("minecraft:single_option", key, label) {
 
     override fun toJson() = super.toJson().also { json ->

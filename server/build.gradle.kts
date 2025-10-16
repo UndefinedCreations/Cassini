@@ -24,7 +24,7 @@ dependencies {
     compileOnly(libs.spigotmc)
 
     // Undefined Creations Libraries
-    implementation("com.undefined:stellar:1.0.3")
+    implementation("com.undefined:stellar:1.1.1")
 
     // Adventure
     implementation("net.kyori:adventure-api:$adventureVersion")

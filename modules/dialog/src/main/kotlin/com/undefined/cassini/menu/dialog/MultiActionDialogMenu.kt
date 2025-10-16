@@ -14,7 +14,7 @@ import net.kyori.adventure.text.Component
  */
 open class MultiActionDialogMenu(
     title: Component,
-    val buttons: MutableList<DialogButton>,
+    val buttons: MutableList<DialogButton> = mutableListOf(),
     val columns: Int = DEFAULT_COLUMNS,
     val exitButton: DialogButton? = null,
     parent: CassiniMenu<*, *>? = null,

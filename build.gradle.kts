@@ -16,7 +16,7 @@ private val submodules: HashMap<String, String> = hashMapOf(
 )
 
 dependencies {
-    compileOnly(libs.spigotmc)
+    compileOnly(libs.papermc)
 
     api(project(":common"))
     api(project(":nms:v1_21_8"))

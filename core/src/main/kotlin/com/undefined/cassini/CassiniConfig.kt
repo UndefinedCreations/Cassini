@@ -16,6 +16,7 @@ object CassiniConfig {
 
         this.plugin = plugin
         NMSManager.nms.initializePacketListener(plugin, PacketHandlerImpl)
+        plugin.server.pluginManager.registerEvents(PacketHandlerImpl, plugin)
     }
 
 }

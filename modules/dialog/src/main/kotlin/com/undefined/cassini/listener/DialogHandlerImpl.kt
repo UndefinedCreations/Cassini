@@ -3,17 +3,19 @@ package com.undefined.cassini.listener
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.listener.DialogHandler
 import com.undefined.cassini.menu.dialog.DialogMenu
-import org.bukkit.NamespacedKey
+import io.papermc.paper.dialog.DialogResponseView
+import net.kyori.adventure.key.Key
+import net.kyori.adventure.nbt.api.BinaryTagHolder
 import org.bukkit.entity.Player
 import java.util.UUID
 
 object DialogHandlerImpl : DialogHandler {
 
-    override fun onCustomClickAction(player: Player, key: NamespacedKey, payload: String) {
-        if (key.key != "cassini") return
+    override fun onCustomClickAction(player: Player, key: Key, payload: DialogResponseView) {
+        if (key.namespace() != "cassini") return
         val menu = NMSManager.openMenus[player.uniqueId] as? DialogMenu ?: return
-        val buttonUUID = UUID.fromString(key.namespace)
-        for (buttonAction in menu.totalButtons.filter { it.uuid == buttonUUID }.flatMap { it.actions }) buttonAction(player)
+        val buttonUUID = UUID.fromString(key.value())
+        for (buttonAction in menu.totalButtons.filter { it.uuid == buttonUUID }.flatMap { it.actions }) buttonAction(player, payload)
     }
 
 }

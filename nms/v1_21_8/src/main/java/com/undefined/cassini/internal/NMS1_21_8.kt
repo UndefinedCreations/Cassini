@@ -19,8 +19,8 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerCommonPacketListenerImpl
 import net.minecraft.world.item.ItemStack
 import org.bukkit.Server
-import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer
-import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack
+import org.bukkit.craftbukkit.entity.CraftPlayer
+import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.ApiStatus
@@ -77,12 +77,12 @@ object NMS1_21_8 : NMS {
     }
 
     override fun sendServerLinks(player: Player, serverLinks: Collection<ServerLink>) {
-        player.connection.send(ClientboundServerLinksPacket(player.serverPlayer.server.serverLinks().untrust()))
+        player.internalConnection.send(ClientboundServerLinksPacket(player.serverPlayer.level().server.serverLinks().untrust()))
     }
 
     val Player.serverPlayer: ServerPlayer
         get() = (player as CraftPlayer).handle
-    val Player.connection: Connection
-        get() = ServerCommonPacketListenerImpl::class.java.getDeclaredField("e").apply { isAccessible = true }.get(serverPlayer.connection) as Connection // VERCHECK - connection
+    val Player.internalConnection: Connection
+        get() = serverPlayer.connection.connection
 
 }

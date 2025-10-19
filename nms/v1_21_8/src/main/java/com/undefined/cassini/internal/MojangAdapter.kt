@@ -12,7 +12,7 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
-import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack
+import org.bukkit.craftbukkit.inventory.CraftItemStack
 import com.undefined.cassini.data.MenuType as CassiniMenuType
 import net.kyori.adventure.text.Component as AdventureComponent
 import org.bukkit.inventory.ItemStack as BukkitItemStack

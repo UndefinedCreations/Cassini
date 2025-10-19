@@ -3,6 +3,8 @@ package com.undefined.cassini.element.dialog
 import com.google.gson.JsonObject
 import com.undefined.cassini.data.dialog.action.CassiniDialogAction
 import com.undefined.cassini.data.dialog.action.DialogAction
+import io.papermc.paper.dialog.DialogResponseView
+import net.kyori.adventure.nbt.api.BinaryTagHolder
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player
@@ -24,7 +26,7 @@ class DialogButton(
 ) : AbstractDialogElement() {
 
     val uuid: UUID by lazy { if (action is CassiniDialogAction) action.button else UUID.randomUUID() }
-    val actions: MutableList<(Player) -> Unit> = mutableListOf()
+    val actions: MutableList<(player: Player, payload: DialogResponseView) -> Unit> = mutableListOf()
 
     override fun toJson() = JsonObject().also { json ->
         json.add("label", GsonComponentSerializer.gson().serializeToTree(label))
@@ -33,7 +35,7 @@ class DialogButton(
         if (action != null) json.add("action", action.toJson())
     }
 
-    fun addAction(action: (Player) -> Unit) {
+    fun addAction(action: (Player, DialogResponseView) -> Unit) {
         actions.add(action)
     }
 

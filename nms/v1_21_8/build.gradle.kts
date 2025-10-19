@@ -1,18 +1,9 @@
-import com.undefinedcreations.echo.tasks.RemapTask
-
 plugins {
     id("setup")
-    id("com.undefinedcreations.echo")
+    id("io.papermc.paperweight.userdev")
 }
 
 dependencies {
-    echo("1.21.8", printDebug = true)
+    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
     compileOnly(project(":common"))
-}
-
-tasks {
-    remap {
-        minecraftVersion("1.21.8")
-        this.action(RemapTask.Action.MOJANG_TO_SPIGOT)
-    }
 }

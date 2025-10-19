@@ -1,8 +1,9 @@
 package com.undefined.cassini.internal.listener
 
-import org.bukkit.NamespacedKey
+import io.papermc.paper.dialog.DialogResponseView
+import net.kyori.adventure.key.Key
 import org.bukkit.entity.Player
 
 interface DialogHandler {
-    fun onCustomClickAction(player: Player, key: NamespacedKey, payload: String)
+    fun onCustomClickAction(player: Player, key: Key, payload: DialogResponseView)
 }

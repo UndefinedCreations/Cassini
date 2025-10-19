@@ -1,28 +1,26 @@
 package com.undefined.cassini.internal
 
-import com.undefined.cassini.internal.NMS1_21_8.connection
+import com.undefined.cassini.internal.NMS1_21_8.internalConnection
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.internal.listener.PacketHandler
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
-import net.minecraft.network.protocol.common.ServerboundCustomClickActionPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
 import org.bukkit.Bukkit
-import org.bukkit.NamespacedKey
-import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer
+import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.UUID
+import java.util.*
+
 
 object NMSPacketListener1_21_8 : Listener {
 
     lateinit var handler: PacketHandler
-
     private val players: HashMap<UUID, UUID> = hashMapOf()
 
     fun initialize(plugin: JavaPlugin, listener: PacketHandler) {
@@ -36,7 +34,7 @@ object NMSPacketListener1_21_8 : Listener {
         val id = UUID.randomUUID()
         players[player.uniqueId] = id
 
-        val connection = player.connection
+        val connection = player.internalConnection
         val channel = connection.channel
         val pipeline = channel.pipeline()
 
@@ -51,9 +49,6 @@ object NMSPacketListener1_21_8 : Listener {
                     if (packet is ServerboundContainerClickPacket)
                         handler.onClick(PacketClickInformation(player, packet.slotNum))
 
-                    if (packet is ServerboundCustomClickActionPacket)
-                        handler.onCustomClickAction(player, NamespacedKey(packet.id.path, packet.id.namespace), "")
-
                     super.channelRead(channelHandlerContext, packet)
                 }
             }
@@ -62,7 +57,7 @@ object NMSPacketListener1_21_8 : Listener {
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
-        val connection = event.player.connection
+        val connection = event.player.internalConnection
         val channel = connection.channel
 
         val id = players[event.player.uniqueId]

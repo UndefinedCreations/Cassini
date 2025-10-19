@@ -6,7 +6,7 @@ import com.undefined.cassini.menu.dialog.DialogMenu
 import org.bukkit.NamespacedKey
 
 /**
- * Static actions are actions that don't depend on the value of an input field.
+ * Actions that don't depend on the value of an input field.
  */
 sealed class StaticDialogAction(type: String) : DialogAction(type) {
 

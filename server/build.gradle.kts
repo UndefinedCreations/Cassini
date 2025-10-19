@@ -21,7 +21,7 @@ repositories {
 val adventureVersion = properties["adventure_version"]!!
 
 dependencies {
-    compileOnly(libs.spigotmc)
+    compileOnly(libs.papermc)
 
     // Undefined Creations Libraries
     implementation("com.undefined:stellar:1.1.1")
@@ -42,7 +42,7 @@ tasks {
     }
     runServer {
         minecraftVersion("1.21.8")
-        serverType(ServerType.SPIGOT)
+        serverType(ServerType.PAPERMC)
         perVersionFolder(true)
         acceptMojangEula()
     }

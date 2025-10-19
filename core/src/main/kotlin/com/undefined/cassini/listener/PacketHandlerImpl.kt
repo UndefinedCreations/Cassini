@@ -6,10 +6,12 @@ import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.menu.item.ItemMenu
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.listener.DialogHandler
-import org.bukkit.NamespacedKey
-import org.bukkit.entity.Player
+import io.papermc.paper.connection.PlayerGameConnection
+import io.papermc.paper.event.player.PlayerCustomClickEvent
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 
-object PacketHandlerImpl : PacketHandler {
+object PacketHandlerImpl : PacketHandler, Listener {
 
     lateinit var dialogHandler: DialogHandler
 
@@ -31,8 +33,16 @@ object PacketHandlerImpl : PacketHandler {
         for (closeAction in menu.closeActions) closeAction(closeInformation.player)
     }
 
-    override fun onCustomClickAction(player: Player, key: NamespacedKey, payload: String) {
-        dialogHandler.onCustomClickAction(player, key, payload)
+    @Suppress("UnstableApiUsage")
+    @EventHandler
+    fun onCustomClickEvent(event: PlayerCustomClickEvent) {
+        if (event.commonConnection !is PlayerGameConnection) error("This needs to be implemented")
+        println("event.tag = ${event.tag}")
+        dialogHandler.onCustomClickAction(
+            (event.commonConnection as PlayerGameConnection).player,
+            event.identifier,
+            event.dialogResponseView,
+        )
     }
 
 }

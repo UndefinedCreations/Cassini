@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly(libs.spigotmc)
+    compileOnly(libs.papermc)
     compileOnly(platform(libs.reactor.bom))
     compileOnly(libs.reactor)
 }

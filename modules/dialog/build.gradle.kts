@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly(libs.spigotmc)
+    compileOnly(libs.papermc)
 
     compileOnly(project(":core"))
     compileOnly(project(":common"))

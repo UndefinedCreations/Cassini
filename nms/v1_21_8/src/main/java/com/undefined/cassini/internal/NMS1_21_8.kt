@@ -16,7 +16,6 @@ import net.minecraft.server.ServerLinks
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dialog.Dialog
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.server.network.ServerCommonPacketListenerImpl
 import net.minecraft.world.item.ItemStack
 import org.bukkit.Server
 import org.bukkit.craftbukkit.entity.CraftPlayer

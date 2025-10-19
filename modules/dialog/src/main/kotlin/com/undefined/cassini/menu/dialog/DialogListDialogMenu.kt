@@ -1,15 +1,12 @@
 package com.undefined.cassini.menu.dialog
 
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
-import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.data.dialog.DialogMenuSettings
+import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
-import kotlin.system.exitProcess
 
 /**
  * A dialog screen with scrollable list of buttons leading to other dialogs. Titles of those buttons will be taken from their respective [DialogMenuSettings.externalTitle].

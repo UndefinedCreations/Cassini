@@ -1,7 +1,6 @@
 package com.undefined.cassini.container
 
 import com.undefined.cassini.element.Element
-import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.state.ListStateObserver
 import com.undefined.cassini.state.ObjectStateObserver
 import com.undefined.cassini.state.PrimitiveStateObserver

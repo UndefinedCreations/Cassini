@@ -1,6 +1,7 @@
 package com.undefined.cassini.internal
 
-import com.google.gson.*
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.mojang.serialization.JsonOps
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.minecraft.commands.CommandBuildContext

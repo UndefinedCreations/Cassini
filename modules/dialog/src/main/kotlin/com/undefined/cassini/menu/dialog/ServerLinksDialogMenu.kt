@@ -1,10 +1,9 @@
 package com.undefined.cassini.menu.dialog
 
-import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.data.dialog.DialogMenuSettings
+import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
-import kotlin.system.exitProcess
 
 /**
  * A dialog screen with scrollable list of server links.

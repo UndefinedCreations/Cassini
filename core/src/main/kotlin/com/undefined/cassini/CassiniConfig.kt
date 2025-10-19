@@ -1,7 +1,7 @@
 package com.undefined.cassini
 
-import com.undefined.cassini.listener.PacketHandlerImpl
 import com.undefined.cassini.internal.NMSManager
+import com.undefined.cassini.listener.PacketHandlerImpl
 import org.bukkit.plugin.java.JavaPlugin
 
 object CassiniConfig {

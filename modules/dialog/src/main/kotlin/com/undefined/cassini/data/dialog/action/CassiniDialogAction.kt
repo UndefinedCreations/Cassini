@@ -1,8 +1,7 @@
 package com.undefined.cassini.data.dialog.action
 
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import java.util.UUID
+import java.util.*
 
 /**
  * A click action that allows you to run a button's click actions.

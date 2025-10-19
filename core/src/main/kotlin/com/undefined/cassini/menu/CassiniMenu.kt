@@ -4,7 +4,7 @@ import com.undefined.cassini.internal.NMSManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.ApiStatus
-import java.util.UUID
+import java.util.*
 
 /**
  * This is the base for any menu, although it's no menu in itself.

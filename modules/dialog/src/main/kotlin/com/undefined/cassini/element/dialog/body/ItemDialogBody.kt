@@ -1,6 +1,5 @@
 package com.undefined.cassini.element.dialog.body
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.undefined.cassini.element.dialog.DialogText
 import com.undefined.cassini.internal.NMSManager

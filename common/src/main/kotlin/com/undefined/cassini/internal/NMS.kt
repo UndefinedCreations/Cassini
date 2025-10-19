@@ -9,7 +9,6 @@ import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.UUID
 
 interface NMS {
 //    fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper

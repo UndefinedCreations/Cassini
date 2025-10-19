@@ -3,7 +3,7 @@ package com.undefined.cassini.internal
 import com.undefined.cassini.exception.UnsupportedVersionException
 import com.undefined.cassini.menu.CassiniMenu
 import org.bukkit.Bukkit
-import java.util.UUID
+import java.util.*
 
 object NMSManager {
 

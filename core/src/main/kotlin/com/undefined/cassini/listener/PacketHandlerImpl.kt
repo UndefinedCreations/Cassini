@@ -1,11 +1,11 @@
 package com.undefined.cassini.listener
 
-import com.undefined.cassini.internal.listener.PacketHandler
+import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
-import com.undefined.cassini.menu.item.ItemMenu
-import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.listener.DialogHandler
+import com.undefined.cassini.internal.listener.PacketHandler
+import com.undefined.cassini.menu.item.ItemMenu
 import io.papermc.paper.connection.PlayerGameConnection
 import io.papermc.paper.event.player.PlayerCustomClickEvent
 import org.bukkit.event.EventHandler

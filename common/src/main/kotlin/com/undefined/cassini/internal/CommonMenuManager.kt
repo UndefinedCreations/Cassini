@@ -1,7 +1,7 @@
 package com.undefined.cassini.internal
 
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
+import java.util.*
 
 /**
  * Contains, manages and stores information that is shared throughout the entire project, including NMS.

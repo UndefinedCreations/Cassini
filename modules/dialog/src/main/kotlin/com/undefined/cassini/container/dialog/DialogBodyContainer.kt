@@ -4,7 +4,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.undefined.cassini.container.Container
 import com.undefined.cassini.element.dialog.body.DialogBodyElement
-import com.undefined.cassini.element.dialog.input.DialogInputElement
 import com.undefined.cassini.menu.dialog.DialogMenu
 
 /**

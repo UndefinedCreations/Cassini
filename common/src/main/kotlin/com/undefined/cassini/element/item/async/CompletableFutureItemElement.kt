@@ -1,9 +1,9 @@
 package com.undefined.cassini.element.item.async
 
-import java.util.concurrent.CompletableFuture
 import com.undefined.cassini.element.CartesianCoordinate
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.concurrent.CompletableFuture
 
 /**
  * Displays [fallbackItem] until the item has been fetched from a [CompletableFuture], where it will then run [update].

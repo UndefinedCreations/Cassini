@@ -1,5 +1,5 @@
-import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.data.dialog.MultiLineOptions
+import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.element.dialog.input.TextDialogInput
 import com.undefined.cassini.menu.dialog.NoticeDialogMenu
 import org.bukkit.entity.Player

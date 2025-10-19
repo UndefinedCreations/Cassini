@@ -1,8 +1,8 @@
 package com.undefined.cassini.menu.dialog
 
 import com.google.gson.JsonArray
-import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.data.dialog.DialogMenuSettings
+import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
 

@@ -1,13 +1,12 @@
 package com.undefined.cassini.menu.dialog
 
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
 import com.undefined.cassini.container.dialog.DialogBodyContainer
 import com.undefined.cassini.container.dialog.DialogInputContainer
-import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.data.dialog.DialogMenuSettings
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.internal.NMSManager
+import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player

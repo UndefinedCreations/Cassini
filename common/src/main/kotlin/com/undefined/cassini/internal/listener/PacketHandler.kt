@@ -2,10 +2,6 @@ package com.undefined.cassini.internal.listener
 
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
-import net.kyori.adventure.nbt.api.BinaryTagHolder
-import org.bukkit.NamespacedKey
-import org.bukkit.entity.Player
-import java.util.UUID
 
 /**
  * Handles any Cassini menu related server bound packets and custom events (such as dialog click).

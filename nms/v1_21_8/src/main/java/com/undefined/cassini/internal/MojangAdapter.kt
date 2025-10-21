@@ -3,6 +3,7 @@ package com.undefined.cassini.internal
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.mojang.serialization.JsonOps
+import io.papermc.paper.command.brigadier.PaperCommands
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.minecraft.commands.CommandBuildContext
 import net.minecraft.core.HolderLookup
@@ -20,13 +21,6 @@ import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 object MojangAdapter {
 
-    private val COMMAND_BUILD_CONTEXT: CommandBuildContext by lazy {
-        CommandBuildContext.simple(
-            MinecraftServer.getServer().registryAccess(),
-            MinecraftServer.getServer().worldData.dataConfiguration.enabledFeatures()
-        )
-    }
-
     fun getMojangMenuType(type: CassiniMenuType): MenuType<*> = when (type) {
         CassiniMenuType.CHEST_9X1 -> MenuType.GENERIC_9x1
         CassiniMenuType.CHEST_9X2 -> MenuType.GENERIC_9x2
@@ -39,7 +33,7 @@ object MojangAdapter {
     }
 
     fun getMojangComponent(component: AdventureComponent): Component =
-        ComponentSerializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), COMMAND_BUILD_CONTEXT)
+        ComponentSerializer.fromJson(GsonComponentSerializer.gson().serializeToTree(component), PaperCommands.INSTANCE.buildContext)
 
     fun getItems(bukkitItems: List<BukkitItemStack>): NonNullList<ItemStack> = NonNullList.create<ItemStack>().apply {
         for (item in bukkitItems) add(CraftItemStack.asNMSCopy(item))

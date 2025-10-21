@@ -1,5 +1,6 @@
 package com.undefined.cassini.listener
 
+import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
@@ -10,6 +11,7 @@ import io.papermc.paper.connection.PlayerGameConnection
 import io.papermc.paper.event.player.PlayerCustomClickEvent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.inventory.ItemStack
 
 object PacketHandlerImpl : PacketHandler, Listener {
 
@@ -22,9 +24,20 @@ object PacketHandlerImpl : PacketHandler, Listener {
     }
 
     override fun onClick(clickInformation: PacketClickInformation) {
+        val slot = clickInformation.slot.toInt()
         val menu = NMSManager.openMenus[clickInformation.player.uniqueId] as? ItemMenu<*> ?: return
+
+        if (slot > menu.size) return // player inventory
+
         val clickData = menu.createClickData(clickInformation.player, clickInformation.slot)
         menu.callClickActions(clickData)
+
+        if (clickData.isCancelled) {
+            val item = menu.items.getOrNull(slot)
+
+            NMSManager.nms.sendSetSlotPacket(clickInformation.player, slot, item ?: ItemStack.empty())
+            NMSManager.nms.sendSetCursorItemPacket(clickInformation.player, clickInformation.newItemInSlot)
+        }
     }
 
     override fun onClose(closeInformation: PacketCloseInformation) {

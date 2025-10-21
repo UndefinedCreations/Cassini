@@ -6,10 +6,14 @@ import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.internal.listener.PacketHandler
 import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
+import net.minecraft.network.HashedStack
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
+import net.minecraft.world.inventory.ClickType
+import net.minecraft.world.item.ItemStack
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.entity.CraftPlayer
+import org.bukkit.craftbukkit.inventory.CraftItemStack
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -43,11 +47,20 @@ object NMSPacketListener1_21_8 : Listener {
             id.toString(),
             object : ChannelDuplexHandler() {
                 override fun channelRead(channelHandlerContext: ChannelHandlerContext, packet: Any) {
-                    if (packet is ServerboundContainerClosePacket)
-                        handler.onClose(PacketCloseInformation(player))
+                    if (packet is ServerboundContainerClosePacket) handler.onClose(PacketCloseInformation(player))
 
-                    if (packet is ServerboundContainerClickPacket)
-                        handler.onClick(PacketClickInformation(player, packet.slotNum))
+                    if (packet is ServerboundContainerClickPacket) {
+                        if (packet.slotNum < 0) return
+
+                        val hashedStack = packet.changedSlots[packet.slotNum.toInt()]
+                        val itemFromHashedStack = (hashedStack as? HashedStack.ActualItem)?.item?.value()
+
+                        handler.onClick(PacketClickInformation(
+                            player,
+                            packet.slotNum,
+                            CraftItemStack.asNewCraftStack(itemFromHashedStack)
+                        ))
+                    }
 
                     super.channelRead(channelHandlerContext, packet)
                 }

@@ -19,6 +19,8 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     val type: MenuType,
 ) : CassiniMenu<T, ItemMenuSettings>(title, parent) {
 
+    val items: MutableList<ItemStack> = mutableListOf() // slot to item
+
     val clickActions: MutableList<(ClickData<T>) -> Unit> = mutableListOf() // int is slot
     val closeActions: MutableList<(Player) -> Unit> = mutableListOf() // int is slot
 
@@ -28,8 +30,9 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         if (player.uniqueId !in viewers) initialize(player)
         super.open(player)
 
+        updateItems(player)
         NMSManager.nms.sendOpenScreenPacket(player, type, title)
-        NMSManager.nms.sendContentsPacket(player, getItems(player))
+        NMSManager.nms.sendContentsPacket(player, items)
     }
 
     /**
@@ -37,7 +40,15 @@ abstract class ItemMenu<T : ItemMenu<T>>(
      */
     abstract fun getItems(player: Player): List<ItemStack>
 
-    fun onClick(action: (ClickData<T>) -> Unit): T = apply {
+    /**
+     * Updates the [items] list with [getItems].
+     */
+    fun updateItems(player: Player) {
+        items.clear()
+        items.addAll(getItems(player))
+    }
+
+    fun onClick(action: ClickData<T>.() -> Unit): T = apply {
         clickActions.add(action)
     } as T
 

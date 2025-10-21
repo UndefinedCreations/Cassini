@@ -32,7 +32,7 @@ class Main : JavaPlugin(), Listener {
             }
             .then("open") {
                 addExecution<Player> {
-                    println(TestMenu().open(sender))
+                    TestMenu().open(sender)
                 }
             }
             .register(this)

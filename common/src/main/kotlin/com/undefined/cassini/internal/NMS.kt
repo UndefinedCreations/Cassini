@@ -29,6 +29,21 @@ interface NMS {
      * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Content">Protocol Reference</a>
      */
     fun sendContentsPacket(player: Player, contents: List<ItemStack>)
+
+    /**
+     * Send the [player], a set slot packet with [slot] and [item].
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Container_Slot">Protocol Reference</a>
+     */
+    fun sendSetSlotPacket(player: Player, slot: Int, item: ItemStack)
+
+    /**
+     * Send the [player], a set cursor item packet [item].
+     *
+     * @see <a href="https://minecraft.wiki/w/Java_Edition_protocol/Packets#Set_Cursor_Item">Protocol Reference</a>
+     */
+    fun sendSetCursorItemPacket(player: Player, item: ItemStack)
+
 //    fun sendOpenBookPacket(player: Player, book: ItemStack)
 //    fun setContainerMenu(player: Player, wrapper: MenuWrapper)
 //    fun resetContainerMenu(player: Player)

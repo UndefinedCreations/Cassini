@@ -5,7 +5,7 @@ import com.undefined.cassini.element.CartesianCoordinate
 import com.undefined.cassini.element.item.ItemElement
 
 /**
- * Represents a container in an [com.undefined.cassini.menu.item.ItemMenu].
+ * Represents a container in an ItemMenu.
  */
 class ItemContainer(
     val cartesianCoordinate: CartesianCoordinate? = null,

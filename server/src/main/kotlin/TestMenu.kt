@@ -1,23 +1,16 @@
-import com.undefined.cassini.data.dialog.MultiLineOptions
-import com.undefined.cassini.element.dialog.DialogButton
-import com.undefined.cassini.element.dialog.input.TextDialogInput
-import com.undefined.cassini.menu.dialog.NoticeDialogMenu
+import com.undefined.cassini.element.item.ItemElement
+import com.undefined.cassini.menu.item.ChestMenu
+import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class TestMenu : NoticeDialogMenu(!"Change Lore", DialogButton(!"Confirm")) {
+class TestMenu : ChestMenu(!"Change Lore", 3) {
 
     override fun initialize(player: Player) {
-        button.addAction { player, payload ->
-            player.sendMessage(payload.getText("input"))
+        rootContainer.addElement(ItemElement(2, Material.KNOWLEDGE_BOOK))
+        onClick {
+            player.sendMessage("fukcy ou (${slot})")
+            cancel()
         }
-
-        this.inputContainer.addElement(TextDialogInput(
-            key = "input",
-            label = !"Input",
-            multiline = MultiLineOptions(
-                height = 16,
-            )
-        ))
     }
 
 }

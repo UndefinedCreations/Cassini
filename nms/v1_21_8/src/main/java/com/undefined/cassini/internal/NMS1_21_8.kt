@@ -11,7 +11,9 @@ import net.kyori.adventure.text.Component
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.common.ClientboundServerLinksPacket
 import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket
+import net.minecraft.network.protocol.game.ClientboundSetCursorItemPacket
 import net.minecraft.server.ServerLinks
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dialog.Dialog
@@ -43,6 +45,19 @@ object NMS1_21_8 : NMS {
             MojangAdapter.getItems(contents),
             CommonMenuManager.carriedItems[player.uniqueId]?.let { CraftItemStack.asNMSCopy(it) } ?: ItemStack.EMPTY
         ))
+    }
+
+    override fun sendSetSlotPacket(player: Player, slot: Int, item: BukkitItemStack) {
+        player.serverPlayer.connection.send(ClientboundContainerSetSlotPacket(
+            CommonMenuManager.CONTAINER_ID,
+            player.serverPlayer.containerMenu.incrementStateId(),
+            slot,
+            CraftItemStack.asNMSCopy(item),
+        ))
+    }
+
+    override fun sendSetCursorItemPacket(player: Player, item: BukkitItemStack) {
+        player.serverPlayer.connection.send(ClientboundSetCursorItemPacket(CraftItemStack.asNMSCopy(item)))
     }
 
     override fun getContainerId(player: Player): Int = player.serverPlayer.nextContainerCounter()

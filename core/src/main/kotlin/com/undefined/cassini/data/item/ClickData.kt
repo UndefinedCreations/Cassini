@@ -20,4 +20,8 @@ class ClickData<T : ItemMenu<*>>(
         // TODO
     }
 
+    fun cancel() {
+        isCancelled = true
+    }
+
 }

@@ -18,8 +18,13 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
     size: Int,
     parent: CassiniMenu<*, *>?,
     type: MenuType,
-    val maxWidth: Int
-) : ItemMenu<T>(title, size, parent, type) {
+    maxWidth: Int
+) : ItemMenu<T>(title, size, parent, type, maxWidth) {
+
+    override val elements: Map<Int, ItemElement>
+        get() = hashMapOf<Int, ItemElement>().also { map ->
+            for (element in rootContainer.getAllElements<ItemElement>()) map[element.computeSlot(maxWidth)] = element
+        }
 
     abstract val rootContainer: ItemContainer
 

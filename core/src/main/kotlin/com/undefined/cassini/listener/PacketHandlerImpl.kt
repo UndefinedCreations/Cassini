@@ -29,7 +29,7 @@ object PacketHandlerImpl : PacketHandler, Listener {
 
         if (slot > menu.size) return // player inventory
 
-        val clickData = menu.createClickData(clickInformation.player, clickInformation.slot)
+        val clickData = menu.createClickData(clickInformation.player, slot)
         menu.callClickActions(clickData)
 
         if (clickData.isCancelled) {

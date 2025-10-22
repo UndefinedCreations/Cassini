@@ -2,6 +2,7 @@ package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
+import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
@@ -17,9 +18,11 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     val size: Int,
     parent: CassiniMenu<*, *>?,
     val type: MenuType,
+    val maxWidth: Int,
 ) : CassiniMenu<T, ItemMenuSettings>(title, parent) {
 
-    val items: MutableList<ItemStack> = mutableListOf() // slot to item
+    val items: MutableList<ItemStack> = mutableListOf() // TODO make AIR items just be null
+    abstract val elements: Map<Int, ItemElement> // slot to element
 
     val clickActions: MutableList<(ClickData<T>) -> Unit> = mutableListOf() // int is slot
     val closeActions: MutableList<(Player) -> Unit> = mutableListOf() // int is slot
@@ -56,13 +59,16 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         closeActions.add(action)
     } as T
 
-    fun createClickData(player: Player, slot: Short): ClickData<T> = ClickData(this as T, player, slot)
+    fun createClickData(player: Player, slot: Int): ClickData<T> = ClickData(this as T, player, slot)
 
+    // TODO rename this to onClick and make it overridable and, by default, run all clickActions pertaining to slots and then all the element click actions
     fun callClickActions(clickData: ClickData<*>) {
         for (clickAction in clickActions) {
             val data = clickData as? ClickData<T> ?: continue
             clickAction(data)
         }
+
+        elements[clickData.slot]?.callActions(clickData)
     }
 
 }

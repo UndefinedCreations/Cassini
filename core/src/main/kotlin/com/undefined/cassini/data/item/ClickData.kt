@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 class ClickData<T : ItemMenu<*>>(
     val menu: T,
     val player: Player,
-    val slot: Short,
+    val slot: Int,
 //    val type: ClickType, TODO add custom click type
 ) {
 

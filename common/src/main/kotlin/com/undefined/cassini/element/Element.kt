@@ -5,7 +5,7 @@ import com.undefined.cassini.container.Container
 /**
  * Represents an element to be displayed on the screen.
  */
-abstract class Element() {
+abstract class Element {
 
     /**
      * A list of containers where this element is used.

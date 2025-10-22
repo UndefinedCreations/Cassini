@@ -5,9 +5,9 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 /**
- * A simple implementation of [ItemElement] that allows for the usage of items.
+ * An implementation of [ItemElement] that gets an item from a synchronous function.
  */
-class SimpleItemElement(private val item: (Player) -> ItemStack) : ItemElement() {
+class SyncItemElement(private val item: (Player) -> ItemStack) : ItemElement() {
     constructor(item: ItemStack) : this({ item })
     constructor(material: Material) : this(ItemStack(material))
 

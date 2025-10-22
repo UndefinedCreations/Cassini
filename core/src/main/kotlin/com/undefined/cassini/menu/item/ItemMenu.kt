@@ -51,6 +51,10 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         items.addAll(getItems(player))
     }
 
+    fun preventClicking() {
+        onClick { cancel() }
+    }
+
     fun onClick(action: ClickData<T>.() -> Unit): T = apply {
         clickActions.add(action)
     } as T

@@ -28,7 +28,7 @@ abstract class DialogMenu(
     val bodyContainer: DialogBodyContainer = DialogBodyContainer()
     val inputContainer: DialogInputContainer = DialogInputContainer()
     open val totalButtons: List<DialogButton>
-        get() = bodyContainer.elements.filterIsInstance<DialogButton>() // TODO
+        get() = bodyContainer.getAllElements().filterIsInstance<DialogButton>() // TODO
 
     override fun open(player: Player) {
         if (player.uniqueId !in viewers) initialize(player)

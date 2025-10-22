@@ -11,19 +11,17 @@ import com.undefined.cassini.state.PrimitiveStateObserver
  * @param C The extending [Container].
  * @param E [Element] that can be added.
  */
-abstract class Container<C : Container<C, *>, E : Element> {
+interface Container<C : Container<C, *>, E : Element?> {
 
-    val elements: MutableList<E> = mutableListOf()
-    val containers: MutableList<C> = mutableListOf()
+    fun addElement(element: E & Any)
+    fun addContainer(container: C)
 
-    fun addElement(element: E) {
-        this.elements.add(element)
-        element.containers.add(this)
-    }
+    /**
+     * Updates the contents of this container to the user.
+     */
+    fun update()
 
-    fun addContainer(container: C) {
-        this.containers.add(container)
-    }
+    fun getAllElements(): List<E>
 
     fun <T : Any> state(initialState: T): PrimitiveStateObserver<T> =
         PrimitiveStateObserver(initialState).apply { observe { update() } }
@@ -33,20 +31,5 @@ abstract class Container<C : Container<C, *>, E : Element> {
 
     fun <T : Any> objectState(initialState: T): ObjectStateObserver<T> =
         ObjectStateObserver(initialState).apply { observe { update() } }
-
-    /**
-     * Updates the contents of this container to the user.
-     */
-    fun update() {
-        TODO()
-    }
-
-    /**
-     * Gets all elements, including from sub-containers.
-     *
-     * @param E What the elements will be cast into.
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun <E : Element> getAllElements(): List<E> = (elements + containers.flatMap { it.getAllElements() }) as List<E>
 
 }

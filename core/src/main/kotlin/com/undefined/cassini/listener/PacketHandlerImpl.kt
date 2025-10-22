@@ -50,7 +50,6 @@ object PacketHandlerImpl : PacketHandler, Listener {
     @EventHandler
     fun onCustomClickEvent(event: PlayerCustomClickEvent) {
         if (event.commonConnection !is PlayerGameConnection) error("This needs to be implemented")
-        println("event.tag = ${event.tag}")
         dialogHandler.onCustomClickAction(
             (event.commonConnection as PlayerGameConnection).player,
             event.identifier,

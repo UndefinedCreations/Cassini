@@ -22,9 +22,7 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
 ) : ItemMenu<T>(title, size, parent, type, maxWidth) {
 
     override val elements: Map<Int, ItemElement>
-        get() = hashMapOf<Int, ItemElement>().also { map ->
-            for (element in rootContainer.getAllElements<ItemElement>()) map[element.computeSlot(maxWidth)] = element
-        }
+        get() = rootContainer.getAllElementsWithSlots()
 
     abstract val rootContainer: ItemContainer
 
@@ -33,14 +31,6 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
         rootContainer.addContainer(container)
     } as T
 
-    override fun getItems(player: Player): List<ItemStack> {
-        val itemsWithSlots: HashMap<Int, ItemStack> = hashMapOf()
-        for (element in rootContainer.getAllElements<ItemElement>())
-            itemsWithSlots[element.computeSlot(maxWidth)] = element.getItem(player)
-
-        val items: MutableList<ItemStack> = mutableListOf()
-        for (slot in 0..size) items.add(itemsWithSlots.getOrDefault(slot, ItemStack(Material.AIR)))
-        return items
-    }
+    override fun getItems(player: Player): List<ItemStack> = rootContainer.getAllElements().map { it?.getItem(player) ?: ItemStack(Material.AIR) }
 
 }

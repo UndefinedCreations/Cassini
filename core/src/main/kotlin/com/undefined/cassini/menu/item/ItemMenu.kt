@@ -1,11 +1,13 @@
 package com.undefined.cassini.menu.item
 
+import com.undefined.cassini.CassiniConfig
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.CassiniMenu
 import net.kyori.adventure.text.Component
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -22,6 +24,12 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 ) : CassiniMenu<T, ItemMenuSettings>(title, parent) {
 
     val items: MutableList<ItemStack> = mutableListOf() // TODO make AIR items just be null
+
+    /**
+     * Whether the menu is solely sent through packets instead of doing much server-side work.
+     */
+    val packetBased: Boolean = true // TODO change to default false when adding non-packet based menus
+
     abstract val elements: Map<Int, ItemElement> // slot to element
 
     val clickActions: MutableList<(ClickData<T>) -> Unit> = mutableListOf() // int is slot
@@ -72,7 +80,9 @@ abstract class ItemMenu<T : ItemMenu<T>>(
             clickAction(data)
         }
 
-        elements[clickData.slot]?.callActions(clickData)
+        Bukkit.getScheduler().runTask(CassiniConfig.plugin, Runnable {
+            elements[clickData.slot]?.callActions(clickData)
+        })
     }
 
 }

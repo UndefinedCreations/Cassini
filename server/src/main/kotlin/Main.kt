@@ -15,7 +15,6 @@ import java.net.URI
 
 class Main : JavaPlugin(), Listener {
 
-    @Suppress("UnstableApiUsage")
     override fun onEnable() {
         server.pluginManager.registerEvents(this, this)
         CassiniConfig.initialize(this)

@@ -30,12 +30,14 @@ object PacketHandlerImpl : PacketHandler, Listener {
         if (slot > menu.size) return // player inventory
 
         val clickData = menu.createClickData(clickInformation.player, slot)
+
         menu.callClickActions(clickData)
 
         if (clickData.isCancelled) {
             val item = menu.items.getOrNull(slot)
 
             NMSManager.nms.sendSetSlotPacket(clickInformation.player, slot, item ?: ItemStack.empty())
+//            clickData.player.itemOnCursor = clickInformation.newItemInSlot
             NMSManager.nms.sendSetCursorItemPacket(clickInformation.player, clickInformation.newItemInSlot)
         }
     }

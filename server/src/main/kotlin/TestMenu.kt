@@ -7,10 +7,16 @@ import org.bukkit.entity.Player
 class TestMenu : ChestMenu(!"Change Lore", 3) {
 
     override fun initialize(player: Player) {
+        preventClicking()
+
         val element = StaticItemElement(Material.KNOWLEDGE_BOOK)
         element.addAction {
             player.sendMessage("You clicked on this!")
             player.openMenu(TestDialogMenu())
+        }
+
+        onClick {
+            cancel()
         }
 
         rootContainer.addElement(2, element)

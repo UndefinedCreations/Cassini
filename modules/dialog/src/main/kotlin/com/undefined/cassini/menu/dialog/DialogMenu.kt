@@ -7,6 +7,7 @@ import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.item.ItemMenu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.entity.Player
@@ -32,8 +33,12 @@ abstract class DialogMenu(
 
     override fun open(player: Player) {
         if (player.uniqueId !in viewers) initialize(player)
+        val previousMenu = NMSManager.openMenus[player.uniqueId]
+        if (previousMenu is ItemMenu<*> && previousMenu.packetBased) player.closeInventory()
+
         super.open(player)
 
+        player.closeInventory()
         NMSManager.nms.showDialog(player, toJson())
     }
 

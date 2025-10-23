@@ -6,7 +6,7 @@ class TestDialogMenu : NoticeDialogMenu(!"test") {
 
     override fun initialize(player: Player) {
         settings.canCloseWithEscape = false
-        settings.afterAction = AfterAction.NONE
+        settings.afterAction = AfterAction.CLOSE
         player.sendMessage("test")
     }
 

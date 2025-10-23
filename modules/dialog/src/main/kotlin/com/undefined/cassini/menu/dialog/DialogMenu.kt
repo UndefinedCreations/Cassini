@@ -44,7 +44,7 @@ abstract class DialogMenu(
         json.add("body", bodyContainer.toJson())
         json.add("inputs", inputContainer.toJson())
         json.addProperty("can_close_with_escape", settings.canCloseWithEscape)
-        json.addProperty("after_action", "close") // TODO make this an enum https://minecraft.wiki/w/Dialog#Dialog_format
+        json.addProperty("after_action", settings.afterAction.tagName)
     }
 
 }

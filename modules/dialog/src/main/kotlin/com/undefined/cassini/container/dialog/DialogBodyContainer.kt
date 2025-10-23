@@ -11,6 +11,6 @@ import com.undefined.cassini.menu.dialog.DialogMenu
  */
 class DialogBodyContainer() : SimpleContainerImpl<DialogBodyContainer, DialogBodyElement>() {
     fun toJson(): JsonElement = JsonArray().also { json ->
-        for (element in elements) json.add(element.toJson())
+        for (element in getAllElements()) json.add(element.toJson())
     }
 }

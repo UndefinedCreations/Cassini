@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.UUID
 
 /**
  * Represents a menu that contains items.
@@ -41,8 +42,14 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         if (player.uniqueId !in viewers) initialize(player)
         super.open(player)
 
-        updateItems(player)
         NMSManager.nms.sendOpenScreenPacket(player, type, title)
+        update(player.uniqueId)
+    }
+
+    override fun update(viewer: UUID) {
+        val player = Bukkit.getPlayer(viewer) ?: return
+
+        updateItems(player)
         NMSManager.nms.sendContentsPacket(player, items)
     }
 

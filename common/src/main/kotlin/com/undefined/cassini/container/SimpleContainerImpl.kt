@@ -22,10 +22,6 @@ abstract class SimpleContainerImpl<C : Container<C, *>, E : Element?> : Containe
         this.containers.add(container)
     }
 
-    override fun update() {
-        TODO("Not yet implemented")
-    }
-
     /**
      * Gets all elements, including from sub-containers.
      */

@@ -29,7 +29,14 @@ abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
         viewers.add(player.uniqueId)
         NMSManager.openMenus[player.uniqueId] = this
     }
-    open fun update() {}
+
+    open fun update() {
+        for (viewer in viewers) update(viewer)
+    }
+
+    open fun update(viewer: UUID) {
+        throw UnsupportedOperationException("Update method not available for ${this::class.simpleName}.")
+    }
 
     @ApiStatus.OverrideOnly
     open fun initialize(player: Player) {}

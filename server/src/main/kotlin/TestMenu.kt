@@ -3,6 +3,7 @@ import com.undefined.cassini.menu.item.ChestMenu
 import com.undefined.cassini.util.openMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import java.util.UUID
 
 class TestMenu : ChestMenu(!"Change Lore", 3) {
 
@@ -11,8 +12,13 @@ class TestMenu : ChestMenu(!"Change Lore", 3) {
 
         val element = StaticItemElement(Material.KNOWLEDGE_BOOK)
         element.addAction {
-            player.sendMessage("You clicked on this!")
-            player.openMenu(TestDialogMenu())
+            val uuid = UUID.randomUUID().toString()
+            player.sendMessage("You clicked on this! ($uuid)")
+            val meta = element.item.itemMeta
+            meta.customName(!uuid)
+            element.item.itemMeta = meta
+            update()
+//            player.openMenu(TestDialogMenu())
         }
 
         onClick {

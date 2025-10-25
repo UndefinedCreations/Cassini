@@ -22,7 +22,7 @@ class ItemContainer(
     constructor(x: Int, y: Int, width: Int, height: Int) : this(CartesianCoordinate(x, y), null, width, height)
     constructor(slot: Int, width: Int, height: Int) : this(null, slot, width, height)
 
-    fun addElement(slot: Int, element: ItemElement) {
+    fun setElement(slot: Int, element: ItemElement) {
         itemElements[slot] = element
         element.containers.add(this)
     }

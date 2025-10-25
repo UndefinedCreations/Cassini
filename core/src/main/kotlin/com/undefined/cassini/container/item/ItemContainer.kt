@@ -2,7 +2,6 @@ package com.undefined.cassini.container.item
 
 import com.undefined.cassini.container.SimpleContainerImpl
 import com.undefined.cassini.element.CartesianCoordinate
-import com.undefined.cassini.element.Element
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.menu.item.ItemMenu
 import kotlin.collections.plus
@@ -43,6 +42,7 @@ class ItemContainer(
      * Gets all elements, including from sub-containers. `null` values are empty slots.
      */
     override fun getAllElements(): List<ItemElement?> {
+        if (itemElements.isEmpty()) return emptyList()
         val highestSlot = itemElements.maxBy { it.key }.key
 
         val currentElements: MutableList<ItemElement?> = mutableListOf() // elements in this container

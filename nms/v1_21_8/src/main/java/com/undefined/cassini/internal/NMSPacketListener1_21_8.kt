@@ -1,6 +1,5 @@
 package com.undefined.cassini.internal
 
-import com.undefined.cassini.internal.NMS1_21_8.internalConnection
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
 import com.undefined.cassini.internal.listener.PacketHandler
@@ -9,8 +8,6 @@ import io.netty.channel.ChannelHandlerContext
 import net.minecraft.network.HashedStack
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket
-import net.minecraft.world.inventory.ClickType
-import net.minecraft.world.item.ItemStack
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.craftbukkit.inventory.CraftItemStack

@@ -9,10 +9,14 @@ plugins {
     id("org.jetbrains.dokka") version "2.0.0"
 }
 
-private val submodules: HashMap<String, String> = hashMapOf(
-    ":core" to "core", // project name to classifier
-    ":modules:chest" to "chest",
+private val submodules: HashMap<String, String> = hashMapOf( // path to classifier
+    ":core" to "core",
+    ":modules:item:chest" to "chest",
     ":modules:dialog" to "dialog",
+)
+
+private val versions: HashMap<String, String> = hashMapOf( // path to classifier
+    ":nms:v1_21_8" to "v1.21.8",
 )
 
 dependencies {
@@ -21,6 +25,7 @@ dependencies {
     api(project(":common"))
     api(project(":nms:v1_21_8"))
     for (module in submodules) api(project(module.key))
+    for (module in versions) api(project(module.key))
 
     dokkaPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
 }
@@ -57,6 +62,11 @@ publishing {
             from(components["shadow"])
             artifact(packageJavadoc)
             artifact(packageSources)
+            for (module in submodules)
+                artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("${rootProject.name}-$version-${module.value}.jar")) {
+                    classifier = module.value
+                }
+
             for (module in submodules)
                 artifact(project(module.key).layout.buildDirectory.dir("libs").get().file("${rootProject.name}-$version-${module.value}.jar")) {
                     classifier = module.value

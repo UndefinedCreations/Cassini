@@ -12,9 +12,9 @@ object NMSManager {
 
     private val version by lazy { Bukkit.getBukkitVersion().split("-")[0] }
     private val versions: Map<String, () -> NMS> = mapOf(
-        "1.21.8" to { NMS1_21_8 },
-        "1.21.7" to { NMS1_21_8 },
-        "1.21.6" to { NMS1_21_8 },
+        "1.21.8" to { NMS1_21_8() },
+        "1.21.7" to { NMS1_21_8() },
+        "1.21.6" to { NMS1_21_8() },
     )
 
 }

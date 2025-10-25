@@ -64,6 +64,7 @@ class PaginatedItemContainer(
         currentPage.clear()
         availableSlots.calculateSlots()
         for ((i, slot) in availableSlots.slots.withIndex()) {
+            if (i > contents.lastIndex) break
             val element = contents[i]
             currentPage[slot] = element
 

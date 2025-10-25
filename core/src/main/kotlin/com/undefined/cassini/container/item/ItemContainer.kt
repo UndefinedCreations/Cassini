@@ -9,17 +9,21 @@ import kotlin.collections.plus
 /**
  * Represents a container in an [ItemMenu]. Any null values are simply empty items.
  */
-class ItemContainer(
+open class ItemContainer(
     val cartesianCoordinate: CartesianCoordinate? = null,
     val slot: Int? = null,
     val width: Int,
     val height: Int,
 ) : SimpleContainerImpl<ItemContainer, ItemElement?>() {
 
-    val itemElements: HashMap<Int, ItemElement> = hashMapOf() // slot to element
+    protected val itemElements: HashMap<Int, ItemElement> = hashMapOf() // slot to element
 
     constructor(x: Int, y: Int, width: Int, height: Int) : this(CartesianCoordinate(x, y), null, width, height)
     constructor(slot: Int, width: Int, height: Int) : this(null, slot, width, height)
+
+    fun removeElement(slot: Int) {
+        itemElements.remove(slot)
+    }
 
     fun setElement(slot: Int, element: ItemElement) {
         itemElements[slot] = element
@@ -39,7 +43,7 @@ class ItemContainer(
     }
 
     /**
-     * Gets all elements, including from sub-containers. `null` values are empty slots.
+     * Gets all elements, including from sub-containers. Elements that are `null` are empty slots.
      */
     override fun getAllElements(): List<ItemElement?> {
         if (itemElements.isEmpty()) return emptyList()

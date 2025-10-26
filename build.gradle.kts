@@ -1,3 +1,4 @@
+import groovy.lang.MissingPropertyException
 import org.gradle.jvm.tasks.Jar
 import org.jetbrains.dokka.gradle.DokkaTask
 
@@ -89,7 +90,9 @@ publishing {
         }
     }
     repositories {
-        if ((System.getenv("MAVEN_NAME") ?: property("mavenUser")) == null) return@repositories
+        try {
+            if ((System.getenv("MAVEN_NAME") ?: property("mavenUser")) == null) return@repositories
+        } catch (e: MissingPropertyException) { return@repositories }
         maven {
             name = "undefined-releases"
             url = uri("https://repo.undefinedcreations.com/releases")

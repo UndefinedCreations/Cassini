@@ -89,6 +89,7 @@ publishing {
         }
     }
     repositories {
+        if ((System.getenv("MAVEN_NAME") ?: property("mavenUser")) == null) return@repositories
         maven {
             name = "undefined-releases"
             url = uri("https://repo.undefinedcreations.com/releases")

@@ -3,7 +3,7 @@ package com.undefined.cassini.menu.item
 import com.undefined.cassini.container.item.PaginatedItemContainer
 import com.undefined.cassini.container.item.PaginatedItemContainerImpl
 import com.undefined.cassini.element.item.ItemElement
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import net.kyori.adventure.text.Component
 import java.util.UUID
@@ -11,7 +11,7 @@ import java.util.UUID
 abstract class PaginatedChestMenu(
     title: Component,
     rows: Int,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: ItemMenuSettings = ItemMenuSettings(),
 ) : ChestMenu(title, rows, parent, settings, rootContainer = PaginatedItemContainerImpl(MAX_WIDTH, MAX_HEIGHT)), PaginatedItemContainer {
 

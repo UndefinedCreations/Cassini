@@ -1,16 +1,19 @@
+import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.element.item.StaticItemElement
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import com.undefined.cassini.menu.item.ChestMenu
 import com.undefined.cassini.util.openMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import java.util.UUID
 
-class TestMenu(parent: CassiniMenu<*, *>? = null) : ChestMenu(!"Change Lore", 3, parent) {
+class TestMenu(parent: Menu<*, *>? = null) : ChestMenu(!"Change Lore", 3, parent) {
 
     override fun initialize(player: Player) {
         println("init")
         preventClicking()
+        createPattern {
+            setElement(1, StaticItemElement(Material.DIAMOND))
+        }
 
         val yayElement = StaticItemElement(Material.PAPER) {
             val element = element as? StaticItemElement ?: return@StaticItemElement

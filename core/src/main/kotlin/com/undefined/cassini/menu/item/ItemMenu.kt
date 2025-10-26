@@ -5,7 +5,7 @@ import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.internal.NMSManager
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,10 +19,10 @@ import java.util.UUID
 abstract class ItemMenu<T : ItemMenu<T>>(
     title: Component,
     val size: Int,
-    parent: CassiniMenu<*, *>?,
+    parent: Menu<*, *>?,
     type: MenuType,
     val maxWidth: Int,
-) : CassiniMenu<T, ItemMenuSettings>(title, parent, type) {
+) : Menu<T, ItemMenuSettings>(title, parent, type) {
 
     val items: MutableList<ItemStack> = mutableListOf() // TODO make AIR items just be null
 

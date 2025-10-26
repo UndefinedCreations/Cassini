@@ -2,6 +2,7 @@ package com.undefined.cassini.menu
 
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.internal.NMSManager
+import com.undefined.cassini.menu.pattern.MenuPattern
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.jetbrains.annotations.ApiStatus
@@ -18,9 +19,9 @@ import java.util.*
  * @param T The extending menu itself.
  * @param C The [MenuSettings] type.
  */
-abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
+abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
     val title: Component,
-    val parent: CassiniMenu<*, *>?,
+    val parent: Menu<*, *>?,
     val type: MenuType,
 ) {
 
@@ -39,6 +40,18 @@ abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
     open fun update(viewer: UUID) {
         throw UnsupportedOperationException("Update method not available for ${this::class.simpleName}.")
     }
+
+    /**
+     * Apply a [MenuPattern] to this menu.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun applyPattern(pattern: MenuPattern<T>) = pattern.apply(this as T)
+
+    /**
+     * Create and apply a [MenuPattern] to this menu.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun createPattern(action: T.() -> Unit) = MenuPattern.create(action).apply(this as T)
 
     @ApiStatus.OverrideOnly
     open fun initialize(player: Player) {}

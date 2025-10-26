@@ -5,7 +5,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 
 /**
@@ -24,7 +24,7 @@ open class DialogListDialogMenu(
     val exitButton: DialogButton? = null,
     val columns: Int = DEFAULT_COLUMNS,
     val buttonWidth: Int = DEFAULT_BUTTON_WIDTH,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : DialogMenu("minecraft:dialog_list", title, parent, settings) {
 
@@ -44,7 +44,7 @@ open class DialogListDialogMenu(
         exitButton: DialogButton? = null,
         columns: Int = DEFAULT_COLUMNS,
         buttonWidth: Int = DEFAULT_BUTTON_WIDTH,
-        parent: CassiniMenu<*, *>? = null,
+        parent: Menu<*, *>? = null,
         settings: DialogMenuSettings = DialogMenuSettings(title),
     ) : this(title, JsonArray().also { for (dialog in dialogs) it.add(dialog.toJson()) }, exitButton, columns, buttonWidth, parent, settings)
 

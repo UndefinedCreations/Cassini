@@ -2,13 +2,13 @@ package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.container.item.ItemContainerImpl
 import com.undefined.cassini.data.MenuType
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 
 abstract class ChestMenu(
     title: Component,
     rows: Int,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: ItemMenuSettings = ItemMenuSettings(),
     rootContainer: ItemContainerImpl = ItemContainerImpl(0, 0, MAX_WIDTH, MAX_HEIGHT)
 ) : SingleContainerItemMenu<ChestMenu>(

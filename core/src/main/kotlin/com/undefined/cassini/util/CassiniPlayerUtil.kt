@@ -3,11 +3,10 @@ package com.undefined.cassini.util
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.internal.NMSManager
-import com.undefined.cassini.menu.CassiniMenu
-import com.undefined.cassini.menu.item.ItemMenu
+import com.undefined.cassini.menu.Menu
 import org.bukkit.entity.Player
 
-fun Player.openMenu(menu: CassiniMenu<*, *>) = menu.open(this)
+fun Player.openMenu(menu: Menu<*, *>) = menu.open(this)
 fun Player.closeMenu() {
     val openMenu = NMSManager.openMenus[uniqueId] ?: return
     when {

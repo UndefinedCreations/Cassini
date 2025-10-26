@@ -2,14 +2,14 @@ package com.undefined.cassini.menu.dialog
 
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 
 // TOTO-DOCS
 open class NoticeDialogMenu(
     title: Component,
     val button: DialogButton = DialogButton(Component.translatable("gui.ok")),
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : DialogMenu("minecraft:notice", title, parent, settings) {
 

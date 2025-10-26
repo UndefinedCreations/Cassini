@@ -7,7 +7,7 @@ import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.internal.NMSManager
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.Bukkit
@@ -24,9 +24,9 @@ import java.util.UUID
 abstract class DialogMenu(
     val dialogType: String,
     title: Component,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
-) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent, MenuType.DIALOG) {
+) : Menu<DialogMenu, DialogMenuSettings>(title, parent, MenuType.DIALOG) {
 
     val bodyContainer: DialogBodyContainer = DialogBodyContainer(this)
     val inputContainer: DialogInputContainer = DialogInputContainer(this)

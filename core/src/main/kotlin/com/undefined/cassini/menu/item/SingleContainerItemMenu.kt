@@ -4,7 +4,7 @@ import com.undefined.cassini.container.item.ItemContainer
 import com.undefined.cassini.container.item.ItemContainerImpl
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.element.item.ItemElement
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack
 abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
     title: Component,
     size: Int,
-    parent: CassiniMenu<*, *>?,
+    parent: Menu<*, *>?,
     type: MenuType,
     maxWidth: Int,
     protected val rootContainer: ItemContainerImpl,

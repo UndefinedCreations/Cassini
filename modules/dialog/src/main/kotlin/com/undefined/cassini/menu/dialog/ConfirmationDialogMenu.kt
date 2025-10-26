@@ -2,7 +2,7 @@ package com.undefined.cassini.menu.dialog
 
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 
 /**
@@ -13,7 +13,7 @@ open class ConfirmationDialogMenu(
     title: Component,
     val yes: DialogButton,
     val no: DialogButton,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : DialogMenu("minecraft:confirmation", title, parent, settings) {
 

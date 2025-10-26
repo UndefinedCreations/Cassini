@@ -3,7 +3,7 @@ package com.undefined.cassini.menu.dialog
 import com.google.gson.JsonArray
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
-import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 
 /**
@@ -17,7 +17,7 @@ open class MultiActionDialogMenu(
     val buttons: MutableList<DialogButton> = mutableListOf(),
     val columns: Int = DEFAULT_COLUMNS,
     val exitButton: DialogButton? = null,
-    parent: CassiniMenu<*, *>? = null,
+    parent: Menu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : DialogMenu("minecraft:multi_action", title, parent, settings) {
 

@@ -4,7 +4,7 @@ import org.bukkit.inventory.ItemStack
 import java.util.*
 
 /**
- * Contains, manages and stores information that is shared throughout the entire project, including NMS.
+ * Contains, manages and stores information shared throughout the entire project, including NMS.
  */
 object CommonMenuManager {
 

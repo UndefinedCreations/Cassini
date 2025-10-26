@@ -3,15 +3,16 @@ package com.undefined.cassini.data
 /**
  * Represents a menu type, mostly used for NMS purposes.
  */
-enum class MenuType {
-    CHEST_9X1,
-    CHEST_9X2,
-    CHEST_9X3,
-    CHEST_9X4,
-    CHEST_9X5,
-    CHEST_9X6,
-    DROPPER,
-    ANVIL;
+enum class MenuType(val itemMenu: Boolean) {
+    CHEST_9X1(true),
+    CHEST_9X2(true),
+    CHEST_9X3(true),
+    CHEST_9X4(true),
+    CHEST_9X5(true),
+    CHEST_9X6(true),
+    DROPPER(true),
+    ANVIL(true),
+    DIALOG(false);
 
     companion object {
         fun rowsToChestMenu(rows: Int): MenuType = when (rows) {

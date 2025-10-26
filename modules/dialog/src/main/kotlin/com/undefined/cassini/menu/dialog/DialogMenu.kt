@@ -3,11 +3,11 @@ package com.undefined.cassini.menu.dialog
 import com.google.gson.JsonObject
 import com.undefined.cassini.container.dialog.DialogBodyContainer
 import com.undefined.cassini.container.dialog.DialogInputContainer
+import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.dialog.DialogMenuSettings
 import com.undefined.cassini.element.dialog.DialogButton
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.CassiniMenu
-import com.undefined.cassini.menu.item.ItemMenu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import org.bukkit.Bukkit
@@ -22,11 +22,11 @@ import java.util.UUID
  * @see <a href="https://minecraft.wiki/w/Dialog">https://minecraft.wiki/w/Dialog</a>
  */
 abstract class DialogMenu(
-    val type: String,
+    val dialogType: String,
     title: Component,
     parent: CassiniMenu<*, *>? = null,
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
-) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent) {
+) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent, MenuType.DIALOG) {
 
     val bodyContainer: DialogBodyContainer = DialogBodyContainer(this)
     val inputContainer: DialogInputContainer = DialogInputContainer(this)
@@ -41,7 +41,7 @@ abstract class DialogMenu(
     }
 
     open fun toJson(): JsonObject = JsonObject().also { json ->
-        json.addProperty("type", type)
+        json.addProperty("type", dialogType)
         json.add("title", GsonComponentSerializer.gson().serializeToTree(title))
         json.add("external_title", GsonComponentSerializer.gson().serializeToTree(settings.externalTitle))
         json.add("body", bodyContainer.toJson())

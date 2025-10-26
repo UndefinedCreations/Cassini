@@ -2,6 +2,8 @@ package com.undefined.cassini.data.item
 
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.menu.item.ItemMenu
+import com.undefined.cassini.util.closeMenu
+import com.undefined.cassini.util.openMenu
 import org.bukkit.entity.Player
 
 class ClickData<T : ItemMenu<*>>(
@@ -16,7 +18,7 @@ class ClickData<T : ItemMenu<*>>(
     var isCancelled: Boolean = false
 
     fun back() {
-        // TODO
+        menu.parent?.let { player.openMenu(it) } ?: player.closeMenu()
     }
 
     fun close() {

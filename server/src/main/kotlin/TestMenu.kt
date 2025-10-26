@@ -1,36 +1,35 @@
 import com.undefined.cassini.element.item.StaticItemElement
-import com.undefined.cassini.menu.item.PaginatedChestMenu
-import com.undefined.cassini.menu.item.iterator.SlotIterator
+import com.undefined.cassini.menu.CassiniMenu
+import com.undefined.cassini.menu.item.ChestMenu
+import com.undefined.cassini.util.openMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import java.util.UUID
 
-class TestMenu : PaginatedChestMenu(!"Change Lore", 3) {
+class TestMenu(parent: CassiniMenu<*, *>? = null) : ChestMenu(!"Change Lore", 3, parent) {
 
     override fun initialize(player: Player) {
-        availableSlots = SlotIterator.of(this, 0..17)
+        println("init")
         preventClicking()
 
-        for (material in Material.entries.filter { it.isItem && !it.isAir && !it.name.contains("LEGACY", true) }) {
-            val element = StaticItemElement(material)
-            addPaginatedElement(element)
-        }
-
-        setElement(18, StaticItemElement(Material.PAPER) {
-            previous()
-        })
-
-        setElement(26, StaticItemElement(Material.PAPER) {
-            next()
-        })
-
-        val randomElement = StaticItemElement(Material.PAPER) {
+        val yayElement = StaticItemElement(Material.PAPER) {
             val element = element as? StaticItemElement ?: return@StaticItemElement
             element.item.editMeta { meta ->
-                meta.displayName(!"<gray>Yay!")
+                meta.displayName(!"<green>YAY!")
             }
             element.update()
         }
-        setElement(22, randomElement)
+        setElement(13, yayElement)
+
+        val otherElement = StaticItemElement(Material.RED_CONCRETE) {
+            back()
+        }
+        setElement(14, otherElement)
+
+        val randomElement = StaticItemElement(Material.GREEN_CONCRETE) {
+            player.openMenu(OtherTestMenu(this@TestMenu))
+        }
+        setElement(12, randomElement)
     }
 
 }

@@ -20,9 +20,9 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     title: Component,
     val size: Int,
     parent: CassiniMenu<*, *>?,
-    val type: MenuType,
+    type: MenuType,
     val maxWidth: Int,
-) : CassiniMenu<T, ItemMenuSettings>(title, parent) {
+) : CassiniMenu<T, ItemMenuSettings>(title, parent, type) {
 
     val items: MutableList<ItemStack> = mutableListOf() // TODO make AIR items just be null
 

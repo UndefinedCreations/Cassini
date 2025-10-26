@@ -30,6 +30,7 @@ object MojangAdapter {
         CassiniMenuType.CHEST_9X6 -> MenuType.GENERIC_9x6
         CassiniMenuType.DROPPER -> MenuType.GENERIC_3x3
         CassiniMenuType.ANVIL -> MenuType.ANVIL
+        else -> error("Menu type not supported")
     }
 
     fun getMojangComponent(component: AdventureComponent): Component =

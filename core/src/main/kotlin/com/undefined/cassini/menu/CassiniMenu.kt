@@ -1,5 +1,6 @@
 package com.undefined.cassini.menu
 
+import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.internal.NMSManager
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -12,6 +13,7 @@ import java.util.*
  * @param title The menu title.
  * @param settings The menu settings. Contains information on the menu's functionality.
  * @param parent The menu this was opened from, if any. This menu might use it in some cases to go back to the previously opened menu.
+ * @param type The type of the menu.
  *
  * @param T The extending menu itself.
  * @param C The [MenuSettings] type.
@@ -19,14 +21,14 @@ import java.util.*
 abstract class CassiniMenu<T : CassiniMenu<T, *>, C : MenuSettings>(
     val title: Component,
     val parent: CassiniMenu<*, *>?,
+    val type: MenuType,
 ) {
 
-    val viewers: MutableList<UUID> = mutableListOf() // player uuid
+    val viewers: MutableSet<UUID> = mutableSetOf() // player uuid
     abstract val settings: C
 
     open fun open(player: Player) {
-        if (player.uniqueId in viewers) return
-        viewers.add(player.uniqueId)
+        if (player.uniqueId !in viewers) viewers.add(player.uniqueId)
         NMSManager.openMenus[player.uniqueId] = this
     }
 

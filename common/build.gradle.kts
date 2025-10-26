@@ -1,17 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.9.22"
+    id("setup")
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
-}
-
-tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "21"
-    }
-}
-
-kotlin {
-    jvmToolchain(21)
+    compileOnly(libs.papermc)
+    compileOnly(platform(libs.reactor.bom))
+    compileOnly(libs.reactor)
 }

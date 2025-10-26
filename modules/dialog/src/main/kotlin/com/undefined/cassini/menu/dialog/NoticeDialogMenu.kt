@@ -1,0 +1,23 @@
+package com.undefined.cassini.menu.dialog
+
+import com.undefined.cassini.data.dialog.DialogMenuSettings
+import com.undefined.cassini.element.dialog.DialogButton
+import com.undefined.cassini.menu.CassiniMenu
+import net.kyori.adventure.text.Component
+
+// TOTO-DOCS
+open class NoticeDialogMenu(
+    title: Component,
+    val button: DialogButton = DialogButton(Component.translatable("gui.ok")),
+    parent: CassiniMenu<*, *>? = null,
+    override val settings: DialogMenuSettings = DialogMenuSettings(title),
+) : DialogMenu("minecraft:notice", title, parent, settings) {
+
+    override val totalButtons: List<DialogButton>
+        get() = super.totalButtons + button
+
+    override fun toJson() = super.toJson().also { json ->
+        json.add("action", button.toJson())
+    }
+
+}

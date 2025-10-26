@@ -1,2 +1,9 @@
 rootProject.name = "cassini"
-include("v1_21_4", "common", "api", "server")
+include(
+    ":common",
+    ":core",
+    ":modules:chest",
+    ":modules:dialog",
+    ":nms:v1_21_8",
+    ":server",
+)

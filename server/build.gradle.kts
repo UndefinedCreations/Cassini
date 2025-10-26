@@ -1,47 +1,57 @@
-import com.undefinedcreations.runServer.RamAmount
-import com.undefinedcreations.runServer.ServerType
+import com.undefinedcreations.nova.ServerType
 
 plugins {
-    kotlin("jvm") version "1.9.22"
-    id("com.undefinedcreations.runServer") version "0.1.6"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("setup")
+    id("com.gradleup.shadow")
+    id("com.undefinedcreations.nova") version "0.0.4"
+    id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.3.0"
 }
 
 repositories {
-    maven("https://repo.undefinedcreations.com/releases")
+    maven {
+        name = "undefined-releases"
+        url = uri("https://repo.undefinedcreations.com/releases")
+    }
+    maven {
+        name = "undefined-snapshots"
+        url = uri("https://repo.undefinedcreations.com/snapshots")
+    }
 }
 
+val adventureVersion = properties["adventure_version"]!!
+
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
-    implementation(project(":common"))
-    implementation(project(":v1_21_4:", "reobf"))
-    implementation(project(":api"))
-    implementation("com.undefined:stellar:0.1.36:spigot")
+    compileOnly(libs.papermc)
+
+    // Undefined Creations Libraries
+    implementation("com.undefined:stellar:1.1.1")
+
+    // Adventure
+    implementation("net.kyori:adventure-api:$adventureVersion")
+    implementation("net.kyori:adventure-text-minimessage:$adventureVersion")
+    implementation("net.kyori:adventure-platform-bukkit:4.4.1")
+    implementation("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
+
+    // Project Dependencies
+    implementation(project(":"))
 }
 
 tasks {
-    assemble {
-        dependsOn(shadowJar)
-    }
     shadowJar {
         archiveFileName = "server.jar"
     }
-    compileKotlin {
-        kotlinOptions.jvmTarget = "21"
-    }
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.8")
         serverType(ServerType.PAPERMC)
-        allowedRam(1, RamAmount.GIGABYTE)
-        serverFolderName { "run" }
+        perVersionFolder(true)
         acceptMojangEula()
     }
 }
 
-java {
-    disableAutoTargetJvm()
-}
-
-kotlin {
-    jvmToolchain(21)
+bukkitPluginYaml {
+    name = "Cassini"
+    version = properties["version"] as String
+    main = "Main"
+    apiVersion = "1.21"
+    author = "StillLutto"
 }

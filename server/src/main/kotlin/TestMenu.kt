@@ -3,7 +3,6 @@ import com.undefined.cassini.menu.item.PaginatedChestMenu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 
 class TestMenu : PaginatedChestMenu(!"Change Lore", 3) {
 
@@ -23,6 +22,15 @@ class TestMenu : PaginatedChestMenu(!"Change Lore", 3) {
         rootContainer.setElement(26, StaticItemElement(Material.PAPER) {
             next()
         })
+
+        val randomElement = StaticItemElement(Material.PAPER) {
+            val element = element as? StaticItemElement ?: return@StaticItemElement
+            element.item.editMeta { meta ->
+                meta.displayName(!"<gray>Yay!")
+            }
+            element.update()
+        }
+        rootContainer.setElement(22, randomElement)
     }
 
 }

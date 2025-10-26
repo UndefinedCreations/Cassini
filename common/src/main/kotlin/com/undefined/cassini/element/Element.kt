@@ -24,7 +24,7 @@ abstract class Element {
      * This will update all containers using this element.
      */
     fun update() {
-//        for (container in containers) container.update() TODO
+        for (container in containers) container.update()
     }
 
 }

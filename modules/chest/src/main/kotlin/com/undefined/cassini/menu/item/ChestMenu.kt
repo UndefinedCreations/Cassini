@@ -14,7 +14,7 @@ abstract class ChestMenu(
     override val settings: ItemMenuSettings = ItemMenuSettings(),
 ) : SingleContainerItemMenu<ChestMenu>(title, rows * MAX_WIDTH, parent, MenuType.rowsToChestMenu(rows), MAX_WIDTH) {
 
-    override val rootContainer: ItemContainer = ItemContainer(0, 0, MAX_WIDTH, MAX_HEIGHT)
+    override val rootContainer: ItemContainer = ItemContainer(this, 0, 0, MAX_WIDTH, MAX_HEIGHT)
 
     companion object {
         const val MAX_WIDTH: Int = 9

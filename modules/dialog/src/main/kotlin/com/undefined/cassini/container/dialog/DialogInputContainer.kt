@@ -9,8 +9,8 @@ import com.undefined.cassini.menu.dialog.DialogMenu
 /**
  * Represents a container containing any number [DialogInputElement]s in a [DialogMenu].
  */
-class DialogInputContainer() : SimpleContainerImpl<DialogInputContainer, DialogInputElement>() {
-    fun toJson(): JsonElement = JsonArray().also { json ->
+class DialogInputContainer(menu: DialogMenu) : AbstractDialogContainer<DialogInputContainer, DialogInputElement>(menu) {
+    override fun toJson(): JsonElement = JsonArray().also { json ->
         for (element in getAllElements()) json.add(element.toJson())
     }
 }

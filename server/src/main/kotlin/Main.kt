@@ -39,5 +39,4 @@ class Main : JavaPlugin(), Listener {
 
 }
 
-inline fun <reified T : Entity> World.spawn(location: Location): T = spawn(location, T::class.java)
 operator fun String.not(): Component = MiniMessage.miniMessage().deserialize(this)

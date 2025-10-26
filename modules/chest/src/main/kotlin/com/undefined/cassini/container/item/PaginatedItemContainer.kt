@@ -2,6 +2,7 @@ package com.undefined.cassini.container.item
 
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.element.item.StaticItemElement
+import com.undefined.cassini.menu.item.ItemMenu
 import com.undefined.cassini.menu.item.PaginatedChestMenu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import kotlin.collections.addAll
@@ -11,9 +12,10 @@ import kotlin.math.ceil
  * An [ItemContainer] designed for a [PaginatedChestMenu].
  */
 class PaginatedItemContainer(
+    menu: ItemMenu<*>,
     width: Int,
     height: Int,
-) : ItemContainer(0, 0, width, height) {
+) : ItemContainer(menu, 0, 0, width, height) {
 
     lateinit var availableSlots: SlotIterator
 

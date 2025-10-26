@@ -15,4 +15,5 @@ interface Container<C : Container<C, *>, E : Element?> {
     fun addElement(element: E & Any)
     fun addContainer(container: C)
     fun getAllElements(): List<E>
+    fun update()
 }

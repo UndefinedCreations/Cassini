@@ -13,7 +13,7 @@ abstract class PaginatedChestMenu(
     override val settings: ItemMenuSettings = ItemMenuSettings(),
 ) : ChestMenu(title, rows, parent, settings) {
 
-    override val rootContainer: PaginatedItemContainer = PaginatedItemContainer(MAX_WIDTH, MAX_HEIGHT)
+    override val rootContainer: PaginatedItemContainer = PaginatedItemContainer(this, MAX_WIDTH, MAX_HEIGHT)
 
     var availableSlots: SlotIterator
         get() = rootContainer.availableSlots

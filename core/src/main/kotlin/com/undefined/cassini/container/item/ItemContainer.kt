@@ -10,6 +10,7 @@ import kotlin.collections.plus
  * Represents a container in an [ItemMenu]. Any null values are simply empty items.
  */
 open class ItemContainer(
+    val menu: ItemMenu<*>,
     val cartesianCoordinate: CartesianCoordinate? = null,
     val slot: Int? = null,
     val width: Int,
@@ -18,8 +19,8 @@ open class ItemContainer(
 
     protected val itemElements: HashMap<Int, ItemElement> = hashMapOf() // slot to element
 
-    constructor(x: Int, y: Int, width: Int, height: Int) : this(CartesianCoordinate(x, y), null, width, height)
-    constructor(slot: Int, width: Int, height: Int) : this(null, slot, width, height)
+    constructor(menu: ItemMenu<*>, x: Int, y: Int, width: Int, height: Int) : this(menu, CartesianCoordinate(x, y), null, width, height)
+    constructor(menu: ItemMenu<*>, slot: Int, width: Int, height: Int) : this(menu, null, slot, width, height)
 
     fun removeElement(slot: Int) {
         itemElements.remove(slot)
@@ -40,6 +41,10 @@ open class ItemContainer(
     @Suppress("UNCHECKED_CAST")
     fun getAllElementsWithSlots(): Map<Int, ItemElement> = (itemElements.clone() as HashMap<Int, ItemElement>).also {
         for (elements in containers.map { it.getAllElementsWithSlots() }) it + elements
+    }
+
+    override fun update() {
+        menu.update()
     }
 
     /**

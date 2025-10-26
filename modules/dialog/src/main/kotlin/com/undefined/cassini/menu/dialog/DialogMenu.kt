@@ -10,7 +10,9 @@ import com.undefined.cassini.menu.CassiniMenu
 import com.undefined.cassini.menu.item.ItemMenu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import java.util.UUID
 
 /**
  * Represents a Minecraft dialog. Dialogs are simple modal windows that can display information and receive player input.
@@ -26,20 +28,16 @@ abstract class DialogMenu(
     override val settings: DialogMenuSettings = DialogMenuSettings(title),
 ) : CassiniMenu<DialogMenu, DialogMenuSettings>(title, parent) {
 
-    val bodyContainer: DialogBodyContainer = DialogBodyContainer()
-    val inputContainer: DialogInputContainer = DialogInputContainer()
+    val bodyContainer: DialogBodyContainer = DialogBodyContainer(this)
+    val inputContainer: DialogInputContainer = DialogInputContainer(this)
     open val totalButtons: List<DialogButton>
         get() = bodyContainer.getAllElements().filterIsInstance<DialogButton>() // TODO
 
     override fun open(player: Player) {
         if (player.uniqueId !in viewers) initialize(player)
-        val previousMenu = NMSManager.openMenus[player.uniqueId]
-        if (previousMenu is ItemMenu<*> && previousMenu.packetBased) player.closeInventory()
-
         super.open(player)
 
-        player.closeInventory()
-        NMSManager.nms.showDialog(player, toJson())
+        update(player.uniqueId)
     }
 
     open fun toJson(): JsonObject = JsonObject().also { json ->
@@ -50,6 +48,12 @@ abstract class DialogMenu(
         json.add("inputs", inputContainer.toJson())
         json.addProperty("can_close_with_escape", settings.canCloseWithEscape)
         json.addProperty("after_action", settings.afterAction.tagName)
+    }
+
+    override fun update(viewer: UUID) {
+        val player = Bukkit.getPlayer(viewer) ?: error("Could not find player")
+        player.closeInventory()
+        NMSManager.nms.showDialog(player, toJson())
     }
 
 }

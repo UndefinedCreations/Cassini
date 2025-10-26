@@ -8,7 +8,7 @@ import com.undefined.cassini.element.Element
  * @param C The extending [Container].
  * @param E [Element] that can be added.
  */
-abstract class SimpleContainerImpl<C : Container<C, *>, E : Element?> : Container<C, E> {
+abstract class SimpleContainerImpl<C : Container<C, *>, E : Element?>() : Container<C, E> {
 
     protected val elements: MutableList<E> = mutableListOf()
     protected val containers: MutableList<C> = mutableListOf()

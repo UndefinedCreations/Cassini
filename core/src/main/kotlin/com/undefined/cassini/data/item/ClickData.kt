@@ -22,7 +22,7 @@ class ClickData<T : ItemMenu<*>>(
     }
 
     fun close() {
-        // TODO
+        player.closeMenu()
     }
 
     fun cancel() {

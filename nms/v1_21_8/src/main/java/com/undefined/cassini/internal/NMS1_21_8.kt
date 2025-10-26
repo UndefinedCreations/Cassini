@@ -28,7 +28,7 @@ import org.jetbrains.annotations.ApiStatus
 import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 @ApiStatus.Internal
-class NMS1_21_8 : NMS {
+object NMS1_21_8 : NMS {
 
     override fun sendOpenScreenPacket(player: Player, type: MenuType, title: Component) {
         player.serverPlayer.connection.send(ClientboundOpenScreenPacket(
@@ -94,10 +94,9 @@ class NMS1_21_8 : NMS {
         player.internalConnection.send(ClientboundServerLinksPacket(player.serverPlayer.level().server.serverLinks().untrust()))
     }
 
+    val Player.serverPlayer: ServerPlayer
+        get() = (player as CraftPlayer).handle
+    val Player.internalConnection: Connection
+        get() = serverPlayer.connection.connection
 
 }
-
-val Player.serverPlayer: ServerPlayer
-    get() = (player as CraftPlayer).handle
-val Player.internalConnection: Connection
-    get() = serverPlayer.connection.connection

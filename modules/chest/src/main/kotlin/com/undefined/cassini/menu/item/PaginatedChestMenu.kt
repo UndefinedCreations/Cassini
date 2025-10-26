@@ -1,6 +1,8 @@
 package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.container.item.PaginatedItemContainer
+import com.undefined.cassini.container.item.PaginatedItemContainerImpl
+import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.menu.CassiniMenu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import net.kyori.adventure.text.Component
@@ -11,33 +13,35 @@ abstract class PaginatedChestMenu(
     rows: Int,
     parent: CassiniMenu<*, *>? = null,
     override val settings: ItemMenuSettings = ItemMenuSettings(),
-) : ChestMenu(title, rows, parent, settings) {
-
-    override val rootContainer: PaginatedItemContainer = PaginatedItemContainer(this, MAX_WIDTH, MAX_HEIGHT)
+) : ChestMenu(title, rows, parent, settings, rootContainer = PaginatedItemContainerImpl(MAX_WIDTH, MAX_HEIGHT)), PaginatedItemContainer {
 
     var availableSlots: SlotIterator
-        get() = rootContainer.availableSlots
+        get() = paginatedRootContainer.availableSlots
         set(value) {
-            rootContainer.availableSlots = value
+            paginatedRootContainer.availableSlots = value
         }
 
+    private val paginatedRootContainer: PaginatedItemContainerImpl = rootContainer as PaginatedItemContainerImpl
+
     override fun update(viewer: UUID) {
-        if (!rootContainer.hasCalculatedElements) rootContainer.updatePageElements()
+        if (!paginatedRootContainer.hasCalculatedElements) paginatedRootContainer.updatePageElements()
         super.update(viewer)
     }
+
+    override fun addPaginatedElements(elements: List<ItemElement>) = paginatedRootContainer.addPaginatedElements(elements)
 
     /**
      * Goes to the next page.
      *
      * @return `false` if there is no next page.
      */
-    fun next(): Boolean = rootContainer.next().also { update() }
+    fun next(): Boolean = paginatedRootContainer.next().also { update() }
 
     /**
      * Goes to the previous page if possible
      *
      * @return `false` if there is no previous page.
      */
-    fun previous(): Boolean = rootContainer.previous().also { update() }
+    fun previous(): Boolean = paginatedRootContainer.previous().also { update() }
 
 }

@@ -12,14 +12,14 @@ class TestMenu : PaginatedChestMenu(!"Change Lore", 3) {
 
         for (material in Material.entries.filter { it.isItem && !it.isAir && !it.name.contains("LEGACY", true) }) {
             val element = StaticItemElement(material)
-            rootContainer.addPaginatedElement(element)
+            addPaginatedElement(element)
         }
 
-        rootContainer.setElement(18, StaticItemElement(Material.PAPER) {
+        setElement(18, StaticItemElement(Material.PAPER) {
             previous()
         })
 
-        rootContainer.setElement(26, StaticItemElement(Material.PAPER) {
+        setElement(26, StaticItemElement(Material.PAPER) {
             next()
         })
 
@@ -30,7 +30,7 @@ class TestMenu : PaginatedChestMenu(!"Change Lore", 3) {
             }
             element.update()
         }
-        rootContainer.setElement(22, randomElement)
+        setElement(22, randomElement)
     }
 
 }

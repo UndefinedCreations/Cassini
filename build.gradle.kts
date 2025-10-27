@@ -92,7 +92,7 @@ publishing {
     repositories {
         try {
             if ((System.getenv("MAVEN_NAME") ?: property("mavenUser")) == null) return@repositories
-        } catch (e: MissingPropertyException) { return@repositories }
+        } catch (_: MissingPropertyException) { return@repositories }
         maven {
             name = "undefined-releases"
             url = uri("https://repo.undefinedcreations.com/releases")

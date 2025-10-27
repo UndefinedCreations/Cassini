@@ -3,7 +3,6 @@ package com.undefined.cassini.menu.pattern
 import com.undefined.cassini.menu.Menu
 
 interface MenuPattern<T : Menu<*, *>> {
-
     fun apply(menu: T)
     fun createMenu(menu: T, action: T.() -> Unit) = menu.action()
 
@@ -12,5 +11,4 @@ interface MenuPattern<T : Menu<*, *>> {
             override fun apply(menu: T) = createMenu(menu, action)
         }
     }
-
 }

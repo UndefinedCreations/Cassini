@@ -33,6 +33,9 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
         NMSManager.openMenus[player.uniqueId] = this
     }
 
+    /**
+     * Update this container for all its viewers.
+     */
     open fun update() {
         for (viewer in viewers) update(viewer)
     }
@@ -42,13 +45,13 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
     }
 
     /**
-     * Apply a [MenuPattern] to this menu.
+     * Apply a [com.undefined.cassini.menu.pattern.MenuPattern] to this menu.
      */
     @Suppress("UNCHECKED_CAST")
     fun applyPattern(pattern: MenuPattern<T>) = pattern.apply(this as T)
 
     /**
-     * Create and apply a [MenuPattern] to this menu.
+     * Create and apply a [com.undefined.cassini.menu.pattern.MenuPattern] to this menu.
      */
     @Suppress("UNCHECKED_CAST")
     fun createPattern(action: T.() -> Unit) = MenuPattern.create(action).apply(this as T)

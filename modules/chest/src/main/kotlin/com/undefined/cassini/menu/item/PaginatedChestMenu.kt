@@ -16,9 +16,9 @@ abstract class PaginatedChestMenu(
 ) : ChestMenu(title, rows, parent, settings, rootContainer = PaginatedItemContainerImpl(MAX_WIDTH, MAX_HEIGHT)), PaginatedItemContainer {
 
     var availableSlots: SlotIterator
-        get() = paginatedRootContainer.availableSlots
+        get() = paginatedRootContainer.availablePaginatedSlots
         set(value) {
-            paginatedRootContainer.availableSlots = value
+            paginatedRootContainer.availablePaginatedSlots = value
         }
 
     private val paginatedRootContainer: PaginatedItemContainerImpl = rootContainer as PaginatedItemContainerImpl

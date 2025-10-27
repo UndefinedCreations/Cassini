@@ -1,11 +1,10 @@
 package com.undefined.cassini.element.item
 
-import com.undefined.cassini.menu.item.ItemMenu
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 /**
- * Represents a list of items to be displayed after one another on each [next] call in a [ItemMenu]. It circles back when it has reached the end of the array.
+ * Represents a list of items to be displayed after one another on each [next] call in a [com.undefined.cassini.menu.item.ItemMenu]. It circles back when it has reached the end of the array.
  */
 class CycleItemElement(val items: Array<ItemStack>) : ItemElement() {
 

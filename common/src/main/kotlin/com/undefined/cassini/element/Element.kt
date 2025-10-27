@@ -11,7 +11,7 @@ abstract class Element {
      * A list of containers where this element is used.
      * These containers will be updated on [update].
      */
-    val containers: MutableList<Container<*, *>> = mutableListOf()
+    val containers: MutableSet<Container<*, *>> = mutableSetOf()
 
     /**
      * Adds [container] to [containers].

@@ -1,7 +1,6 @@
 package com.undefined.cassini.container.item
 
 import com.undefined.cassini.element.item.ItemElement
-import com.undefined.cassini.menu.item.ItemMenu
 import com.undefined.cassini.menu.item.PaginatedChestMenu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import kotlin.math.ceil
@@ -12,22 +11,23 @@ import kotlin.math.ceil
 class PaginatedItemContainerImpl(
     width: Int,
     height: Int,
-) : ItemContainerImpl(0, 0, width, height), PaginatedItemContainer {
+) : ItemContainerImpl(width, height), PaginatedItemContainer {
 
-    lateinit var availableSlots: SlotIterator
+    /**
+     * Slots available to be filled with paginated elements.
+     */
+    lateinit var availablePaginatedSlots: SlotIterator
 
     /**
      * Whether the container has calculated any page elements. This value is updated in [updatePageElements].
      */
     var hasCalculatedElements: Boolean = false
 
-    private val size = width * height
-
     /**
      * Contains all elements to be added in pages.
      */
     private val paginatedElements: MutableList<ItemElement?> = mutableListOf()
-    private val currentPage: MutableMap<Int, ItemElement?> = LinkedHashMap(size)
+    private val currentPage: MutableMap<Int, ItemElement?> = LinkedHashMap(availablePaginatedSlots.numberOfSlots())
 
     private var currentPageNumber = 1
 
@@ -44,8 +44,8 @@ class PaginatedItemContainerImpl(
         val contents = getPageContents(currentPageNumber)
 
         currentPage.clear()
-        availableSlots.calculateSlots()
-        for ((i, slot) in availableSlots.slots.withIndex()) {
+        availablePaginatedSlots.calculateSlots()
+        for ((i, slot) in availablePaginatedSlots.slots.withIndex()) {
             if (i > contents.lastIndex) break
             val element = contents[i]
             currentPage[slot] = element
@@ -83,7 +83,7 @@ class PaginatedItemContainerImpl(
     /**
      * Returns the number of pages this menu has.
      */
-    fun numberOfPages(): Int = ceil(paginatedElements.size.toDouble() / availableSlots.numberOfSlots()).toInt()
+    fun numberOfPages(): Int = ceil(paginatedElements.size.toDouble() / availablePaginatedSlots.numberOfSlots()).toInt()
 
     /**
      * Returns a list with all the item elements to be displayed in the given page.
@@ -91,7 +91,7 @@ class PaginatedItemContainerImpl(
     private fun getPageContents(pageNumber: Int): MutableList<ItemElement?> {
         val actualPageNumber = pageNumber - 1
         val pageElements: MutableList<ItemElement?> = mutableListOf()
-        val numberOfSlots = availableSlots.numberOfSlots()
+        val numberOfSlots = availablePaginatedSlots.numberOfSlots()
 
         var max: Int = ((actualPageNumber * numberOfSlots) + numberOfSlots)
         if (max > paginatedElements.size) max = paginatedElements.size

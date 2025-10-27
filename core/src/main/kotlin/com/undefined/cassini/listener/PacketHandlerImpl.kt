@@ -1,6 +1,5 @@
 package com.undefined.cassini.listener
 
-import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation

@@ -30,6 +30,9 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
 
     open fun open(player: Player) {
         if (player.uniqueId !in viewers) viewers.add(player.uniqueId)
+        val previousMenu = NMSManager.openMenus[player.uniqueId]
+        previousMenu?.viewers?.remove(player.uniqueId)
+
         NMSManager.openMenus[player.uniqueId] = this
     }
 

@@ -48,13 +48,13 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
     }
 
     /**
-     * Apply a [com.undefined.cassini.menu.pattern.MenuPattern] to this menu.
+     * Apply a [MenuPattern] to this menu.
      */
     @Suppress("UNCHECKED_CAST")
-    fun applyPattern(pattern: MenuPattern<T>) = pattern.apply(this as T)
+    fun <M : T> applyPattern(pattern: MenuPattern<M>) = pattern.apply(this as M)
 
     /**
-     * Create and apply a [com.undefined.cassini.menu.pattern.MenuPattern] to this menu.
+     * Create and apply a [MenuPattern] to this menu.
      */
     @Suppress("UNCHECKED_CAST")
     fun createPattern(action: T.() -> Unit) = MenuPattern.create(action).apply(this as T)

@@ -20,7 +20,7 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
     parent: Menu<*, *>?,
     type: MenuType,
     maxWidth: Int,
-    protected val rootContainer: ItemContainerImpl,
+    val rootContainer: ItemContainerImpl,
 ) : ItemMenu<T>(title, size, parent, type, maxWidth), ItemContainer<ItemContainerImpl> by rootContainer {
 
     override val elements: Map<Int, ItemElement>

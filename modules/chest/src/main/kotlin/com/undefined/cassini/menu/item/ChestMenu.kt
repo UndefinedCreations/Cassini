@@ -10,7 +10,7 @@ abstract class ChestMenu(
     rows: Int,
     parent: Menu<*, *>? = null,
     override val settings: ItemMenuSettings = ItemMenuSettings(),
-    rootContainer: ItemContainerImpl = ItemContainerImpl(MAX_WIDTH, MAX_HEIGHT)
+    rootContainer: ItemContainerImpl = ItemContainerImpl(MAX_WIDTH, rows)
 ) : SingleContainerItemMenu<ChestMenu>(
     title = title,
     size = rows * MAX_WIDTH,

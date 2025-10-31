@@ -27,7 +27,7 @@ class PaginatedItemContainerImpl(
      * Contains all elements to be added in pages.
      */
     private val paginatedElements: MutableList<ItemElement?> = mutableListOf()
-    private val currentPage: MutableMap<Int, ItemElement?> = LinkedHashMap(availablePaginatedSlots.numberOfSlots())
+    private val currentPage: MutableMap<Int, ItemElement?> by lazy { LinkedHashMap(availablePaginatedSlots.numberOfSlots()) }
 
     private var currentPageNumber = 1
 

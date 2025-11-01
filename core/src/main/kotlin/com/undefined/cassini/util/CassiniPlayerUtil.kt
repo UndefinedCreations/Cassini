@@ -6,7 +6,7 @@ import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.Menu
 import org.bukkit.entity.Player
 
-fun Player.openMenu(menu: Menu<*, *>) = menu.open(this)
+fun Player.openMenu(menu: Menu<*, *>, initialize: Boolean = true) = menu.open(this)
 fun Player.closeMenu() {
     val openMenu = NMSManager.openMenus[uniqueId] ?: return
     when {

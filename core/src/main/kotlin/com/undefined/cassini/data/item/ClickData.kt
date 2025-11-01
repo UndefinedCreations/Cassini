@@ -18,7 +18,7 @@ class ClickData<T : ItemMenu<*>>(
     var isCancelled: Boolean = false
 
     fun back() {
-        menu.parent?.let { player.openMenu(it) } ?: close()
+        menu.parent?.let { player.openMenu(it, initialize = false) } ?: close()
     }
 
     fun close() {

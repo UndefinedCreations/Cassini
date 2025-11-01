@@ -28,6 +28,8 @@ abstract class PaginatedChestMenu(
         super.update(viewer)
     }
 
+    fun updatePaginatedElements() = paginatedRootContainer.updatePageElements()
+
     override fun addPaginatedElements(elements: List<ItemElement>) = paginatedRootContainer.addPaginatedElements(elements)
 
     /**

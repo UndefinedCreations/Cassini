@@ -28,8 +28,11 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
     val viewers: MutableSet<UUID> = mutableSetOf() // player uuid
     abstract val settings: C
 
-    open fun open(player: Player) {
-        if (player.uniqueId !in viewers) viewers.add(player.uniqueId)
+    open fun open(player: Player, initialize: Boolean = true) {
+        if (player.uniqueId !in viewers) {
+            viewers.add(player.uniqueId)
+            if (initialize) initialize(player)
+        }
         val previousMenu = NMSManager.openMenus[player.uniqueId]
         previousMenu?.viewers?.remove(player.uniqueId)
 

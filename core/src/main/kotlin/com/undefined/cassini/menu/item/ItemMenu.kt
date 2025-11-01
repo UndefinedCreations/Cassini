@@ -38,9 +38,8 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 
     override val settings: ItemMenuSettings = ItemMenuSettings()
 
-    override fun open(player: Player) {
-        if (player.uniqueId !in viewers) initialize(player)
-        super.open(player)
+    override fun open(player: Player, initialize: Boolean) {
+        super.open(player, initialize)
 
         NMSManager.nms.sendOpenScreenPacket(player, type, title)
         update(player.uniqueId)

@@ -4,7 +4,7 @@ import com.undefined.cassini.internal.info.PacketClickInformation
 import com.undefined.cassini.internal.info.PacketCloseInformation
 
 /**
- * Handles any Cassini menu related server bound packets and custom events (such as dialog click).
+ * Handles any Cassini menu related serverbound packets and custom events (such as dialog click).
  * This is overridden by the implementation of the core module.
  */
 interface PacketHandler {

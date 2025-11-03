@@ -33,9 +33,8 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
             viewers.add(player.uniqueId)
             if (initialize) initialize(player)
         }
-        val previousMenu = NMSManager.openMenus[player.uniqueId]
-        previousMenu?.viewers?.remove(player.uniqueId)
 
+        NMSManager.openMenus[player.uniqueId]?.close(player) // previous menu
         NMSManager.openMenus[player.uniqueId] = this
     }
 
@@ -48,6 +47,11 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
 
     open fun update(viewer: UUID) {
         throw UnsupportedOperationException("Update method not available for ${this::class.simpleName}.")
+    }
+
+    fun close(player: Player) {
+        viewers.remove(player.uniqueId)
+        onClose(player)
     }
 
     /**
@@ -64,5 +68,8 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
 
     @ApiStatus.OverrideOnly
     open fun initialize(player: Player) {}
+
+    @ApiStatus.OverrideOnly
+    open fun onClose(player: Player) {}
 
 }

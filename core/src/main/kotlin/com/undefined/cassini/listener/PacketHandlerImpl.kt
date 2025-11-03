@@ -42,9 +42,13 @@ object PacketHandlerImpl : PacketHandler, Listener {
     }
 
     override fun onClose(closeInformation: PacketCloseInformation) {
-        val menu = NMSManager.openMenus[closeInformation.player.uniqueId] as? ItemMenu<*> ?: return
+        val menu = NMSManager.openMenus[closeInformation.player.uniqueId] ?: return
+        menu.close(closeInformation.player)
         NMSManager.openMenus.remove(closeInformation.player.uniqueId)
-        for (closeAction in menu.closeActions) closeAction(closeInformation.player)
+
+        if (menu is ItemMenu<*>) {
+            for (closeAction in menu.closeActions) closeAction(closeInformation.player)
+        }
     }
 
     @Suppress("UnstableApiUsage")

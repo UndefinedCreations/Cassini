@@ -23,6 +23,13 @@ class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 
         setElement(26, StaticItemElement(Material.PAPER) {
             next()
         })
+
+        onClose { player ->
+            player.sendMessage("Closed action")
+        }
     }
 
+    override fun onClose(player: Player) {
+        player.sendMessage("onClose!")
+    }
 }

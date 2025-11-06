@@ -10,7 +10,7 @@ class OtherTestMenu(parent: Menu<*, *>? = null) : ChestMenu(!"Change Lore", 3, p
         preventClicking()
 
         val otherElement = StaticItemElement(Material.RED_CONCRETE) {
-            back()
+            back(initialize = true)
         }
         setElement(13, otherElement)
     }

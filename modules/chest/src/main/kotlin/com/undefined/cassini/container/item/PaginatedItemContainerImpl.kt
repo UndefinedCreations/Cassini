@@ -86,7 +86,7 @@ class PaginatedItemContainerImpl(
     fun numberOfPages(): Int = ceil(paginatedElements.size.toDouble() / availablePaginatedSlots.numberOfSlots()).toInt()
 
     /**
-     * Returns a list with all the item elements to be displayed in the given page.
+     * Returns a list with all the item elements to be displayed on the given page.
      */
     private fun getPageContents(pageNumber: Int): MutableList<ItemElement?> {
         val actualPageNumber = pageNumber - 1

@@ -6,6 +6,8 @@ import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.menu.Menu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import java.util.UUID
 
 abstract class PaginatedChestMenu(
@@ -24,7 +26,7 @@ abstract class PaginatedChestMenu(
     private val paginatedRootContainer: PaginatedItemContainerImpl = rootContainer as PaginatedItemContainerImpl
 
     override fun update(viewer: UUID) {
-        if (!paginatedRootContainer.hasCalculatedElements) paginatedRootContainer.updatePageElements()
+        updatePaginatedElements()
         super.update(viewer)
     }
 

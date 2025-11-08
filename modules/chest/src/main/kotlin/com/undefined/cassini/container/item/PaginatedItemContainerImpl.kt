@@ -36,6 +36,16 @@ class PaginatedItemContainerImpl(
     }
 
     /**
+     * Resets the page elements and sets the current page to `1`.
+     */
+    fun resetPageElements() {
+        paginatedElements.clear()
+        currentPage.clear()
+        hasCalculatedElements = false
+        currentPageNumber = 1
+    }
+
+    /**
      * Replaces old page elements with new elements according to [currentPageNumber].
      */
     fun updatePageElements() {

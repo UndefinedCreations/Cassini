@@ -7,7 +7,6 @@ import com.undefined.cassini.menu.Menu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import java.util.UUID
 
 abstract class PaginatedChestMenu(
@@ -25,12 +24,21 @@ abstract class PaginatedChestMenu(
 
     private val paginatedRootContainer: PaginatedItemContainerImpl = rootContainer as PaginatedItemContainerImpl
 
+    override fun open(player: Player, initialize: Boolean) {
+        if (player.uniqueId !in viewers && initialize && paginatedRootContainer.hasCalculatedElements) {
+            resetPaginatedElements()
+        }
+
+        super.open(player, initialize)
+    }
+
     override fun update(viewer: UUID) {
         updatePaginatedElements()
         super.update(viewer)
     }
 
     fun updatePaginatedElements() = paginatedRootContainer.updatePageElements()
+    fun resetPaginatedElements() = paginatedRootContainer.resetPageElements()
 
     override fun addPaginatedElements(elements: List<ItemElement>) = paginatedRootContainer.addPaginatedElements(elements)
 

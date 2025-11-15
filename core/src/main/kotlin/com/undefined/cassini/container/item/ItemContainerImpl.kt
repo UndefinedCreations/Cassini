@@ -3,6 +3,7 @@ package com.undefined.cassini.container.item
 import com.undefined.cassini.container.Container
 import com.undefined.cassini.element.CartesianCoordinate
 import com.undefined.cassini.element.item.ItemElement
+import com.undefined.cassini.element.item.StaticItemElement
 import com.undefined.cassini.menu.item.ItemMenu
 import org.jetbrains.annotations.Range
 
@@ -105,6 +106,8 @@ open class ItemContainerImpl(
     }
 
     override fun fill(element: ItemElement) = fill(0, 0, height - 1, width - 1, element)
+
+    override fun clear() = clear(0, 0, height - 1, width - 1)
 
     override fun fillRow(row: Int, element: ItemElement) = fill(row, 0, row, width - 1, element)
     override fun fillColumn(column: Int, element: ItemElement) = fill(0, column, height - 1, column, element)

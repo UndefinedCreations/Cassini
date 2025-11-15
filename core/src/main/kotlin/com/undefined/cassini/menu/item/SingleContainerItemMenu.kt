@@ -26,6 +26,10 @@ abstract class SingleContainerItemMenu<T : SingleContainerItemMenu<T>>(
     override val elements: Map<Int, ItemElement>
         get() = rootContainer.getAllElementsWithSlots()
 
+    init {
+        containers.add(rootContainer)
+    }
+
     override fun update() {
         super<ItemMenu>.update()
     }

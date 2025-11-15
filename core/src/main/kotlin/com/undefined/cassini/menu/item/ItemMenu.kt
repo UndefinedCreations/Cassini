@@ -1,6 +1,7 @@
 package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.CassiniConfig
+import com.undefined.cassini.container.item.ItemContainerImpl
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.element.item.ItemElement
@@ -33,12 +34,17 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 
     abstract val elements: Map<Int, ItemElement> // slot to element
 
+    protected val containers: MutableList<ItemContainerImpl> = mutableListOf()
+
     val clickActions: MutableList<(ClickData<T>) -> Unit> = mutableListOf() // int is slot
     val closeActions: MutableList<(Player) -> Unit> = mutableListOf() // int is slot
 
     override val settings: ItemMenuSettings = ItemMenuSettings()
 
     override fun open(player: Player, initialize: Boolean) {
+        if (player.uniqueId !in viewers && initialize) {
+            for (container in containers) container.clear()
+        }
         super.open(player, initialize)
 
         NMSManager.nms.sendOpenScreenPacket(player, type, title)

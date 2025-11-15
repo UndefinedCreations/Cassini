@@ -32,6 +32,11 @@ interface FillOperations {
     }
 
     /**
+     * Clears all items in the container.
+     */
+    fun clear()
+
+    /**
      * Clears all items in the specified rectangular area. Rows and columns specified are inclusive.
      */
     fun clear(fromRow: Int, fromColumn: Int, toRow: Int, toColumn: Int) {

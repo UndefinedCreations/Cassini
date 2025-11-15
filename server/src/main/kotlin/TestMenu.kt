@@ -9,14 +9,17 @@ import org.bukkit.entity.Player
 
 class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 3, parent) {
 
+    var hasInitialized = false
+
     override fun initialize(player: Player) {
-        println("TestMenu.initialize")
         preventClicking()
         availableSlots = SlotIterator.of(this, 0..17)
 
-        for (material in Material.entries.filter { it.isItem && !it.isAir && !it.name.contains("LEGACY", true) }.shuffled().take(2)) {
-            val element = StaticItemElement(material)
-            addPaginatedElement(element)
+        if (!hasInitialized) {
+            for (material in Material.entries.filter { it.isItem && !it.isAir && !it.name.contains("LEGACY", true) }.shuffled().take(2)) {
+                val element = StaticItemElement(material)
+                addPaginatedElement(element)
+            }
         }
 
         setElement(22, StaticItemElement(Material.GREEN_CONCRETE) {
@@ -31,10 +34,7 @@ class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 
             next()
         })
 
-        onClose { player ->
-        }
+        hasInitialized = true
     }
 
-    override fun onClose(player: Player) {
-    }
 }

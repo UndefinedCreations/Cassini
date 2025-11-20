@@ -49,7 +49,7 @@ abstract class Menu<T : Menu<T, *>, C : MenuSettings>(
         throw UnsupportedOperationException("Update method not available for ${this::class.simpleName}.")
     }
 
-    fun close(player: Player) {
+    open fun close(player: Player) {
         viewers.remove(player.uniqueId)
         onClose(player)
     }

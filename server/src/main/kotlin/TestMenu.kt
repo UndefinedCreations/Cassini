@@ -12,7 +12,6 @@ class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 
     var hasInitialized = false
 
     override fun initialize(player: Player) {
-        preventClicking()
         availableSlots = SlotIterator.of(this, 0..17)
 
         if (!hasInitialized) {
@@ -35,6 +34,10 @@ class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 
         })
 
         hasInitialized = true
+    }
+
+    override fun onClose(player: Player) {
+        player.sendMessage(elements[0]?.getItem(player)?.i18NDisplayName ?: "null")
     }
 
 }

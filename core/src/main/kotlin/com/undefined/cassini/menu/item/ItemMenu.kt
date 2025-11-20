@@ -6,9 +6,11 @@ import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.element.item.ItemElement
 import com.undefined.cassini.internal.NMSManager
+import com.undefined.cassini.internal.wrapper.ItemMenuWrapper
 import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.UUID
@@ -30,7 +32,8 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     /**
      * Whether the menu is solely sent through packets instead of doing much server-side work.
      */
-    val packetBased: Boolean = true // TODO change to default false when adding non-packet based menus
+    open val packetBased: Boolean = false // TODO change to default false when adding non-packet based menus
+    val wrappers: HashMap<UUID, ItemMenuWrapper> = hashMapOf()
 
     abstract val elements: Map<Int, ItemElement> // slot to element
 
@@ -44,6 +47,13 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     override fun open(player: Player, initialize: Boolean) {
         if (player.uniqueId !in viewers && initialize) {
             for (container in containers) container.clear()
+            if (!packetBased) {
+                println("wrappers[viewer] == null = ${wrappers[player.uniqueId] == null}")
+                if (wrappers[player.uniqueId] == null) setupWrapper(player)
+                val wrapper = wrappers[player.uniqueId] ?: error("Wrapper is null??!")
+                NMSManager.nms.setContainerMenu(player, wrapper)
+                NMSManager.nms.initMenu(player, wrapper)
+            }
         }
         super.open(player, initialize)
 
@@ -56,6 +66,18 @@ abstract class ItemMenu<T : ItemMenu<T>>(
 
         updateItems(player)
         NMSManager.nms.sendContentsPacket(player, items)
+        wrappers[player.uniqueId]?.clearItems()
+        wrappers[player.uniqueId]?.setItem(1, ItemStack(Material.BARRIER))
+    }
+
+    override fun close(player: Player) {
+        if (!packetBased) {
+            wrappers.remove(player.uniqueId)
+            Bukkit.getScheduler().runTask(CassiniConfig.plugin, Runnable {
+                NMSManager.nms.closeContainerMenu(player)
+            })
+        }
+        super.close(player)
     }
 
     /**
@@ -95,6 +117,13 @@ abstract class ItemMenu<T : ItemMenu<T>>(
         Bukkit.getScheduler().runTask(CassiniConfig.plugin, Runnable {
             elements[clickData.slot]?.callActions(clickData)
         })
+    }
+
+    /**
+     * Setups up wrapper.
+     */
+    protected open fun setupWrapper(player: Player) {
+        wrappers[player.uniqueId] = NMSManager.nms.createChestMenu(player, type, title)
     }
 
 }

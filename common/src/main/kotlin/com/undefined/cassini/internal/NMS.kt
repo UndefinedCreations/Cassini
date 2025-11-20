@@ -4,6 +4,9 @@ import com.google.gson.JsonElement
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.internal.listener.PacketHandler
+import com.undefined.cassini.internal.wrapper.ChestMenuWrapper
+import com.undefined.cassini.internal.wrapper.ItemMenuWrapper
+import com.undefined.cassini.internal.wrapper.MenuWrapper
 import net.kyori.adventure.text.Component
 import org.bukkit.Server
 import org.bukkit.entity.Player
@@ -11,10 +14,12 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 
 interface NMS {
-//    fun createChestMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
-//    fun createAnvilMenu(player: Player, size: Int, title: Component, config: MenuConfig): AnvilMenuWrapper
-//    fun createSmithingMenu(player: Player, size: Int, title: Component, config: MenuConfig): MenuWrapper
-//    fun sendContainerClosePacket(player: Player, wrapper: MenuWrapper)
+
+    fun createChestMenu(player: Player, type: MenuType, title: Component): ItemMenuWrapper
+
+    fun setContainerMenu(player: Player, wrapper: ItemMenuWrapper)
+    fun closeContainerMenu(player: Player)
+    fun initMenu(player: Player, wrapper: ItemMenuWrapper)
 
     /**
      * Send the [player], an open screen packet with [type] and [title].
@@ -45,9 +50,6 @@ interface NMS {
     fun sendSetCursorItemPacket(player: Player, item: ItemStack)
 
 //    fun sendOpenBookPacket(player: Player, book: ItemStack)
-//    fun setContainerMenu(player: Player, wrapper: MenuWrapper)
-//    fun resetContainerMenu(player: Player)
-//    fun initMenu(player: Player, wrapper: MenuWrapper)
 
     /**
      * Get the next container id for [player].

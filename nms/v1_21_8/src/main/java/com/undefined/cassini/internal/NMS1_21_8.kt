@@ -7,6 +7,8 @@ import com.mojang.serialization.JsonOps
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.ServerLink
 import com.undefined.cassini.internal.listener.PacketHandler
+import com.undefined.cassini.internal.wrapper.ChestMenuWrapper1_21_8
+import com.undefined.cassini.internal.wrapper.ItemMenuWrapper
 import net.kyori.adventure.text.Component
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.common.ClientboundServerLinksPacket
@@ -18,6 +20,7 @@ import net.minecraft.server.ServerLinks
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.dialog.Dialog
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import org.bukkit.Server
 import org.bukkit.craftbukkit.entity.CraftPlayer
@@ -29,6 +32,12 @@ import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 @ApiStatus.Internal
 object NMS1_21_8 : NMS {
+
+    override fun createChestMenu(player: Player, type: MenuType, title: Component): ItemMenuWrapper = ChestMenuWrapper1_21_8(player, type, title)
+
+    override fun setContainerMenu(player: Player, wrapper: ItemMenuWrapper) { player.serverPlayer.containerMenu = wrapper as AbstractContainerMenu }
+    override fun closeContainerMenu(player: Player) { player.serverPlayer.closeContainer() }
+    override fun initMenu(player: Player, wrapper: ItemMenuWrapper) = player.serverPlayer.initMenu(wrapper as AbstractContainerMenu)
 
     override fun sendOpenScreenPacket(player: Player, type: MenuType, title: Component) {
         player.serverPlayer.connection.send(ClientboundOpenScreenPacket(

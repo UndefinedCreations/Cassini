@@ -2,8 +2,11 @@ package com.undefined.cassini.menu.item
 
 import com.undefined.cassini.container.item.ItemContainerImpl
 import com.undefined.cassini.data.MenuType
+import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.menu.Menu
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
+import java.util.UUID
 
 abstract class ChestMenu(
     title: Component,

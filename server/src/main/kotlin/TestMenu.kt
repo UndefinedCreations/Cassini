@@ -1,15 +1,17 @@
-import com.undefined.cassini.container.item.PaginatedItemContainerImpl
 import com.undefined.cassini.element.item.StaticItemElement
 import com.undefined.cassini.menu.Menu
 import com.undefined.cassini.menu.item.PaginatedChestMenu
 import com.undefined.cassini.menu.item.iterator.SlotIterator
 import com.undefined.cassini.util.openMenu
 import org.bukkit.Material
+import org.bukkit.craftbukkit.inventory.CraftInventoryCustom
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 3, parent) {
 
     var hasInitialized = false
+//    override val packetBased: Boolean = true
 
     override fun initialize(player: Player) {
         availableSlots = SlotIterator.of(this, 0..17)
@@ -22,7 +24,10 @@ class TestMenu(parent: Menu<*, *>? = null) : PaginatedChestMenu(!"Change Lore", 
         }
 
         setElement(22, StaticItemElement(Material.GREEN_CONCRETE) {
-            player.openMenu(OtherTestMenu(this@TestMenu))
+//            player.openMenu(TestMenu(this@TestMenu))
+            val inventory = CraftInventoryCustom(player, type.size!!, title)
+            inventory.setItem(2, ItemStack(Material.DIAMOND))
+            player.openInventory(inventory)
         })
 
         setElement(18, StaticItemElement(Material.PAPER) {

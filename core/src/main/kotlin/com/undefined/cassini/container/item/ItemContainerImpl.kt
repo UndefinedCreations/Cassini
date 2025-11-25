@@ -89,7 +89,7 @@ open class ItemContainerImpl(
         val allElements = getAllElementsWithSlots()
 
         val currentElements: MutableList<ItemElement?> = mutableListOf()
-        for (slot in 0..menu.size) {
+        for (slot in 0..<menu.size) {
             currentElements.add(allElements[slot])
         }
 

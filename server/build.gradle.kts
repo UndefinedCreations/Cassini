@@ -5,6 +5,7 @@ plugins {
     id("com.gradleup.shadow")
     id("com.undefinedcreations.nova") version "0.0.4"
     id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.3.0"
+    id("io.papermc.paperweight.userdev")
 }
 
 repositories {
@@ -21,10 +22,10 @@ repositories {
 val adventureVersion = properties["adventure_version"]!!
 
 dependencies {
-    compileOnly(libs.papermc)
+    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
 
     // Undefined Creations Libraries
-    implementation("com.undefined:stellar:1.1.1")
+    implementation("com.undefined:stellar:1.1.2:paper")
 
     // Adventure
     implementation("net.kyori:adventure-api:$adventureVersion")

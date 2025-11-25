@@ -7,7 +7,9 @@ import com.undefined.cassini.internal.listener.DialogHandler
 import com.undefined.cassini.internal.listener.PacketHandler
 import com.undefined.cassini.menu.item.ItemMenu
 import io.papermc.paper.connection.PlayerGameConnection
+import io.papermc.paper.dialog.DialogResponseView
 import io.papermc.paper.event.player.PlayerCustomClickEvent
+import net.kyori.adventure.nbt.api.BinaryTagHolder
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
@@ -55,11 +57,19 @@ object PacketHandlerImpl : PacketHandler, Listener {
     @EventHandler
     fun onCustomClickEvent(event: PlayerCustomClickEvent) {
         if (event.commonConnection !is PlayerGameConnection) error("This needs to be implemented")
+        val dialogResponseView = event.dialogResponseView ?: EmptyDialogResponseView
         dialogHandler.onCustomClickAction(
             (event.commonConnection as PlayerGameConnection).player,
             event.identifier,
-            event.dialogResponseView,
+            dialogResponseView,
         )
+    }
+
+    private object EmptyDialogResponseView : DialogResponseView {
+        override fun payload(): BinaryTagHolder = BinaryTagHolder.binaryTagHolder("")
+        override fun getText(key: String): String? = null
+        override fun getBoolean(key: String): Boolean? = null
+        override fun getFloat(key: String): Float? = null
     }
 
 }

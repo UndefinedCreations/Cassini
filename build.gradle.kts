@@ -8,6 +8,7 @@ plugins {
     `java-library`
     `maven-publish`
     id("org.jetbrains.dokka") version "2.0.0"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19" apply false
 }
 
 private val submodules: HashMap<String, String> = hashMapOf(
@@ -33,6 +34,13 @@ subprojects {
     tasks.register<Jar>("sourceJar") {
         archiveClassifier = "sources"
         from(sourceSets.main.get().allSource)
+    }
+}
+
+develocity {
+    buildScan {
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
     }
 }
 
@@ -118,9 +126,6 @@ java {
 }
 
 tasks {
-    jar {
-        dependsOn(shadowJar)
-    }
     shadowJar {
         minimize {
             exclude("**/kotlin/**")

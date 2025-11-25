@@ -13,7 +13,7 @@ object CommonMenuManager {
 
     /**
      * Contains a list of all players, and what item they are carrying.
-     * This only applies to players in a Cassini created menu.
+     * This only applies to players in a Cassini-created menu.
      */
     val carriedItems: HashMap<UUID, ItemStack> = hashMapOf()
 

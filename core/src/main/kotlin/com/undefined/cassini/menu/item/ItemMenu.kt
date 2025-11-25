@@ -5,6 +5,7 @@ import com.undefined.cassini.container.item.ItemContainerImpl
 import com.undefined.cassini.data.MenuType
 import com.undefined.cassini.data.item.ClickData
 import com.undefined.cassini.element.item.ItemElement
+import com.undefined.cassini.internal.NMS1_21_8
 import com.undefined.cassini.internal.NMSManager
 import com.undefined.cassini.internal.wrapper.ItemMenuWrapper
 import com.undefined.cassini.menu.Menu
@@ -27,7 +28,9 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     val maxWidth: Int,
 ) : Menu<T, ItemMenuSettings>(title, parent, type) {
 
-    val items: MutableList<ItemStack> = mutableListOf() // TODO make AIR items just be null
+    val _items: Array<ItemStack?> = arrayOfNulls(type.size!! ) // TODO make AIR items just be null (also, remove the items var, it's a temporary variable)
+    val items: List<ItemStack>
+        get() = _items.map { it ?: ItemStack.empty() }
 
     /**
      * Whether the menu is solely sent through packets instead of doing much server-side work.
@@ -47,30 +50,35 @@ abstract class ItemMenu<T : ItemMenu<T>>(
     override fun open(player: Player, initialize: Boolean) {
         if (player.uniqueId !in viewers && initialize) {
             for (container in containers) container.clear()
-            if (!packetBased) {
-                println("wrappers[viewer] == null = ${wrappers[player.uniqueId] == null}")
-                if (wrappers[player.uniqueId] == null) setupWrapper(player)
-                val wrapper = wrappers[player.uniqueId] ?: error("Wrapper is null??!")
-                NMSManager.nms.setContainerMenu(player, wrapper)
-                NMSManager.nms.initMenu(player, wrapper)
-            }
         }
         super.open(player, initialize)
 
-        NMSManager.nms.sendOpenScreenPacket(player, type, title)
+        NMSManager.nms.closeContainerMenu(player)
+        if (packetBased) NMSManager.nms.sendOpenScreenPacket(player, type, title)
+
+        if (initialize && !packetBased) setupWrapper(player)
+//        if (initialize && !packetBased) {
+//            if (wrappers[player.uniqueId] == null) setupWrapper(player)
+//            val wrapper = wrappers[player.uniqueId] ?: error("Wrapper is null??!")
+//            println(1)
+//            NMSManager.nms.setContainerMenu(player, wrapper)
+//            NMSManager.nms.initMenu(player, wrapper)
+//        }
+        wrappers[player.uniqueId]?.open(player)
+
         update(player.uniqueId)
     }
 
     override fun update(viewer: UUID) {
         val player = Bukkit.getPlayer(viewer) ?: return
 
-        updateItems(player)
-        NMSManager.nms.sendContentsPacket(player, items)
         wrappers[player.uniqueId]?.clearItems()
-        wrappers[player.uniqueId]?.setItem(1, ItemStack(Material.BARRIER))
+        updateItems(player)
+        if (packetBased) NMSManager.nms.sendContentsPacket(player, items)
     }
 
     override fun close(player: Player) {
+        println("ItemMenu.close")
         if (!packetBased) {
             wrappers.remove(player.uniqueId)
             Bukkit.getScheduler().runTask(CassiniConfig.plugin, Runnable {
@@ -89,8 +97,11 @@ abstract class ItemMenu<T : ItemMenu<T>>(
      * Updates the [items] list with [getItems].
      */
     fun updateItems(player: Player) {
-        items.clear()
-        items.addAll(getItems(player))
+        _items.fill(null)
+        for ((i, item) in getItems(player).map { if (it.isEmpty) null else it }.withIndex()) {
+            _items[i] = item
+            wrappers[player.uniqueId]?.setItem(i, item)
+        }
     }
 
     fun preventClicking() {
